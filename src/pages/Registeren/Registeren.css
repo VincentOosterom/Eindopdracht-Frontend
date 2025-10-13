@@ -1,0 +1,22 @@
+header {
+    background: linear-gradient(0deg, #000 12.02%, #F6AD55 100%);
+    padding: 0 20px;
+}
+
+.register-title {
+    text-align: center;
+    color: white;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+}
+
+.register-title h1 {
+    margin-bottom: 1rem;
+}
+
+.register{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+}
