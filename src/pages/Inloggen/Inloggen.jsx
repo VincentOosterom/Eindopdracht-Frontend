@@ -12,7 +12,7 @@ function Inloggen() {
 
     // Controleert of e-mail & wachtwoord lang genoeg is
 
-    const isDisabled = email.length < 10 && email.includes("@") || password.length < 5;
+    const isDisabled = email.length < 10 && email.includes("@")
 
     const testUser = {
         email: "v-oosterom@hotmail.com",

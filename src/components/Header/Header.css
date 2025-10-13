@@ -1,7 +1,7 @@
 /* ========== HEADER ========== */
 .app-header {
+    background: linear-gradient(0deg, #000 0%, #F6AD55 100%);
     min-height: 70vh;
-    color: white;
     display: flex;
     flex-direction: column;
 }
@@ -25,7 +25,7 @@
 }
 
 
-/* INPUT */
+/* ========== INPUT ========== */
 .input-field {
     display: flex;
     flex-direction: row;
@@ -63,7 +63,6 @@
     color: black;
     border-radius: 0 10px 10px 0;
     cursor: pointer;
-    width: 80px;
 }
 
 
@@ -100,7 +99,6 @@
 
     /* ========== SEARCH BTN ========== */
     .search-btn {
-        min-width: 100px;
         margin-left: 0;
         border-radius: 15px;
         border: none;

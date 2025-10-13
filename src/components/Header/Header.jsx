@@ -39,9 +39,7 @@ function Header({query, setQuery}) {
                         <option value="noord-brabant">Noord-Brabant</option>
                         <option value="limburg">Limburg</option>
                     </select>
-                    <button className="search-btn">
-                        Zoek
-                    </button>
+                    <button className="search-btn">Zoeken</button>
                 </div>
                 <div className="input-field-mobile">
                     <input
@@ -66,9 +64,7 @@ function Header({query, setQuery}) {
                         <option value="noord-brabant">Noord-Brabant</option>
                         <option value="limburg">Limburg</option>
                     </select>
-                    <button className="search-btn">
-                        Zoeken
-                    </button>
+                    <button className="search-btn">Zoeken</button>
                 </div>
             </div>
         </header>
