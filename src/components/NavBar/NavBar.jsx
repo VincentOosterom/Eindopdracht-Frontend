@@ -38,14 +38,14 @@ function NavBar() {
             <ul className={`nav-links ${isOpen ? "open" : ""}`}>
                 <li>
                     <NavLink
-                        to="/inloggen"
+                        to="/inloggen/bedrijf"
                         className={({ isActive }) => (isActive ? "active" : "")}
                     >
                         Inloggen
                     </NavLink>
                 </li>
                 <li className="button-register">
-                    <NavLink to="/registeren" className={({ isActive }) => (isActive ? "active" : "")}>Registreren</NavLink>
+                    <NavLink to="/registeren/bedrijf" className={({ isActive }) => (isActive ? "active" : "")}>Registreren</NavLink>
                 </li>
             </ul>
         </nav>

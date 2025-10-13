@@ -1,6 +1,5 @@
-/* HEADER */
+/* ========== HEADER ========== */
 .app-header {
-    background: linear-gradient(0deg, #000 0%, #F6AD55 100%);
     min-height: 70vh;
     color: white;
     display: flex;
@@ -58,7 +57,7 @@
     border-radius: 0;
 }
 
-/* SEARCH BUTTON */
+/* ========== SEARCH BTN ========== */
 .search-btn {
     background: #fff;
     color: black;
@@ -68,8 +67,10 @@
 }
 
 
+/* ========== MEDIA QUERIES ========== */
 @media (max-width: 480px) {
-    /* HEADER */
+
+    /* ========== HEADER ========== */
     .header-content {
         flex-direction: column;
         justify-content: center;
@@ -78,7 +79,7 @@
         padding: 0 1.5rem;
     }
 
-    /* INPUT */
+    /* ========== INPUT ========== */
     .input-field {
         display: none;
     }
@@ -97,7 +98,7 @@
         border: none;
     }
 
-    /* SEARCH BUTTON */
+    /* ========== SEARCH BTN ========== */
     .search-btn {
         min-width: 100px;
         margin-left: 0;

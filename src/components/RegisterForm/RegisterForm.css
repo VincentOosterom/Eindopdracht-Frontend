@@ -1,3 +1,5 @@
+/* ========== RegisterForm ========== */
+
 .register-container {
     display: flex;
     flex-direction: column;
@@ -53,6 +55,7 @@
 .register-form button{
     margin-top: 2rem;
     width: 500px;
+    padding: 1rem 1rem;
 }
 
 .password-required {
@@ -81,10 +84,8 @@
     color: white;
 }
 
+/* ========== MEDIA QUERIES ========== */
 @media screen and (max-width: 480px) {
-
-
-
     .register-container{
         width: 350px;
     }

@@ -1,6 +1,6 @@
 import NavBar from "../NavBar/NavBar.jsx";
 import './Header.css'
-import {useState} from "react";
+
 
 function Header({query, setQuery}) {
 

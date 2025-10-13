@@ -18,8 +18,11 @@ function Home() {
 
     return (
         <>
+            {/*HEADER COMPONENT*/}
             <Header query={query} setQuery={setQuery}/>
-            <main className="homepage">
+            <main className="main">
+
+                {/*SECTION 2*/}
                 <h2>Zoek resultaten</h2>
                 <section className="search-result">
                     {filteredCompanies.map((company) => (
@@ -28,6 +31,8 @@ function Home() {
                     ))}
 
                 </section>
+
+                {/*SECTION 2*/}
                 <h2>Hoe werkt het?</h2>
                 <section className="how-it-works">
                     <HowWorksCard
@@ -44,6 +49,8 @@ function Home() {
                         subtitle="Klanten boeken direct een tijdslot bij jouw diensten. Beheer je agenda eenvoudig via het dashboard en blijf overzicht houden."/>
                 </section>
             </main>
+
+            {/*FOOTER COMPONENT*/}
             <Footer/>
 
         </>

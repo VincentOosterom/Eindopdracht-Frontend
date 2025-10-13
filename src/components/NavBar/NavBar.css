@@ -1,3 +1,5 @@
+/* ========== NAVBAR ========== */
+
 .navbar {
     display: flex;
     flex-direction: row;
@@ -54,13 +56,15 @@
     border-radius: 10px;
 }
 
+/* ========== MEDIA QUERIES ========== */
 @media (max-width: 480px) {
-    /*HAMBUGER MENU*/
+
     .navbar {
         flex-direction: row;
         justify-content: center;
     }
 
+    /* ========== HAMBURGER MENU========== */
     .hamburger {
         display: block;
         position: fixed;
