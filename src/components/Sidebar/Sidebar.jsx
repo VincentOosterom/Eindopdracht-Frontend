@@ -41,9 +41,9 @@ function Sidebar({ companyId }) {
                             </li>
                         </ul>
                     </nav>
-                    <div className="logout-btn">
+                    <div className="logout-btn" onClick={handleLogout}>
                         <FontAwesomeIcon icon={faBackwardStep} className="icon"/>
-                        <h3 onClick={handleLogout}>
+                        <h3>
                            <span>Uitloggen</span>
                         </h3>
                     </div>

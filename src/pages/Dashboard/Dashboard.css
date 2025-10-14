@@ -35,14 +35,14 @@
 
 }
 
-.dashboard-content-today article{
+.dashboard-content-today article {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     max-width: 250px;
     width: 100%;
-    min-height: 150px;
+    height: 150px;
     background-color: var(--color-primary);
     border-radius: 10px;
     gap: 20px;
@@ -57,7 +57,7 @@
     font-size: 1.5rem;
 }
 
-.dashboard-content-today .make-appointment{
+.dashboard-content-today .make-appointment {
     background-color: var(--color-black);
 }
 
@@ -66,11 +66,48 @@
     transition: 0.4s;
 }
 
-.dashboard-content-today .make-appointment:hover h3{
+.dashboard-content-today .make-appointment:hover h3 {
     color: var(--color-black);
     transition: 0.4s;
 }
 
-.dashboard-content-today .make-appointment h3{
+.dashboard-content-today .make-appointment h3 {
     color: white;
+}
+
+
+/*MEDIA QUERIES*/
+
+
+@media (max-width: 480px) {
+
+    .dashboard-header-title {
+        display: flex;
+        justify-content: center;
+    }
+
+    .dashboard-header-title h2 {
+        color: var(--color-black);
+        font-size: 0.8rem;
+    }
+
+    .dashboard-content-today {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .dashboard-content-today article {
+        max-width: 250px;
+        height: 100px;
+        gap: 10px;
+    }
+
+    .dashboard-content-today article h3{
+        font-size: 0.8rem;
+    }
+
+    .dashboard-content-today article p{
+        font-size: 1rem;
+    }
+
 }

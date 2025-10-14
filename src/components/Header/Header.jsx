@@ -46,7 +46,9 @@ function Header({query, setQuery}) {
                         className="input-field-search"
                         type="text"
                         name={"search-company"}
-                        placeholder="Zoek uw bedrijf.."/>
+                        value={query}
+                        placeholder="Zoek uw bedrijf.."
+                    onChange={(e) => setQuery(e.target.value)}/>
                     <select
                         name="provincie"
                         className="input-field-city">
