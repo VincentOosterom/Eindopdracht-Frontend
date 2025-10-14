@@ -7,14 +7,22 @@ export const companies = [
         title: "Barber Amsterdam",
         description: "Welkom bij Barber Amsterdam",
         address: "Vondellaan 1, Amsterdam",
-        image: logoCompany
+        image: logoCompany,
+        userEmail: "barber@amsterdam.nl",
+        userPassword: "amsterdam123",
+        nextAppointment: "15:00",
+        appointmentsToday: "4"
     },
     {
         companyId: "barber-utrecht",
         title: "Barber Utrecht",
         description: "De beste knipbeurt in de Domstad",
         address: "Oudegracht 120, Utrecht",
-        image: logoCompany
+        image: logoCompany,
+        userEmail: "barber@utrecht.nl",
+        userPassword: "utrecht123",
+        nextAppointment: "14:00",
+        appointmentsToday: "10"
     },
     {
         companyId: "salon-rotterdam",

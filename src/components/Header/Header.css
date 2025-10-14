@@ -1,6 +1,6 @@
 /* ========== HEADER ========== */
 .app-header {
-    background: linear-gradient(0deg, #000 0%, #F6AD55 100%);
+    background: linear-gradient(0deg, #000 12.02%, #F6AD55 100%);
     min-height: 70vh;
     display: flex;
     flex-direction: column;

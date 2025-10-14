@@ -1,6 +1,7 @@
 import './Inloggen.css'
 import {useState} from "react";
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {companies} from "../../data/companies.js";
 
 
 function Inloggen() {
@@ -10,33 +11,24 @@ function Inloggen() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    // Controleert of e-mail & wachtwoord lang genoeg is
-
-    const isDisabled = email.length < 10 && email.includes("@")
-
-    const testUser = {
-        email: "v-oosterom@hotmail.com",
-        password: "Testuser123"
-    }
-
     async function handleSubmit(e) {
         e.preventDefault();
-        setError("")
 
-        if (!email.includes("@")) {
+        const company = companies.find(
+            (c) => c.userEmail === email && c.userPassword === password);
+        setError("");
+
+        if (company) {
+            alert(`Ingelogd bij ${company.title}`);
             setError("")
-        }
-
-        if (password !== testUser.password) {
-            setError("Niet het juiste wachtwoord")
-        }
-
-        if (password === testUser.password && email === testUser.email ) {
-            navigate("/dashboard")
+            navigate(`/dashboard/${company.companyId}`)
+        } else {
+            setError("Verkeerde wachtwoord of e-mailadres")
         }
 
         setLoading(true)
     }
+
     return (
         <>
             <header className="login-page">
@@ -62,7 +54,7 @@ function Inloggen() {
                         <button
                             type="submit"
                             className="login-btn"
-                            disabled={isDisabled}>Inloggen
+                        >Inloggen
                         </button>
                         <div className="forget-password">
                             <NavLink to="/wachtwoord-vergeten">Wachtwoord vergeten</NavLink>

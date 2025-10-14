@@ -7,7 +7,7 @@ import Footer from "../../components/Footer/Footer.jsx";
 function Register() {
     return (
         <>
-            <header>
+            <header className="registeren-header">
                 <NavBar/>
                 <div className="register">
                     <div className="register-title">
