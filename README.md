@@ -1,16 +1,32 @@
-# React + Vite
+🕒 Tijdslot
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tijdslot is een online afspraakplanner voor freelancers en ondernemers.
+Bedrijven kunnen afspraken beheren, klanten laten boeken en agenda’s synchroniseren.
 
-Currently, two official plugins are available:
+🎯 Over dit project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Tijdslot is ontwikkeld als onderdeel van de opleiding Full-Stack Developer.
+Het project demonstreert kennis van frontend-ontwikkeling met React (Vite), component-architectuur, state management en routing.
 
-## React Compiler
+Het doel is om een gebruiksvriendelijke, efficiënte en schaalbare omgeving te creëren waarin ondernemers hun tijd en klanten kunnen beheren.
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+⚙️ Functionaliteiten
 
-## Expanding the ESLint configuration
+✨ Inloggen met bedrijfsaccount
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+📅 Afsprakenoverzicht via interactieve kalender
+
+👥 Klantbeheer
+
+⚙️ Instellingen per bedrijf
+
+🔒 Unieke bedrijfs-URL’s zoals /dashboard/:companyId
+
+📱 Responsief ontwerp met mobiele sidebar
+
+🧠 Technologieën
+Technologie	Omschrijving
+React (Vite)	Frontend framework voor snelle webapplicaties
+React Router	Routing voor dynamische pagina’s per bedrijf
+Font Awesome	Iconen voor navigatie en UI
+CSS Modules / Media Queries	Gestileerde, responsive componenten
