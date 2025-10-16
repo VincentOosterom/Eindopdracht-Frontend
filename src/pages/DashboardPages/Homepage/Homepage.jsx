@@ -1,19 +1,20 @@
-import './Dashboard.css'
-import Sidebar from "../../components/Sidebar/Sidebar.jsx";
-import {companies} from "../../data/companies.js";
+import './Homepage.css'
+import Sidebar from "../../../components/Sidebar/Sidebar.jsx";
+import {companies} from "../../../data/companies.js";
 import {useParams} from "react-router-dom";
 
 
-function Dashboard() {
 
-    const {companyId} = useParams(); //
+function Homepage() {
+
+    const { companyId } = useParams();
     const company = companies.find((c) => c.companyId === companyId);
 
 
     return (
         <>
             <div className="dashboard">
-                <Sidebar companyId={companyId}/>
+                <Sidebar/>
                 <header className="dashboard-main">
                     <div className="dashboard-header-title">
                         <h2>Welkom terug, {company.title}</h2>
@@ -32,11 +33,9 @@ function Dashboard() {
                         </article>
                     </section>
                 </header>
-
             </div>
         </>
-
     )
 }
 
-export default Dashboard;
+export default Homepage;

@@ -7,7 +7,7 @@ import { companies } from "/src/data/companies.js";
 function CompanyPage() {
 
     const {companyId} = useParams();
-    const company = companies.find(company => company.companyId === companyId);
+    const company = companies.find(c => c.companyId === companyId);
 
     if (!company) return <p>Bedrijf niet gevonden</p>
 

@@ -1,12 +1,13 @@
-import {NavLink, useNavigate} from "react-router-dom";
+import {NavLink, useNavigate, useParams} from "react-router-dom";
 import "./Sidebar.css"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHome, faCalendar, faPerson, faGear, faBackwardStep} from '@fortawesome/free-solid-svg-icons';
 
 
 
-function Sidebar({ companyId }) {
+function Sidebar() {
     const navigate = useNavigate();
+    const { companyId } = useParams();
 
     function handleLogout() {
         navigate("/");
@@ -21,7 +22,7 @@ function Sidebar({ companyId }) {
                     </div>
                     <nav className="nav-sidebar">
                         <ul>
-                            <li><NavLink to={`/dashboard/${companyId}`} className={({isActive}) => (isActive ? "active-sidebar" : "")}>
+                            <li><NavLink to={`/dashboard/${companyId}`} end className={({isActive}) => (isActive ? "active-sidebar" : "")}>
                                 <FontAwesomeIcon icon={faHome} className="icon"/>
                                 <span>Home</span>
                             </NavLink></li>

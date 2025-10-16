@@ -1,6 +1,6 @@
 import './Inloggen.css'
 import {useState} from "react";
-import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {NavLink, useNavigate,} from "react-router-dom";
 import {companies} from "../../data/companies.js";
 
 
@@ -19,7 +19,6 @@ function Inloggen() {
         setError("");
 
         if (company) {
-            alert(`Ingelogd bij ${company.title}`);
             setError("")
             navigate(`/dashboard/${company.companyId}`)
         } else {

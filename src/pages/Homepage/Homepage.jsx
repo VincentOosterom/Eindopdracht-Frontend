@@ -1,6 +1,6 @@
 import './Homepage.css'
 import SearchResultCard from "../../components/SearchCard/SearchResultCard.jsx";
-import HowWorksCard from "../../components/WorksCard/HowWorksCard.jsx";
+import HowWorksCard from "../../components/HowWorksCard/HowWorksCard.jsx";
 import plus from "../../assets/plus.svg";
 import global from "../../assets/global.svg";
 import calender from "../../assets/calender.svg";
@@ -13,8 +13,8 @@ import {useState} from "react";
 function Home() {
     const [query, setQuery] = useState("");
     const filteredCompanies = query
-        ? companies.filter((company) =>
-            company.title.toLowerCase().includes(query.toLowerCase())) : companies;
+        ? companies.filter((c) =>
+            c.title.toLowerCase().includes(query.toLowerCase())) : companies;
 
     return (
         <>
