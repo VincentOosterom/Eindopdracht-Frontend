@@ -17,13 +17,13 @@
 /* ========== SECTION 1 ========== */
 
 .search-result{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 2rem;
     margin-bottom: 100px;
+    flex-wrap: wrap;
 }
 
 /* ========== SECTION 2 ========== */
@@ -35,6 +35,7 @@
     justify-content: center;
     gap: 1rem;
     margin: 0 1rem;
+    flex-wrap: wrap;
 }
 
 

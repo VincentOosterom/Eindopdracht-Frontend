@@ -1,3 +1,5 @@
+/* ========== SIDEBAR ========== */
+
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -66,7 +68,7 @@
 }
 
 
-/*Active link*/
+/* ========== Active link ========== */
 .active-sidebar {
     border-radius: 10px;
     padding: 10px;
@@ -78,7 +80,8 @@
 
 
 
-/*MEDIA QUERIES*/
+/* ========== MEDIA QUERIES ========== */
+
 @media (max-width: 480px) {
     .sidebar {
         max-width: 80px;
@@ -99,7 +102,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-
     }
 
     .nav-sidebar ul li a {
@@ -115,8 +117,6 @@
 
     .nav-sidebar ul li .icon{
         margin: 0 auto;
-
-
     }
 
     .nav-sidebar ul li span{
@@ -128,9 +128,9 @@
     }
 
     .active-sidebar {
-        border-radius: 0;
-        padding: 0;
-        background-color: var(--color-primary);
+        border-radius: 5px;
+        padding: 5px;
+        background-color: var(--color-bg);
     }
 
 

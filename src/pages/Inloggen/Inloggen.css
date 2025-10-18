@@ -1,3 +1,5 @@
+/* ========== LOGIN PAGE ========== */
+
 .login-page{
     background: linear-gradient(0deg, #000 12.02%, #F6AD55 100%);
     display: flex;
@@ -71,6 +73,8 @@
     color: white;
 }
 
+
+/* ========== MEDIA QUERIES ========== */
 @media (max-width: 480px) {
     .login-container{
         max-width: 350px;
