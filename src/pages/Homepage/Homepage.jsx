@@ -49,10 +49,8 @@ function Home() {
                         subtitle="Klanten boeken direct een tijdslot bij jouw diensten. Beheer je agenda eenvoudig via het dashboard en blijf overzicht houden."/>
                 </section>
             </main>
-
             {/*FOOTER COMPONENT*/}
             <Footer/>
-
         </>
     )
 }

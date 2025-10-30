@@ -26,6 +26,7 @@ function CompanyPage() {
                         <p>{company.address}</p>
                     </div>
                 </div>
+                <div className="appointment-content"></div>
             </header>
         </>
 

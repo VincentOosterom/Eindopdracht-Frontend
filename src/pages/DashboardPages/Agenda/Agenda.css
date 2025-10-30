@@ -1,0 +1,101 @@
+.agenda {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
+
+.agenda-container {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin: 20px 20px
+}
+
+.agenda-container h1 {
+    color: var(--color-primary);
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    margin-bottom: 1rem;
+}
+
+
+/* ==== Basis opmaak ==== */
+.fc {
+    font-family: var(--font-body), sans-serif;
+    color: var(--color-black);
+}
+
+/* Toolbar */
+.fc .fc-toolbar {
+    gap: .75rem;
+}
+
+.fc .fc-toolbar-title {
+    font-family: var(--font-heading), sans-serif;
+    font-size: clamp(2rem, 1vw, 1.4rem);
+    letter-spacing: .2px;
+}
+
+.fc .fc-button {
+    border-radius: var(--border-radius-button);
+    border: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .08);
+    transition: transform .06s ease;
+}
+
+.fc .fc-button:active {
+    transform: translateY(1px);
+}
+
+/* Header (dagen) */
+.fc .fc-col-header-cell {
+    border-bottom: var(--border-line);
+}
+
+.fc .fc-col-header-cell-cushion {
+    font-weight: 600;
+    text-decoration: none;
+    padding: .6rem .4rem;
+}
+
+/* Tijdrooster */
+.fc .fc-timegrid-slot {
+    height: 2.8rem; /* slot-hoogte */
+}
+
+.fc .fc-timegrid-slot,
+.fc .fc-timegrid-axis,
+.fc .fc-timegrid-slot-label {
+    border-color: rgba(0, 0, 0, .08);
+}
+
+.fc .fc-timegrid-axis-cushion {
+    font-size: .85rem;
+    color: rgba(0, 0, 0, .6);
+}
+
+/* Events */
+.fc .fc-event {
+    border-radius: 8px;
+    padding: 2px 6px;
+    border: none;
+}
+
+.fc .fc-event .fc-event-time,
+.fc .fc-event .fc-event-title {
+    font-weight: 600;
+}
+
+/* Vandaag highlight subtiel */
+.fc .fc-day-today {
+    background: var(--fc-today-bg-color);
+}
+
+@media (max-width: 640px) {
+    .fc .fc-toolbar-title {
+        font-size: 1.1rem;
+    }
+
+    .fc .fc-button {
+        padding: .35rem .6rem;
+    }
+}

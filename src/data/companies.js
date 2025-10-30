@@ -9,9 +9,7 @@ export const companies = [
         address: "Vondellaan 1, Amsterdam",
         image: logoCompany,
         userEmail: "barber@amsterdam.nl",
-        userPassword: "amsterdam123",
-        nextAppointment: "15:00",
-        appointmentsToday: "4"
+        userPassword: "amsterdam123"
     },
     {
         companyId: "barber-utrecht",
@@ -21,8 +19,6 @@ export const companies = [
         image: logoCompany,
         userEmail: "barber@utrecht.nl",
         userPassword: "utrecht123",
-        nextAppointment: "14:00",
-        appointmentsToday: "10"
     },
     {
         companyId: "salon-rotterdam",

@@ -13,6 +13,7 @@ function Inloggen() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        setLoading(false);
 
         const company = companies.find(
             (c) => c.userEmail === email && c.userPassword === password);
@@ -24,8 +25,6 @@ function Inloggen() {
         } else {
             setError("Verkeerde wachtwoord of e-mailadres")
         }
-
-        setLoading(true)
     }
 
     return (
