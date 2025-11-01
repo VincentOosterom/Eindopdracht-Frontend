@@ -3,6 +3,7 @@ import App from "../../App.jsx";
 import {useState} from "react";
 import Footer from "../Footer/Footer.jsx";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
 
 function RegisterForm() {
     const [name, setName] = useState("");
@@ -16,15 +17,14 @@ function RegisterForm() {
     const navigate = useNavigate();
     const [passwordError, setPasswordError] = useState(false);
 
-
-
-    async function handleSubmit(e) {
-        // Voorkomt refresh
+    async function Register(e) {
         e.preventDefault();
-
-        // Error is nog leeg maar kan iets verwachten
         setError("");
 
+        if (password !== confirmPassword) {
+            setError("Wachtwoorden komen niet overeen");
+            return;
+        }
         // Input niet rood, maar na error wel.
         setPasswordError(false);
 
@@ -34,18 +34,23 @@ function RegisterForm() {
             return;
         }
 
-        // controleert wachtwoorden met elkaar
-        if (password !== confirmPassword) {
-            setError("Wachtwoord komt niet overeen");
-            setPasswordError(true);
-            return;
-        }
-
         // Moeten 1 van deze tekens bevatten.
         if (!passwordRegex.test(password)) {
             setError("Wachtwoord moet minimaal 8 tekens, 1 hoofdletter, 1 cijfer en 1 speciaal teken bevatten");
             setPasswordError(true)
             return;
+        }
+
+        try {
+            const response = await axios.post("NAAR API NOVI", {
+                name, company, email, password, confirmPassword
+            });
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+            setError("Fout opgetreden bij het registeren.");
+        } finally {
+            setLoading(false);
         }
 
         setLoading(true);
@@ -60,7 +65,7 @@ function RegisterForm() {
     return (
         <>
             <section className="register-container">
-                <form onSubmit={handleSubmit} className="register-form">
+                <form onSubmit={Register} className="register-form">
                     <div className="register-form-title">
                         <h2>Maak jouw account aan</h2>
                         <p>Gratis voor 14 dagen, geheel vrijblijvend.</p>
@@ -137,7 +142,6 @@ function RegisterForm() {
                 </form>
 
                 {error && <p className="error-message">{error}</p>}
-                {/*Of loading wordt getoond of error*/}
                 {loading && !error && <p className="loading-message">Registratie verwerken</p>}
             </section>
         </>

@@ -7,7 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
-import {companies} from "../../../data/companies.js";
+import { companies } from "../../../data/companies.js";
 
 
 function Agenda() {
@@ -114,7 +114,6 @@ function Agenda() {
                         events={events}
                         height="80vh"
                         dateClick={handleDateClick}
-
                     />
                 </div>
             </div>

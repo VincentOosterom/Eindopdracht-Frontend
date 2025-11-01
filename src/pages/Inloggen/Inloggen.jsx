@@ -2,6 +2,7 @@ import './Inloggen.css'
 import {useState} from "react";
 import {NavLink, useNavigate,} from "react-router-dom";
 import {companies} from "../../data/companies.js";
+import axios from "axios";
 
 
 function Inloggen() {
@@ -15,15 +16,32 @@ function Inloggen() {
         e.preventDefault();
         setLoading(false);
 
+        try {
+            const response = await axios.post("NOVI API", {email, password});
+
+            const token = response.data.token;
+            const companyId = response.data.companyId;
+
+            localStorage.setItem("token", token);
+            localStorage.setItem("companyId", companyId);
+
+            navigate(`/dashboard/${companyId}`)
+
+        } catch (error) {
+            console.log(error)
+            setError("Verkeerd wachtwoord of e-mailadres", error)
+        } finally {
+            setLoading(false);
+        }
+
         const company = companies.find(
             (c) => c.userEmail === email && c.userPassword === password);
-        setError("");
 
         if (company) {
             setError("")
             navigate(`/dashboard/${company.companyId}`)
         } else {
-            setError("Verkeerde wachtwoord of e-mailadres")
+            setError("Verkeerd wachtwoord of e-mailadres")
         }
     }
 
@@ -52,7 +70,8 @@ function Inloggen() {
                         <button
                             type="submit"
                             className="login-btn"
-                        >Inloggen
+                            disabled={loading}
+                        > Inloggen
                         </button>
                         <div className="forget-password">
                             <NavLink to="/wachtwoord-vergeten">Wachtwoord vergeten</NavLink>

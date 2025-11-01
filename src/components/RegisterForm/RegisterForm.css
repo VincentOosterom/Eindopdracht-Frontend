@@ -47,6 +47,19 @@
     gap: 7px;
 }
 
+.register-form ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    list-style: none;
+}
+
+.register-form ul li {
+    font-size: clamp(0.7rem, 2.5vw, 0.5rem);
+}
+
 .register-form-inputs input {
     border: none;
     height: 55px;

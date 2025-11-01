@@ -1,6 +1,7 @@
 import logoCompany from "/src/assets/logoCompany.jpg";
 
 
+// DUMMY BEDRIJVEN
 export const companies = [
     {
         companyId: "barber-amsterdam",

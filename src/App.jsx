@@ -19,7 +19,7 @@ function App() {
                 <Route path="/inloggen" element={<Inloggen />} />
                 <Route path="/registeren" element={<Register />} />
                 <Route path="/bedrijf/:companyId" element={<CompanyPage />} />
-                <Route path="/dashboard/:companyId/" element={<DashBoard/>} />
+                <Route path="/dashboard/:companyId/" element={<DashBoard />} />
                 <Route path="/dashboard/:companyId/agenda" element={<Agenda/>} />
                 <Route path="/dashboard/:companyId/klanten" element={<Clients/>} />
                 <Route path="/dashboard/:companyId/instellingen" element={<Settings/>} />

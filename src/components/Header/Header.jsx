@@ -1,17 +1,15 @@
 import NavBar from "../NavBar/NavBar.jsx";
 import './Header.css'
 
-
-function Header({query, setQuery}) {
-
+function Header({query, setQuery, title, title2, subTitle}) {
 
     return (
         <header className="app-header">
             <NavBar/>
             <div className="header-content">
-                <h1>Vind en boek lokale </h1>
-                <h1>dienstverleners in één klik.</h1>
-                <p>Van masseurs tot kapper, plan direct een afspraak bij jouw in de buurt.</p>
+                <h1>{title}</h1>
+                <h1>{title2}</h1>
+                <p>{subTitle}</p>
                 <div className="input-field">
                     <input
                         className="input-field-search"

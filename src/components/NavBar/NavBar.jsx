@@ -7,12 +7,6 @@ function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrollY, setScrollY] = useState(0);
     const toggleMenu = () => setIsOpen(!isOpen);
-    const navigate = useNavigate();
-
-    // Als je op logo klikt, terug naar home
-    function toHome() {
-        navigate(`/`)
-    }
 
     // Houd scroll in de gaten, zodra naar beneden, hamburger verdwijnt.
     useEffect(() => {
@@ -30,7 +24,7 @@ function NavBar() {
     return (
         <nav className="navbar">
             <div className="app-logo">
-                <p className="logo" onClick={toHome}> Tijdslot</p>
+                <p className="logo"> Tijdslot</p>
             </div>
             <div className={`hamburger ${scrollY  ? "hidden" : ""}`} onClick={toggleMenu}>
                 ☰

@@ -12,14 +12,17 @@ import {useState} from "react";
 
 function Home() {
     const [query, setQuery] = useState("");
-    const filteredCompanies = query
-        ? companies.filter((c) =>
-            c.title.toLowerCase().includes(query.toLowerCase())) : companies;
+    const filteredCompanies = query ? companies.filter((c) => c.title.toLowerCase().includes(query.toLowerCase())) : companies;
 
     return (
         <>
             {/*HEADER COMPONENT*/}
-            <Header query={query} setQuery={setQuery}/>
+            <Header
+                query={query}
+                setQuery={setQuery}
+                title="Vind en boek lokale"
+                title2="dienstverleners in één klik."
+                subTitle="Van masseurs tot kapper, plan direct een afspraak bij jouw in de buurt."/>
             <main className="main">
 
                 {/*SECTION 2*/}
