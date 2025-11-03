@@ -1,7 +1,7 @@
 import './CompanyPage.css';
 import {useParams} from "react-router-dom";
 import NavBar from "../../../components/Website/NavBar/NavBar.jsx";
-import { companies } from "/src/data/companies.js";
+import { companies } from "/src/dummyData/companies.js";
 
 
 function CompanyPage() {

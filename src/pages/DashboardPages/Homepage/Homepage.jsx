@@ -1,6 +1,6 @@
 import './Homepage.css'
 import Sidebar from "../../../components/Dashboard/Sidebar/Sidebar.jsx";
-import {companies} from "../../../data/companies.js";
+import {companies} from "../../../dummyData/companies.js";
 import {useParams} from "react-router-dom";
 import HeaderDashboard from "../../../components/Dashboard/HeaderDashboard/HeaderDashboard.jsx";
 

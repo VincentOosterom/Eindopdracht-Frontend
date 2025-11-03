@@ -7,7 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
-import { companies } from "../../../data/companies.js";
+import { companies } from "../../../dummyData/companies.js";
 
 
 function Agenda() {

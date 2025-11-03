@@ -1,7 +1,7 @@
 import './Inloggen.css'
 import {useState} from "react";
 import {NavLink, useNavigate,} from "react-router-dom";
-import {companies} from "../../../data/companies.js";
+import {companies} from "../../../dummyData/companies.js";
 import axios from "axios";
 
 
