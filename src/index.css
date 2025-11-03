@@ -77,8 +77,20 @@ input, textarea, select {
 .text-center { text-align: center; }
 
 
+/* ========== DASHBOARD BASIS ========== */
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+}
 
-/* ==== FullCalendar CSS ==== */
+.dashboard-main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+}
+
+/* ==== FullCalendar API CSS ==== */
 :root {
     --fc-page-bg-color: var(--color-bg);
     --fc-neutral-bg-color: var(--color-bg);

@@ -1,38 +1,9 @@
-.dashboard {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-}
-
-
-.dashboard-main {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-}
-
-.dashboard-header-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: var(--color-primary);
-    margin: 20px 20px;
-    padding: 20px 20px;
-    border-radius: 20px;
-}
-
-.dashboard-header-title h2 {
-    color: var(--color-black);
-    font-size: 1.2rem;
-}
-
 .dashboard-content-today {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
     margin: 20px 20px;
-
 }
 
 .dashboard-content-today article {

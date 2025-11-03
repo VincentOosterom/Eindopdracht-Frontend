@@ -1,7 +1,5 @@
 import './RegisterForm.css'
-import App from "../../App.jsx";
 import {useState} from "react";
-import Footer from "../Footer/Footer.jsx";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
@@ -16,6 +14,7 @@ function RegisterForm() {
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
     const navigate = useNavigate();
     const [passwordError, setPasswordError] = useState(false);
+    const [success, setSuccess] = useState(false);
 
     async function Register(e) {
         e.preventDefault();
@@ -41,24 +40,37 @@ function RegisterForm() {
             return;
         }
 
-        try {
-            const response = await axios.post("NAAR API NOVI", {
-                name, company, email, password, confirmPassword
-            });
-            console.log(response);
-        } catch (error) {
-            console.log(error);
-            setError("Fout opgetreden bij het registeren.");
-        } finally {
-            setLoading(false);
-        }
-
         setLoading(true);
+
+        setTimeout(async () => {
+            try {
+                const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/users', {
+                        name,
+                        company,
+                        email,
+                        password,
+                        confirmPassword,
+                    }, {
+                        headers: {
+                            'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
+                        },
+                    }
+                );
+                console.log(response);
+                setSuccess(true);
+            } catch (error) {
+                console.log(error);
+                setError('Fout opgetreden bij het registeren.');
+            } finally {
+                setLoading(false);
+            }
+        }, 5000)
+
+        navigate("/login");
 
         // TEST IN CONSOLE
         const formData = {name, company, email};
         console.log("Nieuwe registratie:", formData);
-        navigate("/dashboard")
         setLoading(false);
     }
 
@@ -77,7 +89,9 @@ function RegisterForm() {
                             name={"firstname"}
                             value={name}
                             placeholder="Voornaam"
-                            onChange={(e) => setName(e.target.value)}/>
+                            onChange={(e) => setName(e.target.value)}
+                            id="firstname"/>
+
 
                         <label htmlFor="company-name"></label>
                         <input
@@ -85,7 +99,8 @@ function RegisterForm() {
                             name={"company-name"}
                             value={company}
                             onChange={(e) => setCompany(e.target.value)}
-                            placeholder="Bedrijfsnaam"/>
+                            placeholder="Bedrijfsnaam"
+                            id="company-name"/>
 
                         <label htmlFor="company-email"></label>
                         <input
@@ -93,7 +108,8 @@ function RegisterForm() {
                             name={"company-email"}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Zakelijk e-mailadres"/>
+                            placeholder="Zakelijk e-mailadres"
+                            id="company-email"/>
 
                         <label htmlFor="company-password"></label>
                         <input
@@ -102,7 +118,8 @@ function RegisterForm() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Uw wachtwoord"
-                            className={`password-input ${passwordError ? "error" : ""}`}/>
+                            className={`password-input ${passwordError ? "error" : ""}`}
+                            id="company-password"/>
 
                         <ul className="password-required">
                             <li>Minimaal 8 tekens</li>
@@ -118,31 +135,38 @@ function RegisterForm() {
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             placeholder="Bevestig uw wachtwoord"
-                            className={`password-input ${passwordError ? "error" : ""}`}/>
+                            className={`password-input ${passwordError ? "error" : ""}`}
+                            id="confirm-password"/>
 
                         <label htmlFor="zipcode"></label>
                         <input
                             type="text"
                             name={"zipcode"}
-                            placeholder="Postcode"/>
+                            placeholder="Postcode"
+                            id="zipcode"/>
 
                         <label htmlFor="city"></label>
                         <input
                             type="text"
                             name={"city"}
-                            placeholder="Plaats"/>
+                            placeholder="Plaats"
+                            id="city"/>
 
                         <label htmlFor="phone-number"></label>
                         <input
                             type="text"
                             name={"phone-number"}
-                            placeholder="Telefoonnummer"/>
+                            placeholder="Telefoonnummer"
+                            id="phone-number"/>
                     </div>
-                    <button type="submit">Registeren</button>
+                    <button
+                        type="submit">
+                        {loading ? "Uw account wordt aangemaakt..." : "Registeren"}
+                    </button>
                 </form>
 
                 {error && <p className="error-message">{error}</p>}
-                {loading && !error && <p className="loading-message">Registratie verwerken</p>}
+                {success && <p className="success-message">Uw account is succesvol aangemaakt!</p>}
             </section>
         </>
     )

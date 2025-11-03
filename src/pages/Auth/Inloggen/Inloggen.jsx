@@ -1,7 +1,7 @@
 import './Inloggen.css'
 import {useState} from "react";
 import {NavLink, useNavigate,} from "react-router-dom";
-import {companies} from "../../data/companies.js";
+import {companies} from "../../../data/companies.js";
 import axios from "axios";
 
 
@@ -17,7 +17,7 @@ function Inloggen() {
         setLoading(false);
 
         try {
-            const response = await axios.post("NOVI API", {email, password});
+            const response = await axios.get("NOVI API", {email, password});
 
             const token = response.data.token;
             const companyId = response.data.companyId;

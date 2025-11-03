@@ -1,10 +1,10 @@
 
 import './index.css'
 import {Route, Routes} from "react-router-dom";
-import Inloggen from "./pages/Inloggen/Inloggen.jsx";
-import Register from "./pages/Registeren/Registeren.jsx";
-import Homepage from "./pages/Homepage/Homepage.jsx";
-import CompanyPage from "./pages/CompanyPage/CompanyPage.jsx";
+import Inloggen from "./pages/Auth/Inloggen/Inloggen.jsx";
+import Register from "./pages/Auth/Registeren/Registeren.jsx";
+import Homepage from "./pages/Website/Homepage/Homepage.jsx";
+import CompanyPage from "./pages/Website/CompanyPage/CompanyPage.jsx";
 import DashBoard from "./pages/DashboardPages/Homepage/Homepage.jsx";
 import Agenda from "./pages/DashboardPages/Agenda/Agenda.jsx";
 import Settings from "./pages/DashboardPages/Instellingen/Settings.jsx";

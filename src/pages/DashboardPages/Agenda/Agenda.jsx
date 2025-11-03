@@ -1,5 +1,5 @@
 import './Agenda.css'
-import Sidebar from "../../../components/Sidebar/Sidebar.jsx";
+import Sidebar from "../../../components/Dashboard/Sidebar/Sidebar.jsx";
 import React, {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router-dom";
 import FullCalendar from "@fullcalendar/react";

@@ -1,11 +1,11 @@
 import './Homepage.css'
-import SearchResultCard from "../../components/SearchCard/SearchResultCard.jsx";
-import HowWorksCard from "../../components/HowWorksCard/HowWorksCard.jsx";
-import plus from "../../assets/plus.svg";
-import global from "../../assets/global.svg";
-import calender from "../../assets/calender.svg";
-import Header from "../../components/Header/Header.jsx";
-import Footer from "../../components/Footer/Footer.jsx";
+import SearchResultCard from "../../../components/Website/SearchCard/SearchResultCard.jsx";
+import HowWorksCard from "../../../components/Website/HowWorksCard/HowWorksCard.jsx";
+import plus from "../../../assets/plus.svg";
+import global from "../../../assets/global.svg";
+import calender from "../../../assets/calender.svg";
+import Header from "../../../components/Website/Header/Header.jsx";
+import Footer from "../../../components/Website/Footer/Footer.jsx";
 import {companies} from "/src/data/companies";
 import {useState} from "react";
 
@@ -13,6 +13,7 @@ import {useState} from "react";
 function Home() {
     const [query, setQuery] = useState("");
     const filteredCompanies = query ? companies.filter((c) => c.title.toLowerCase().includes(query.toLowerCase())) : companies;
+
 
     return (
         <>
@@ -34,7 +35,6 @@ function Home() {
                     ))}
 
                 </section>
-
                 {/*SECTION 2*/}
                 <h2>Hoe werkt het?</h2>
                 <section className="how-it-works">
