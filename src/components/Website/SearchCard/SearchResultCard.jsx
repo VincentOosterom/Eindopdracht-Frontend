@@ -12,7 +12,7 @@ function SearchResultCard({title, description, name, image, address, companyId})
                 <h3>{title}</h3>
                 <p>{description}</p>
                 <p>{address}</p>
-                <Link to={`/bedrijf/${companyId}`}>
+                <Link to={`/boek-nu/${companyId}`}>
                 <button>{name}</button>
                     </Link>
             </div>
