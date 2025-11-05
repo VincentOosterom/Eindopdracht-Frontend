@@ -14,8 +14,9 @@
 
     --color-primary: #F6AD55;
     --color-button: #000000;
-    --color-text: #ffffff;
+    --color-text: #00000;
     --color-bg: #ffffff;
+    --color-white: #ffffff;
     --color-black: #000000;
 
     --border-radius-input: 15px;
@@ -88,6 +89,7 @@ input, textarea, select {
     display: flex;
     flex: 1;
     flex-direction: column;
+    margin: 20px 20px
 }
 
 /* ==== FullCalendar API CSS ==== */

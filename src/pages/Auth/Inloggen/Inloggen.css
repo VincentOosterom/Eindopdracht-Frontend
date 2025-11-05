@@ -31,6 +31,7 @@
 
 .login-container{
     display: flex;
+    position: relative;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -41,6 +42,14 @@
     border-radius: 15px;
     background: rgba(255, 255, 255, 0.01);
     box-shadow: 14px 12px 34.5px 3px #F6AD55;
+}
+
+.icon-back{
+    position: absolute;
+    left: 2rem;
+    top: 2rem;
+    color: white;
+    cursor: pointer;
 }
 
 .login-form{
@@ -71,6 +80,11 @@
 
 .forget-password a{
     color: white;
+    margin: 1rem;
+}
+
+.error-message{
+    color: red;
 }
 
 

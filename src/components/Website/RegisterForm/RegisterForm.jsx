@@ -64,9 +64,8 @@ function RegisterForm() {
             } finally {
                 setLoading(false);
             }
+            navigate("/login");
         }, 5000)
-
-        navigate("/login");
 
         // TEST IN CONSOLE
         const formData = {name, company, email};

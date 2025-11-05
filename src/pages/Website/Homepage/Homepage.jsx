@@ -21,8 +21,7 @@ function Home() {
             <Header
                 query={query}
                 setQuery={setQuery}
-                title="Vind en boek lokale"
-                title2="dienstverleners in één klik."
+                title="Vind en boek lokale dienstverleners in één klik."
                 subTitle="Van masseurs tot kapper, plan direct een afspraak bij jouw in de buurt."/>
             <main className="main">
 

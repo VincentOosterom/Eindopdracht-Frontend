@@ -10,7 +10,10 @@ function Sidebar() {
     const { companyId } = useParams();
 
     function handleLogout() {
-        navigate("/");
+        localStorage.removeItem("token");
+        localStorage.removeItem("companyId");
+        navigate("/inloggen");
+
     }
 
     return (

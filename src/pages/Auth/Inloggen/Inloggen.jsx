@@ -3,6 +3,8 @@ import {useState} from "react";
 import {NavLink, useNavigate,} from "react-router-dom";
 import {companies} from "../../../dummyData/companies.js";
 import axios from "axios";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faLeftLong} from "@fortawesome/free-solid-svg-icons";
 
 
 function Inloggen() {
@@ -12,21 +14,27 @@ function Inloggen() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
+    function handleBack() {
+        navigate('/')
+    }
+
     async function handleSubmit(e) {
         e.preventDefault();
-        setLoading(false);
+        setLoading(true);
 
         try {
-            const response = await axios.get("NOVI API", {email, password});
+            const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/login', {email, password},
+                {
+                headers: {
+                    'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
+                }
+            }, )
 
             const token = response.data.token;
             const companyId = response.data.companyId;
 
             localStorage.setItem("token", token);
             localStorage.setItem("companyId", companyId);
-
-            navigate(`/dashboard/${companyId}`)
-
         } catch (error) {
             console.log(error)
             setError("Verkeerd wachtwoord of e-mailadres", error)
@@ -49,6 +57,9 @@ function Inloggen() {
         <>
             <header className="login-page">
                 <section className="login-container">
+                    <div className="icon-back">
+                        <FontAwesomeIcon icon={faLeftLong} onClick={handleBack} />
+                    </div>
                     <h1>Tijdslot</h1>
                     <div className="login-content">
                         <h2>Welkom Terug</h2>
@@ -78,7 +89,7 @@ function Inloggen() {
                         </div>
                     </form>
 
-                    {error && <p>{error}</p>}
+                    {error && <p className="error-message">{error}</p>}
                     {loading && <p>Bezig met inloggen</p>}
 
                 </section>

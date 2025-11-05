@@ -14,7 +14,14 @@ function Clients() {
                 <Sidebar/>
                 <div className="dashboard-main">
                     <div className="dashboard-header">
-                        <HeaderDashboard title="Klanten van" company={company.title} />
+                        <HeaderDashboard title="Klanten van" company={company.title}/>
+                    </div>
+                    <div className="clients_container">
+                        <div className="clients_content">
+                            <h2>Alle klanten</h2>
+                            <input type="text"
+                                   placeholder="Zoek klant"/>
+                        </div>
                     </div>
                 </div>
             </div>

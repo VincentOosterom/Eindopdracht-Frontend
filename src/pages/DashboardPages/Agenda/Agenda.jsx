@@ -106,7 +106,7 @@ function Agenda() {
                     <FullCalendar
                         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                         initialView="timeGridWeek"
-                        ref={calendarRef} // zorgt ervoor dat Grid naar DAY gaat en geen week
+                        ref={calendarRef} // zorgt ervoor dat Grid naar DAY gaat en geen week op telefoon
                         locale="nl"
                         allDaySlot={false}
                         slotMinTime="08:00:00"

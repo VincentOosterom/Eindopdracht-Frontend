@@ -1,14 +1,13 @@
 import NavBar from "../NavBar/NavBar.jsx";
 import './Header.css'
 
-function Header({query, setQuery, title, title2, subTitle}) {
+function Header({query, setQuery, title, subTitle}) {
 
     return (
         <header className="app-header">
             <NavBar/>
             <div className="header-content">
                 <h1>{title}</h1>
-                <h1>{title2}</h1>
                 <p>{subTitle}</p>
                 <div className="input-field">
                     <input
@@ -37,7 +36,6 @@ function Header({query, setQuery, title, title2, subTitle}) {
                         <option value="noord-brabant">Noord-Brabant</option>
                         <option value="limburg">Limburg</option>
                     </select>
-                    <button className="search-btn">Zoeken</button>
                 </div>
                 <div className="input-field-mobile">
                     <input
@@ -64,7 +62,6 @@ function Header({query, setQuery, title, title2, subTitle}) {
                         <option value="noord-brabant">Noord-Brabant</option>
                         <option value="limburg">Limburg</option>
                     </select>
-                    <button className="search-btn">Zoeken</button>
                 </div>
             </div>
         </header>

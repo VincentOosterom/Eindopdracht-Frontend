@@ -1,0 +1,13 @@
+button {
+    border: none;
+    outline: none;
+    border-radius: var(--border-radius-button);
+    background-color: var(--color-button);
+}
+
+button:hover {
+    background-color: var(--color-primary);
+    border: none;
+    outline: none;
+    border-radius: var(--border-radius-button);
+}
