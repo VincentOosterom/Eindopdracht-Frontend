@@ -1,11 +1,11 @@
 import './Homepage.css'
-import SearchResultCard from "../../../components/Website/SearchCard/SearchResultCard.jsx";
-import HowWorksCard from "../../../components/Website/HowWorksCard/HowWorksCard.jsx";
+import SearchResultCard from "../../../components/website/SearchCard/SearchResultCard.jsx";
+import HowWorksCard from "../../../components/website/HowWorksCard/HowWorksCard.jsx";
 import plus from "../../../assets/plus.svg";
 import global from "../../../assets/global.svg";
 import calender from "../../../assets/calender.svg";
-import Header from "../../../components/Website/Header/Header.jsx";
-import Footer from "../../../components/Website/Footer/Footer.jsx";
+import Header from "../../../components/website/Header/Header.jsx";
+import Footer from "../../../components/website/Footer/Footer.jsx";
 import {companies} from "/src/dummy-data/companies";
 import {useState} from "react";
 

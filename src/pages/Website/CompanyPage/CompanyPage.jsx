@@ -1,6 +1,6 @@
 import './CompanyPage.css';
 import {useParams} from "react-router-dom";
-import NavBar from "../../../components/Website/NavBar/NavBar.jsx";
+import NavBar from "../../../components/website/NavBar/NavBar.jsx";
 import { companies } from "/src/dummy-data/companies.js";
 
 

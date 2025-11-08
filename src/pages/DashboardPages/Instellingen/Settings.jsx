@@ -1,8 +1,8 @@
-import Sidebar from "../../../components/Dashboard/Sidebar/Sidebar.jsx";
+import Sidebar from "../../../components/dashboard/Sidebar/Sidebar.jsx";
 import {useParams} from "react-router-dom";
 import {companies} from "../../../dummy-data/companies.js";
 import './Settings.css'
-import HeaderDashboard from "../../../components/Dashboard/HeaderDashboard/HeaderDashboard.jsx";
+import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
 
 function Settings() {
 

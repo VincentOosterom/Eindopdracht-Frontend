@@ -1,7 +1,7 @@
-import NavBar from "../../../components/Website/NavBar/NavBar.jsx";
+import NavBar from "../../../components/website/NavBar/NavBar.jsx";
 import './Registeren.css'
-import RegisterForm from "../../../components/Website/RegisterForm/RegisterForm.jsx";
-import Footer from "../../../components/Website/Footer/Footer.jsx";
+import RegisterForm from "../../../components/website/RegisterForm/RegisterForm.jsx";
+import Footer from "../../../components/website/Footer/Footer.jsx";
 
 
 function Register() {
