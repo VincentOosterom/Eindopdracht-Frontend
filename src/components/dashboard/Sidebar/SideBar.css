@@ -48,8 +48,8 @@
 }
 
 .nav-sidebar ul li a:hover {
-    border-bottom: 1px solid var(--color-black);
     cursor: pointer;
+
 }
 
 .nav-sidebar ul li .icon {

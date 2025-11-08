@@ -1,7 +1,9 @@
 import NavBar from "../NavBar/NavBar.jsx";
 import './Header.css'
 
+
 function Header({query, setQuery, title, subTitle}) {
+
 
     return (
         <header className="app-header">

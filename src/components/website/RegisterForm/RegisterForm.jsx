@@ -64,7 +64,7 @@ function RegisterForm() {
             } finally {
                 setLoading(false);
             }
-            navigate("/login");
+            navigate("/Inloggen");
         }, 5000)
 
         // TEST IN CONSOLE

@@ -13,7 +13,7 @@
     --font-body: 'Karma', serif;
 
     --color-primary: #F6AD55;
-    --color-button: #ef7904;
+    --color-button: #000000;
     --color-text: #00000;
     --color-bg: #ffffff;
     --color-white: #ffffff;
@@ -46,7 +46,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ========== BUTTONS ========== */
 button {
-    background-color: var(--color-button);
+    background-color: var(--color-black);
     color: #fff;
     border: none;
     border-radius: var(--border-radius-button);
