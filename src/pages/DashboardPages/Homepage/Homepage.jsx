@@ -12,24 +12,33 @@ function Homepage() {
     return (
         <>
             <div className="dashboard">
-                <Sidebar/>
-                <header className="dashboard-main">
-                       <HeaderDashboard title="Welkom terug," company={company.title} />
+                <aside className="dashboard-sidebar">
+                    <Sidebar />
+                </aside>
+
+                <main className="dashboard-main">
+                    <header className="dashboard-header">
+                        <HeaderDashboard title="Welkom terug," company={company.title} />
+                    </header>
+
                     <section className="dashboard-content-today">
                         <article>
                             <h3>Afspraken vandaag</h3>
                             <p>{company.appointmentsToday}</p>
                         </article>
+
                         <article>
                             <h3>Volgende afspraak</h3>
                             <p>{company.nextAppointment}</p>
                         </article>
+
                         <article className="make-appointment">
                             <h3>Afspraak maken</h3>
                         </article>
                     </section>
-                </header>
+                </main>
             </div>
+
         </>
     )
 }

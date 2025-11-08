@@ -1,6 +1,6 @@
-import './HowWorksCard.css'
+import './InfoCard.css'
 
-function HowWorksCard({image, title, subtitle}) {
+function InfoCard({image, title, subtitle}) {
     return (
         <article className="how-work-card">
             <div className="how-work-card-image">
@@ -12,4 +12,4 @@ function HowWorksCard({image, title, subtitle}) {
     )
 }
 
-export default HowWorksCard;
+export default InfoCard;

@@ -7,7 +7,7 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import axios from "axios";
-import { companies } from "../../../dummy-data/companies.js";
+import {companies} from "../../../dummy-data/companies.js";
 
 
 function Agenda() {
@@ -55,6 +55,7 @@ function Agenda() {
                 console.log("Fout bij het ophalen van de afspraken", error);
             }
         }
+
         fetchAppointments();
     }, [companyId]);
 
@@ -99,9 +100,12 @@ function Agenda() {
 
     return (
         <>
-            <div className="agenda">
-                <Sidebar/>
-                <div className="agenda-container">
+            <div className="dashboard">
+                <aside className="dashboard-sidebar">
+                    <Sidebar/>
+                </aside>
+
+                <main className="agenda-container">
                     <h1>Agenda van {company.title}</h1>
                     <FullCalendar
                         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -115,7 +119,7 @@ function Agenda() {
                         height="80vh"
                         dateClick={handleDateClick}
                     />
-                </div>
+                </main>
             </div>
         </>
     )

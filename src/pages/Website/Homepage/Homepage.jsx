@@ -1,6 +1,6 @@
 import './Homepage.css'
-import SearchResultCard from "../../../components/website/SearchCard/SearchResultCard.jsx";
-import HowWorksCard from "../../../components/website/HowWorksCard/HowWorksCard.jsx";
+import SearchResultCard from "../../../components/website/SearchResult/SearchResultCard.jsx";
+import InfoCard from "../../../components/website/InfoCard/InfoCard.jsx";
 import plus from "../../../assets/plus.svg";
 import global from "../../../assets/global.svg";
 import calender from "../../../assets/calender.svg";
@@ -37,15 +37,15 @@ function Home() {
                 {/*SECTION 2*/}
                 <h2>Hoe werkt het?</h2>
                 <section className="how-it-works">
-                    <HowWorksCard
+                    <InfoCard
                         image={plus}
                         title="Meld je aan als bedrijf"
                         subtitle="Registreer jouw bedrijf bij Tijdslot en maak een profiel aan. Voeg je openingstijden, diensten en medewerkers toe."/>
-                    <HowWorksCard
+                    <InfoCard
                         image={global}
                         title="Word zichtbaar voor klanten"
                         subtitle="Zodra je profiel compleet is, kunnen klanten je vinden via zoekfunctie of unieke bedrijfs-URL."/>
-                    <HowWorksCard
+                    <InfoCard
                         image={calender}
                         title="Ontvang en beheer afspraken"
                         subtitle="Klanten boeken direct een tijdslot bij jouw diensten. Beheer je agenda eenvoudig via het dashboard en blijf overzicht houden."/>

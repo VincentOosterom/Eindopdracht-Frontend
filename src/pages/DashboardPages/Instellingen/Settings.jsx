@@ -13,12 +13,15 @@ function Settings() {
     return (
         <>
             <div className="dashboard">
-                <Sidebar/>
-                <div className="dashboard-main">
-                    <div className="dashboard-header">
-                        <HeaderDashboard title="Instellingen" company={company.title} />
-                    </div>
-                </div>
+                <aside className="dashboard-sidebar">
+                    <Sidebar/>
+                </aside>
+                <main className="dashboard-main">
+                    <header className="dashboard-header">
+                        <HeaderDashboard title="Instellingen" company={company.title}/>
+                    </header>
+
+                </main>
             </div>
 
         </>

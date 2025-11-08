@@ -11,11 +11,15 @@ function Clients() {
     return (
         <>
             <div className="dashboard">
-                <Sidebar/>
-                <div className="dashboard-main">
-                    <div className="dashboard-header">
+                <aside className="dashboard-sidebar">
+                    <Sidebar />
+                </aside>
+
+                <main className="dashboard-main">
+                    <header className="dashboard-header">
                         <HeaderDashboard title="Klanten van" company={company.title}/>
-                    </div>
+                    </header>
+
                     <div className="clients_container">
                         <div className="clients_content">
                             <h2>Alle klanten</h2>
@@ -23,7 +27,7 @@ function Clients() {
                                    placeholder="Zoek klant"/>
                         </div>
                     </div>
-                </div>
+                </main>
             </div>
         </>
     )
