@@ -13,7 +13,7 @@
     --font-body: 'Karma', serif;
 
     --color-primary: #F6AD55;
-    --color-button: #000000;
+    --color-button: #ef7904;
     --color-text: #00000;
     --color-bg: #ffffff;
     --color-white: #ffffff;
@@ -100,7 +100,7 @@ input, textarea, select {
     --fc-neutral-bg-color: var(--color-bg);
     --fc-border-color: rgba(0,0,0,.12);
 
-    --fc-button-bg-color: var(--color-button);
+    --fc-button-bg-color: var(--color-bg);
     --fc-button-text-color: var(--color-text);
     --fc-button-border-color: var(--color-button);
     --fc-button-hover-bg-color: var(--color-primary);
