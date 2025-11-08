@@ -1,4 +1,120 @@
-.clients_content {
+.clients-content {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.clients-content input {
+    max-width: 200px;
+}
+
+
+/* ========== TABLE ========== */
+
+.clients-table {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    border: none;
+    box-shadow: none;
+    height: auto;
+    background-color: transparent;
+}
+
+.clients-table thead {
+    display: flex;
+}
+
+
+.clients-table tbody tr {
+    display: block;
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 12px;
+}
+
+.clients-table td {
+    display: flex;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+}
+
+.clients-table td::before {
+    content: attr(data-label); /* label tonen links */
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-right: 8px;
+}
+
+.clients-table td:last-child {
+    border-bottom: none;
+}
+
+
+/* ========== MEDIA ========== */
+
+@media (max-width: 768px) {
+    .clients-table th,
+    .clients-table td {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .clients-table {
+        height: auto;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .clients-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .clients-table {
+        display: flex;
+        flex-direction: column;
+        border: none;
+        box-shadow: none;
+        height: auto;
+        background-color: transparent;
+    }
+
+    .clients-table thead {
+        display: none; /* verberg koprijen */
+    }
+
+    .clients-table tbody tr {
+        display: block;
+        margin-bottom: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        padding: 12px;
+    }
+
+    .clients-table td {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 0.9rem;
+    }
+
+    .clients-table td::before {
+        content: attr(data-label); /* gebruik attribuut als label */
+        font-weight: 600;
+        color: var(--color-primary);
+    }
+
+    .clients-table td:last-child {
+        border-bottom: none;
+    }
 }

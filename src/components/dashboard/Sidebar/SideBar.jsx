@@ -1,17 +1,15 @@
 import {NavLink, useNavigate, useParams} from "react-router-dom";
-import "./Sidebar.css"
+import "./SideBar.css"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHome, faCalendar, faPerson, faGear, faBackwardStep} from '@fortawesome/free-solid-svg-icons';
 
 
 
-function Sidebar() {
+function SideBar() {
     const navigate = useNavigate();
     const { companyId } = useParams();
 
     function handleLogout() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("companyId");
         navigate("/inloggen");
 
     }
@@ -57,4 +55,4 @@ function Sidebar() {
     )
 }
 
-export default Sidebar
+export default SideBar

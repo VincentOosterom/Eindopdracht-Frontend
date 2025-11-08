@@ -1,24 +1,21 @@
 import './Homepage.css'
-import Sidebar from "../../../components/dashboard/Sidebar/Sidebar.jsx";
+import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
 import {companies} from "../../../dummy-data/companies.js";
 import {useParams} from "react-router-dom";
 import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
 
 function Homepage() {
 
-    const { companyId } = useParams();
+    const {companyId} = useParams();
     const company = companies.find((c) => c.companyId === companyId);
 
     return (
         <>
             <div className="dashboard">
-                <aside className="dashboard-sidebar">
-                    <Sidebar />
-                </aside>
-
+                <SideBar/>
                 <main className="dashboard-main">
                     <header className="dashboard-header">
-                        <HeaderDashboard title="Welkom terug," company={company.title} />
+                        <HeaderDashboard title="Welkom terug," company={company.title}/>
                     </header>
 
                     <section className="dashboard-content-today">

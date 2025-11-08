@@ -1,4 +1,4 @@
-import Sidebar from "../../../components/dashboard/Sidebar/Sidebar.jsx";
+import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
 import {useParams} from "react-router-dom";
 import {companies} from "../../../dummy-data/companies.js";
 import './Settings.css'
@@ -13,9 +13,7 @@ function Settings() {
     return (
         <>
             <div className="dashboard">
-                <aside className="dashboard-sidebar">
-                    <Sidebar/>
-                </aside>
+                <SideBar/>
                 <main className="dashboard-main">
                     <header className="dashboard-header">
                         <HeaderDashboard title="Instellingen" company={company.title}/>

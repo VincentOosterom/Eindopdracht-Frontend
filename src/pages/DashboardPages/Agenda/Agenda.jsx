@@ -1,5 +1,5 @@
 import './Agenda.css'
-import Sidebar from "../../../components/dashboard/Sidebar/Sidebar.jsx";
+import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
 import React, {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router-dom";
 import FullCalendar from "@fullcalendar/react";
@@ -101,9 +101,7 @@ function Agenda() {
     return (
         <>
             <div className="dashboard">
-                <aside className="dashboard-sidebar">
-                    <Sidebar/>
-                </aside>
+                <SideBar/>
 
                 <main className="agenda-container">
                     <h1>Agenda van {company.title}</h1>

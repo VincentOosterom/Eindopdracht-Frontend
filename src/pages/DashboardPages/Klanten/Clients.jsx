@@ -1,7 +1,9 @@
-import Sidebar from "../../../components/dashboard/Sidebar/Sidebar.jsx";
+import './Clients.css'
+import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
 import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
 import {useParams} from "react-router-dom";
 import {companies} from "../../../dummy-data/companies.js";
+
 
 function Clients() {
 
@@ -11,22 +13,49 @@ function Clients() {
     return (
         <>
             <div className="dashboard">
-                <aside className="dashboard-sidebar">
-                    <Sidebar />
-                </aside>
+                <SideBar/>
 
                 <main className="dashboard-main">
                     <header className="dashboard-header">
                         <HeaderDashboard title="Klanten van" company={company.title}/>
                     </header>
 
-                    <div className="clients_container">
-                        <div className="clients_content">
+                    <section className="clients-container">
+                        <div className="clients-content">
                             <h2>Alle klanten</h2>
-                            <input type="text"
-                                   placeholder="Zoek klant"/>
+                            <input
+                                type="text"
+                                placeholder="Zoek klant"
+                            />
                         </div>
-                    </div>
+                        <section className="clients-table">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Naam:</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>Jan de Vries</td>
+                                </tr>
+                                <tr>
+                                    <td>Sophie Jansen</td>
+                                </tr>
+                                <tr>
+                                    <td>Sophie Jansen</td>
+                                </tr>
+                                <tr>
+                                    <td>Sophie Jansen</td>
+                                </tr>
+                                <tr>
+                                    <td>Sophie Jansen</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </section>
+                    </section>
                 </main>
             </div>
         </>

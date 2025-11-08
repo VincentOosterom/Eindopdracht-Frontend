@@ -22,9 +22,10 @@ function Home() {
                 query={query}
                 setQuery={setQuery}
                 title="Vind en boek lokale dienstverleners in één klik."
-                subTitle="Van masseurs tot kapper, plan direct een afspraak bij jouw in de buurt."/>
-            <main className="main">
+                subTitle="Van masseurs tot kapper, plan direct een afspraak bij jouw in de buurt."
+            />
 
+            <main className="main">
                 {/*SECTION 2*/}
                 <h2>Zoek resultaten</h2>
                 <section className="search-result">
