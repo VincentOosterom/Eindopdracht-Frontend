@@ -6,7 +6,7 @@ import global from "../../../assets/global.svg";
 import calender from "../../../assets/calender.svg";
 import Header from "../../../components/Website/Header/Header.jsx";
 import Footer from "../../../components/Website/Footer/Footer.jsx";
-import {companies} from "/src/dummyData/companies";
+import {companies} from "/src/dummy-data/companies";
 import {useState} from "react";
 
 

@@ -1,7 +1,7 @@
 import './Inloggen.css'
 import {useState} from "react";
 import {NavLink, useNavigate,} from "react-router-dom";
-import {companies} from "../../../dummyData/companies.js";
+import {companies} from "../../../dummy-data/companies.js";
 import axios from "axios";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLeftLong} from "@fortawesome/free-solid-svg-icons";

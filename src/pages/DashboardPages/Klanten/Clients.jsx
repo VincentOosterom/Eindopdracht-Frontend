@@ -1,7 +1,7 @@
 import Sidebar from "../../../components/Dashboard/Sidebar/Sidebar.jsx";
 import HeaderDashboard from "../../../components/Dashboard/HeaderDashboard/HeaderDashboard.jsx";
 import {useParams} from "react-router-dom";
-import {companies} from "../../../dummyData/companies.js";
+import {companies} from "../../../dummy-data/companies.js";
 
 function Clients() {
 
