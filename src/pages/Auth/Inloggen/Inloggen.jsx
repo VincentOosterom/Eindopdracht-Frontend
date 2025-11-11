@@ -57,8 +57,9 @@ function Inloggen() {
         <>
             <header className="login-page">
                 <section className="login-container">
-                    <div className="icon-back">
-                        <FontAwesomeIcon icon={faLeftLong} onClick={handleBack} />
+                    <div className="icon-back" onClick={handleBack}>
+                        <FontAwesomeIcon icon={faLeftLong}  />
+                        <p>Homepage</p>
                     </div>
                     <h1>Tijdslot</h1>
                     <div className="login-content">

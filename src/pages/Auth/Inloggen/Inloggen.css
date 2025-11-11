@@ -45,6 +45,9 @@
 }
 
 .icon-back{
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
     position: absolute;
     left: 2rem;
     top: 2rem;
