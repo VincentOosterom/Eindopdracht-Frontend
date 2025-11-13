@@ -18,7 +18,7 @@ function Homepage() {
                         <HeaderDashboard title="Welkom terug," company={company.title}/>
                     </header>
 
-                    <section className="dashboard-content-today">
+                    <section className="dashboard-today">
                         <article>
                             <h3>Afspraken vandaag</h3>
                             <p>{company.appointmentsToday}</p>
@@ -32,6 +32,33 @@ function Homepage() {
                         <article className="make-appointment">
                             <h3>Afspraak maken</h3>
                         </article>
+                    </section>
+
+                    <section className="dashboard-quick-agenda">
+                        <h3>Vandaag in één oogopslag</h3>
+                        <table className="today-table">
+                            <tbody>
+                            <tr>
+                                <th>Tijd</th>
+                                <th>Klant</th>
+                                <th>Dienst</th>
+                            </tr>
+                            </tbody>
+                            <tbody>
+                            <tr>
+                                <td>09:00</td>
+                                <td>Karin</td>
+                                <td>Wassen en Knippen</td>
+                            </tr>
+                            </tbody>
+                            <tbody>
+                            <tr>
+                                <td>10:00</td>
+                                <td>Thomas</td>
+                                <td>Knippen & Baard</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </section>
                 </main>
             </div>
