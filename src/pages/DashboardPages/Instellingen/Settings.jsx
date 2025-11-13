@@ -8,6 +8,22 @@ function Settings() {
 
     const {companyId} = useParams();
     const company = companies.find((c) => c.companyId === companyId);
+    const days = [
+        "Maandag",
+        "Dinsdag",
+        "Woensdag",
+        "Donderdag",
+        "Vrijdag",
+        "Zaterdag",
+        "Zondag"
+    ];
+    const services = [
+        "Knippen",
+        "Knippen & Baard",
+        "Wassen, Knippen en Baard"
+    ]
+
+
 
 
     return (
@@ -45,9 +61,51 @@ function Settings() {
                                 <p>Wachtwoord wijzigen</p>
                             </button>
                         </div>
-
                     </section>
+                    <section className="account-schedule">
+                        <article className="account-availabilities">
+                            <h2>Beschikbaarheid</h2>
+                            <form className="availability-form">
+                                {days.map((dayName, index) => (
+                                    <div className="availability-row" key={index}>
+                                        <span className="day-label">{dayName}</span>
 
+                                        <input
+                                            type="time"
+                                            name={`start-${index}`}
+                                            defaultValue="09:00"
+                                        />
+
+                                        <input
+                                            type="time"
+                                            name={`end-${index}`}
+                                            defaultValue="17:00"
+                                        />
+
+                                        <label className="closed-checkbox">
+                                            <input type="checkbox" />
+                                        </label>
+                                    </div>
+                                ))}
+
+                                <button type="submit" className="save-btn"></button>
+                            </form>
+                        </article>
+                        <article className="account-service">
+                            <h2>Diensten</h2>
+                            <form className="service-form">
+                                {services.map((service, index) => (
+                                    <div className="service-row" key={index}>
+                                        <input
+                                            type="text"
+                                            name={service}
+                                            defaultValue={service}/>
+                                    </div>
+                                ))}
+                                <button type="submit" className="save-btn"></button>
+                            </form>
+                        </article>
+                    </section>
                 </main>
             </div>
 

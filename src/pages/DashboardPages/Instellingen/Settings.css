@@ -10,6 +10,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+    margin-bottom: 2.5rem;
 }
 
 .account-label{
@@ -20,4 +21,32 @@
 .account-button{
     margin-top: 1.8rem;
     padding: 0.8rem;
+}
+/* ========== ACCOUNT AVAILABILITIES ========== */
+
+.account-schedule{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+.account-availabilities{
+    display: flex;
+    flex-direction: column;
+    max-width: 40%;
+    width: 100%;
+}
+
+.availability-row input{
+    margin-bottom: 0.5rem;
+}
+
+
+
+
+/* ========== MEDIA QUERIES ========== */
+
+@media (max-width: 480px) {
+    .account-info{
+        flex-direction: column;
+    }
 }
