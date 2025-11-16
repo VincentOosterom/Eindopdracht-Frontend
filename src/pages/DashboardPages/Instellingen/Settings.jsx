@@ -24,8 +24,6 @@ function Settings() {
     ]
 
 
-
-
     return (
         <>
             <div className="dashboard">
@@ -66,32 +64,39 @@ function Settings() {
                         <article className="account-availabilities">
                             <h2>Beschikbaarheid</h2>
                             <form className="availability-form">
-                                {days.map((dayName, index) => (
-                                    <div className="availability-row" key={index}>
-                                        <span className="day-label">{dayName}</span>
+                                <div className="availability-list">
+                                    {days.map((dayName, index) => (
+                                        <div className="availability-row" key={index}>
+                                            <span className="day-label">{dayName}</span>
 
-                                        <input
-                                            type="time"
-                                            name={`start-${index}`}
-                                            defaultValue="09:00"
-                                        />
+                                            <input
+                                                type="time"
+                                                name={`start-${index}`}
+                                                defaultValue="09:00"
+                                            />
 
-                                        <input
-                                            type="time"
-                                            name={`end-${index}`}
-                                            defaultValue="17:00"
-                                        />
+                                            <input
+                                                type="time"
+                                                name={`end-${index}`}
+                                                defaultValue="18:00"
+                                            />
 
-                                        <label className="closed-checkbox">
-                                            <input type="checkbox" />
-                                        </label>
-                                    </div>
-                                ))}
-
-                                <button type="submit" className="save-btn"></button>
+                                            <div className="closed-checkbox">
+                                                <label>
+                                                    Gesloten
+                                                    <input type="checkbox"/>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <button type="submit" className="btn">
+                                    Openingstijden opslaan
+                                </button>
                             </form>
                         </article>
-                        <article className="account-service">
+
+                        <article className="account-availabilities">
                             <h2>Diensten</h2>
                             <form className="service-form">
                                 {services.map((service, index) => (
@@ -102,7 +107,14 @@ function Settings() {
                                             defaultValue={service}/>
                                     </div>
                                 ))}
-                                <button type="submit" className="save-btn"></button>
+                                <div className="service-btns">
+                                    <button type="submit" className="btn">
+                                        Dienst toevoegen
+                                    </button>
+                                    <button type="submit" className="btn">
+                                        Diensten opslaan
+                                    </button>
+                                </div>
                             </form>
                         </article>
                     </section>

@@ -82,8 +82,8 @@ input, textarea, select {
 .dashboard {
     display: flex;
     flex-direction: row;
-    min-height: 100vh; /* was height: 100vh */
-    overflow: visible; /* laat sticky werken */
+    min-height: 100vh;
+    overflow: visible;
 }
 
 .dashboard-main {
@@ -91,7 +91,7 @@ input, textarea, select {
     flex: 1;
     flex-direction: column;
     margin: 20px;
-    overflow-y: auto; /* zodat de main scrollt */
+    overflow-y: auto;
 }
 
 /* ==== FullCalendar API CSS ==== */
