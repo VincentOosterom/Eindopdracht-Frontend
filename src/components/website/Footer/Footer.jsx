@@ -1,5 +1,5 @@
 import './Footer.css'
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom";
 
 function Footer() {
     return (
@@ -13,10 +13,8 @@ function Footer() {
                 <div className="first-colum">
                     <h3>Voor bedrijven</h3>
                     <ul>
-                        <li><NavLink to="/registeren"
-                                     className={({isActive}) => (isActive ? "active" : "")}>Registeren</NavLink></li>
-                        <li><NavLink to="/inloggen"
-                                     className={({isActive}) => (isActive ? "active" : "")}>Inloggen</NavLink></li>
+                        <li><Link to="/registeren">Registeren</Link></li>
+                        <li><Link to="/inloggen">Inloggen</Link></li>
                     </ul>
                 </div>
 
