@@ -4,9 +4,9 @@ function HeaderDashboard({title, company}) {
 
     return (
         <>
-            <div>
+            <header>
                 <h2 className="dashboard-header-title">{title} {company}</h2>
-            </div>
+            </header>
         </>
     )
 }
