@@ -23,18 +23,23 @@ function Inloggen() {
         setLoading(true);
 
         try {
-            const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/login', {email, password},
+            const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/login',
                 {
-                headers: {
-                    'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
-                }
-            }, )
+                    email,
+                    password
+                },
+                {
+                    headers: {
+                        'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
+                    }
+                },)
 
             const token = response.data.token;
             const companyId = response.data.companyId;
 
             localStorage.setItem("token", token);
             localStorage.setItem("companyId", companyId);
+
         } catch (error) {
             console.log(error)
             setError("Verkeerd wachtwoord of e-mailadres", error)
@@ -58,7 +63,7 @@ function Inloggen() {
             <header className="login-page">
                 <section className="login-container">
                     <div className="icon-back" onClick={handleBack}>
-                        <FontAwesomeIcon icon={faLeftLong}  />
+                        <FontAwesomeIcon icon={faLeftLong}/>
                         <p>Homepage</p>
                     </div>
                     <h1>Tijdslot</h1>

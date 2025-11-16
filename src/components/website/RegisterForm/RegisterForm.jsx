@@ -11,164 +11,160 @@ function RegisterForm() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
-    const navigate = useNavigate();
     const [passwordError, setPasswordError] = useState(false);
     const [success, setSuccess] = useState(false);
+
+    const navigate = useNavigate();
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
 
     async function Register(e) {
         e.preventDefault();
         setError("");
 
-        if (password !== confirmPassword) {
-            setError("Wachtwoorden komen niet overeen");
-            return;
-        }
-        // Input niet rood, maar na error wel.
-        setPasswordError(false);
-
-        // Alles moet ingevuld zijn || en en.
         if (!name || !company || !email || !password || !confirmPassword) {
             setError("Let op, alle velden moeten ingevuld zijn.");
             return;
         }
 
-        // Moeten 1 van deze tekens bevatten.
+        if (password !== confirmPassword) {
+            setError("Wachtwoorden komen niet overeen");
+            return;
+        }
+
         if (!passwordRegex.test(password)) {
             setError("Wachtwoord moet minimaal 8 tekens, 1 hoofdletter, 1 cijfer en 1 speciaal teken bevatten");
-            setPasswordError(true)
+            setPasswordError(true);
             return;
         }
 
         setLoading(true);
 
-        setTimeout(async () => {
-            try {
-                const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/users', {
-                        name,
-                        company,
-                        email,
-                        password,
-                        confirmPassword,
-                    }, {
-                        headers: {
-                            'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
-                        },
+        try {
+            // 1. USER REGISTEREN
+            const registerResponse = await axios.post(
+                "https://https://novi-backend-api-wgsgz.ondigitalocean.app/api/users",
+                {
+                    email,
+                    password,
+                    confirmPassword,
+                    firstname: name,
+                    lastname: company,
+                }, {
+                    headers: {
+                        'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
                     }
-                );
-                console.log(response);
-                setSuccess(true);
-            } catch (error) {
-                console.log(error);
-                setError('Fout opgetreden bij het registeren.');
-            } finally {
-                setLoading(false);
-            }
-            navigate("/Inloggen");
-        }, 5000)
+                }
+            );
 
-        // TEST IN CONSOLE
-        const formData = {name, company, email};
-        console.log("Nieuwe registratie:", formData);
-        setLoading(false);
+            const userId = registerResponse.data.userId;
+
+            // 2. PROFIEL AANMAKEN
+            await axios.post(
+                "https://novi-backend-api-wgsgz.ondigitalocean.app/api/profiles",
+                {
+                    userId: userId,
+                    companyName: company,
+                    bio: "",
+                    profileImageUrl: "",
+                },{
+                    headers: {
+                        'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
+                    }
+                }
+            );
+
+            setSuccess(true);
+
+            // 3. Naar inloggen
+            setTimeout(() => navigate("/inloggen"), 1500);
+
+        } catch (err) {
+            console.error(err);
+            setError("Er ging iets mis tijdens het registeren.");
+        } finally {
+            setLoading(false);
+        }
+
+
     }
 
+
     return (
-        <>
-            <section className="register-container">
-                <form onSubmit={Register} className="register-form">
-                    <div className="register-form-title">
-                        <h2>Maak jouw account aan</h2>
-                        <p>Gratis voor 14 dagen, geheel vrijblijvend.</p>
-                    </div>
-                    <div className="register-form-inputs">
-                        <label htmlFor="firstname"></label>
-                        <input
-                            type="text"
-                            name={"firstname"}
-                            value={name}
-                            placeholder="Voornaam"
-                            onChange={(e) => setName(e.target.value)}
-                            id="firstname"/>
+        <section className="register-container">
+            <form onSubmit={Register} className="register-form">
 
+                <div className="register-form-title">
+                    <h2>Maak jouw account aan</h2>
+                    <p>Gratis voor 14 dagen, geheel vrijblijvend.</p>
+                </div>
 
-                        <label htmlFor="company-name"></label>
-                        <input
-                            type="text"
-                            name={"company-name"}
-                            value={company}
-                            onChange={(e) => setCompany(e.target.value)}
-                            placeholder="Bedrijfsnaam"
-                            id="company-name"/>
+                <div className="register-form-inputs">
 
-                        <label htmlFor="company-email"></label>
-                        <input
-                            type="email"
-                            name={"company-email"}
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Zakelijk e-mailadres"
-                            id="company-email"/>
+                    <label htmlFor="firstname">Voornaam</label>
+                    <input
+                        id="firstname"
+                        type="text"
+                        value={name}
+                        placeholder="Voornaam"
+                        onChange={(e) => setName(e.target.value)}
+                    />
 
-                        <label htmlFor="company-password"></label>
-                        <input
-                            type="password"
-                            name={"company-password"}
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Uw wachtwoord"
-                            className={`password-input ${passwordError ? "error" : ""}`}
-                            id="company-password"/>
+                    <label htmlFor="company-name">Bedrijfsnaam</label>
+                    <input
+                        id="company-name"
+                        type="text"
+                        value={company}
+                        placeholder="Bedrijfsnaam"
+                        onChange={(e) => setCompany(e.target.value)}
+                    />
 
-                        <ul className="password-required">
-                            <li>Minimaal 8 tekens</li>
-                            <li>Minstens één hoofdletter</li>
-                            <li>Minstens één cijfer</li>
-                            <li>Minstens één speciaal teken</li>
-                        </ul>
+                    <label htmlFor="company-email">Zakelijk e-mailadres</label>
+                    <input
+                        id="company-email"
+                        type="email"
+                        value={email}
+                        placeholder="Zakelijk e-mailadres"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
 
-                        <label htmlFor="confirm-password"></label>
-                        <input
-                            type="password"
-                            name={"confirm-password"}
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            placeholder="Bevestig uw wachtwoord"
-                            className={`password-input ${passwordError ? "error" : ""}`}
-                            id="confirm-password"/>
+                    <label htmlFor="company-password">Wachtwoord</label>
+                    <input
+                        id="company-password"
+                        type="password"
+                        value={password}
+                        placeholder="Wachtwoord"
+                        className={passwordError ? "error" : ""}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
 
-                        <label htmlFor="zipcode"></label>
-                        <input
-                            type="text"
-                            name={"zipcode"}
-                            placeholder="Postcode"
-                            id="zipcode"/>
+                    <ul className="password-required">
+                        <li>Minimaal 8 tekens</li>
+                        <li>Minstens één hoofdletter</li>
+                        <li>Minstens één cijfer</li>
+                        <li>Minstens één speciaal teken</li>
+                    </ul>
 
-                        <label htmlFor="city"></label>
-                        <input
-                            type="text"
-                            name={"city"}
-                            placeholder="Plaats"
-                            id="city"/>
+                    <label htmlFor="confirm-password">Bevestig wachtwoord</label>
+                    <input
+                        id="confirm-password"
+                        type="password"
+                        value={confirmPassword}
+                        placeholder="Bevestig wachtwoord"
+                        className={passwordError ? "error" : ""}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                </div>
 
-                        <label htmlFor="phone-number"></label>
-                        <input
-                            type="text"
-                            name={"phone-number"}
-                            placeholder="Telefoonnummer"
-                            id="phone-number"/>
-                    </div>
-                    <button
-                        type="submit">
-                        {loading ? "Uw account wordt aangemaakt..." : "Registeren"}
-                    </button>
-                </form>
+                <button type="submit" disabled={loading}>
+                    {loading ? "Uw account wordt aangemaakt..." : "Registreren"}
+                </button>
 
-                {error && <p className="error-message">{error}</p>}
-                {success && <p className="success-message">Uw account is succesvol aangemaakt!</p>}
-            </section>
-        </>
-    )
+            </form>
+
+            {error && <p className="error-message">{error}</p>}
+            {success && <p className="success-message">Uw account is succesvol aangemaakt!</p>}
+        </section>
+    );
 }
 
 export default RegisterForm;
