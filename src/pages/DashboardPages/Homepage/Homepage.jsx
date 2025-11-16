@@ -29,9 +29,9 @@ function Homepage() {
                             <p>{company.nextAppointment}</p>
                         </article>
 
-                        <article className="make-appointment">
-                            <h3>Afspraak maken</h3>
-                        </article>
+                        <button className="button-appointment">
+                            <p>Afspraak maken</p>
+                        </button>
                     </section>
 
                     <section className="dashboard-quick-agenda">
