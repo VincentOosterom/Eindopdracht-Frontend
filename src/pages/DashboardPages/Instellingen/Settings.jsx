@@ -10,6 +10,7 @@ function Settings() {
 
     const {companyId} = useParams();
     const company = companies.find((c) => c.companyId === companyId);
+
     const days = [
         "Maandag",
         "Dinsdag",
@@ -32,7 +33,7 @@ function Settings() {
                 <SideBar/>
                 <main className="dashboard-main">
                     <HeaderDashboard title="Instellingen" company={company.title}/>
-                    <AccountInfo company={company.title}/>
+                    <AccountInfo company={company}/>
                     <AccountSchedule days={days} services={services}/>
                 </main>
             </div>

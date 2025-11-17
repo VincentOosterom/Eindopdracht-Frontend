@@ -1,7 +1,7 @@
 .account-info {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
+    gap: 0.8rem;
 }
 
 .first-colum,
@@ -11,6 +11,12 @@
     flex-direction: column;
     gap: 0.8rem;
     margin-bottom: 2.5rem;
+}
+
+.password-form{
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
 }
 
 .account-label {
@@ -29,3 +35,4 @@
         flex-direction: column;
         gap: 0
     }
+}

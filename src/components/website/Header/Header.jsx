@@ -8,7 +8,7 @@ function Header({query, setQuery, title, subTitle}) {
     return (
         <header className="app-header">
             <NavBar/>
-            <div className="header-content">
+            <section className="header-content">
                 <h1>{title}</h1>
                 <p>{subTitle}</p>
                 <div className="input-field">
@@ -65,7 +65,7 @@ function Header({query, setQuery, title, subTitle}) {
                         <option value="limburg">Limburg</option>
                     </select>
                 </div>
-            </div>
+            </section>
         </header>
     )
 }
