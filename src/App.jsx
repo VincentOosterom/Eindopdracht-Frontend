@@ -8,6 +8,8 @@ import DashBoard from "./pages/DashboardPages/Homepage/Homepage.jsx";
 import Agenda from "./pages/DashboardPages/Agenda/Agenda.jsx";
 import Settings from "./pages/DashboardPages/Instellingen/Settings.jsx";
 import Clients from "./pages/DashboardPages/Klanten/Clients.jsx";
+import NotFound from "./pages/Website/NotFound/NotFound.jsx";
+
 
 function App() {
 
@@ -22,6 +24,7 @@ function App() {
                 <Route path="/dashboard/:companyId/agenda" element={<Agenda/>} />
                 <Route path="/dashboard/:companyId/klanten" element={<Clients/>} />
                 <Route path="/dashboard/:companyId/instellingen" element={<Settings/>} />
+                <Route path="*" element={<NotFound/>} />
             </Routes>
         </>
     )
