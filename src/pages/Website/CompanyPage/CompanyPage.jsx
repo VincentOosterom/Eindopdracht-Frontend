@@ -2,6 +2,7 @@ import './CompanyPage.css';
 import {useParams} from "react-router-dom";
 import NavBar from "../../../components/website/NavBar/NavBar.jsx";
 import { companies } from "/src/dummy-data/companies.js";
+import AppointmentForm from "../../../components/appointment_form/AppointmentForm.jsx";
 
 
 function CompanyPage() {
@@ -26,7 +27,9 @@ function CompanyPage() {
                         <p>{company.address}</p>
                     </div>
                 </div>
-                <div className="appointment-content"></div>
+                <div className="appointment-content">
+                    <AppointmentForm/>
+                </div>
             </header>
         </>
 
