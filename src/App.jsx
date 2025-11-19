@@ -19,11 +19,11 @@ function App() {
                 <Route path="/" element={<Homepage />} />
                 <Route path="/inloggen" element={<Inloggen />} />
                 <Route path="/registeren" element={<Register />} />
-                <Route path="/boek-nu/:companyId" element={<CompanyPage />} />
-                <Route path="/dashboard/:companyId/" element={<DashBoard />} />
-                <Route path="/dashboard/:companyId/agenda" element={<Agenda/>} />
-                <Route path="/dashboard/:companyId/klanten" element={<Clients/>} />
-                <Route path="/dashboard/:companyId/instellingen" element={<Settings/>} />
+                <Route path="/boek-nu/:userId" element={<CompanyPage />} />
+                <Route path="/dashboard/:userId/" element={<DashBoard />} />
+                <Route path="/dashboard/:userId/agenda" element={<Agenda/>} />
+                <Route path="/dashboard/:userId/klanten" element={<Clients/>} />
+                <Route path="/dashboard/:userId/instellingen" element={<Settings/>} />
                 <Route path="*" element={<NotFound/>} />
             </Routes>
         </>

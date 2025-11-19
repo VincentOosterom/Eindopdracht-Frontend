@@ -1,7 +1,6 @@
 import './Inloggen.css'
 import {useState} from "react";
 import {NavLink, useNavigate,} from "react-router-dom";
-import {companies} from "../../../dummy-data/companies.js";
 import axios from "axios";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLeftLong} from "@fortawesome/free-solid-svg-icons";
@@ -10,7 +9,7 @@ import {faLeftLong} from "@fortawesome/free-solid-svg-icons";
 function Inloggen() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [error, setError] = useState('')
+    const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -26,35 +25,29 @@ function Inloggen() {
             const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/login',
                 {
                     email,
-                    password
+                    password,
                 },
                 {
                     headers: {
-                        'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
+                            'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
                     }
                 },)
 
+            console.log(response)
+
             const token = response.data.token;
-            const companyId = response.data.companyId;
+            const companyId = response.data.userId;
 
             localStorage.setItem("token", token);
             localStorage.setItem("companyId", companyId);
 
+            navigate(`/dashboard/${companyId}`);
+
         } catch (error) {
             console.log(error)
-            setError("Verkeerd wachtwoord of e-mailadres", error)
+            setError("Verkeerd wachtwoord of e-mailadres")
         } finally {
             setLoading(false);
-        }
-
-        const company = companies.find(
-            (c) => c.userEmail === email && c.userPassword === password);
-
-        if (company) {
-            setError("")
-            navigate(`/dashboard/${company.companyId}`)
-        } else {
-            setError("Verkeerd wachtwoord of e-mailadres")
         }
     }
 
