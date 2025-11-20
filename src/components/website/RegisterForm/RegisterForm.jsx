@@ -49,7 +49,9 @@ function RegisterForm() {
                     confirmPassword,
                     firstname: name,
                     lastname: company,
-                    role: "admin"
+                    roles: [
+                        "admin"
+                    ]
                 },
                 {
                     headers: {

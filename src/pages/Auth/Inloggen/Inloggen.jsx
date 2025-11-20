@@ -4,6 +4,7 @@ import {NavLink, useNavigate,} from "react-router-dom";
 import axios from "axios";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLeftLong} from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "../../../context/AuthContext";
 
 
 function Inloggen() {
@@ -12,9 +13,15 @@ function Inloggen() {
     const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     function handleBack() {
         navigate('/')
+    }
+
+    function decodeJwt(token) {
+        const payload = token.split(".")[1];
+        return JSON.parse(atob(payload));
     }
 
     async function handleSubmit(e) {
@@ -36,12 +43,15 @@ function Inloggen() {
             console.log(response)
 
             const token = response.data.token;
-            const companyId = response.data.userId;
+            const decoded = decodeJwt(token);
+            const userId = decoded.userId;
 
-            localStorage.setItem("token", token);
-            localStorage.setItem("companyId", companyId);
+            login({
+                token: token,
+                userId: userId,
+            });
 
-            navigate(`/dashboard/${companyId}`);
+            navigate(`/dashboard/${userId}`);
 
         } catch (error) {
             console.log(error)

@@ -1,97 +1,149 @@
-import './Homepage.css'
+import "./Homepage.css";
+import { useEffect, useState } from "react";
 import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
-import {companies} from "../../../dummy-data/companies.js";
-import {useNavigate, useParams} from "react-router-dom";
 import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
+import { useNavigate, useParams } from "react-router-dom";
+import api from "../../../api/api.js";
+import { useAuth } from "../../../context/AuthContext.jsx";
+import { convertToISO, isToday } from "../../../helpers/date.js";
 
 
 function Homepage() {
-
-    const {companyId} = useParams();
-    const company = companies.find((c) => c.companyId === companyId);
+    const { companyId } = useParams();
     const navigate = useNavigate();
+    const { user } = useAuth();
+
+    // STATES
+    const [profile, setProfile] = useState(null);
+    const [appointmentsToday, setAppointmentsToday] = useState([]);
+    const [appointments, setAppointments] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    // === FETCH DASHBOARD DATA ===
+    useEffect(() => {
+        async function loadDashboard() {
+            try {
+                // 1. PROFIEL (bedrijfnaam etc)
+                const profileRes = await api.get(`/profiles/${user.userId}`);
+                setProfile(profileRes.data);
+
+                // 2. APPOINTMENTS
+                const appointmentRes = await api.get(`/appointments?userId=${user.userId}`);
+                const allAppointments = appointmentRes.data;
+                setAppointments(allAppointments);
+
+                // Vandaag filteren
+                const today = new Date().toISOString().split("T")[0];
+                const todayList = allAppointments.filter(a => isToday(a.date));
+                setAppointmentsToday(todayList);
+
+            } catch (error) {
+                console.error("Fout bij ophalen dashboard data:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadDashboard();
+    }, [user.userId]);
 
     function handleGoToAgenda() {
         navigate(`/dashboard/${companyId}/agenda`);
     }
-    
+
+    if (loading) return <p>Dashboard laden...</p>;
 
     return (
-        <>
-            <div className="dashboard">
-                <SideBar/>
-                <main className="dashboard-main">
-                    <HeaderDashboard title="Welkom terug," company={company.title}/>
+        <div className="dashboard">
+            <SideBar />
+            <main className="dashboard-main">
 
+                {/* HEADER */}
+                <HeaderDashboard
+                    title="Welkom terug,"
+                    company={profile?.companyName ?? "Jouw bedrijf"}
+                />
 
-                    <section className="dashboard-today">
-                        <article>
-                            <h3>Afspraken vandaag</h3>
-                            <p>{company.appointmentsToday}</p>
-                        </article>
+                {/* SECTION: Vandaag */}
+                <section className="dashboard-today">
+                    <article>
+                        <h3>Afspraken vandaag</h3>
+                        <p>{appointmentsToday.length}</p>
+                    </article>
 
-                        <article>
-                            <h3>Volgende afspraak</h3>
-                            <p>{company.nextAppointment}</p>
-                        </article>
+                    <article>
+                        <h3>Volgende afspraak</h3>
+                        <p>
+                            {appointmentsToday.length > 0
+                                ? `${appointmentsToday[0].time} - ${appointmentsToday[0].clientName}`
+                                : "Geen afspraken gepland"}
+                        </p>
+                    </article>
 
-                        <button type="button" className="button-appointment">Afspraak maken</button>
+                    <button className="button-appointment">
+                        Nieuwe afspraak
+                    </button>
+                </section>
+
+                {/* SECTION: Quick look */}
+                <section className="quick-look-section">
+
+                    {/* Vandaag agenda */}
+                    <section className="dashboard-quick-agenda">
+                        <h3>Vandaag in één oogopslag</h3>
+
+                        <table className="today-table">
+                            <thead>
+                            <tr>
+                                <th>Tijd</th>
+                                <th>Klant</th>
+                                <th>Dienst</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {appointmentsToday.length > 0 ? (
+                                appointmentsToday.map((appt) => (
+                                    <tr key={appt.id}>
+                                        <td>{appt.time}</td>
+                                        <td>{appt.clientName}</td>
+                                        <td>{appt.serviceId}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="3">Geen afspraken</td>
+                                </tr>
+                            )}
+                            </tbody>
+                        </table>
+
+                        <button onClick={handleGoToAgenda}>
+                            Bekijk volledige agenda
+                        </button>
                     </section>
 
-                    <section className="quick-look-section">
+                    {/* Weekoverzicht (placeholder tot je weekberekening maakt) */}
+                    <article className="dashboard-quick-this-week">
+                        <h3>Weekoverzicht</h3>
 
-                        <section className="dashboard-quick-agenda">
-                            <h3>Vandaag in één oogopslag</h3>
+                        <ul className="stats-list">
+                            <li>
+                                <p>Afspraken deze week</p>
+                                <strong>{appointments.length}</strong>
+                            </li>
+                            <li>
+                                <p>Totale omzet</p>
+                                <strong>€0</strong>
+                                {/* omzet komt als jij services koppelt */}
+                            </li>
+                        </ul>
+                    </article>
+                </section>
 
-                            <table className="today-table">
-                                <thead>
-                                <tr>
-                                    <th>Tijd</th>
-                                    <th>Klant</th>
-                                    <th>Dienst</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>09:00</td>
-                                    <td>Karin</td>
-                                    <td>Wassen en Knippen</td>
-                                </tr>
-                                <tr>
-                                    <td>10:00</td>
-                                    <td>Thomas</td>
-                                    <td>Knippen & Baard</td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-                            <button type="button" onClick={handleGoToAgenda}>
-                                Bekijk volledige agenda
-                            </button>
-                        </section>
-
-                        <article className="dashboard-quick-this-week">
-                            <h3>Weekoverzicht</h3>
-
-                            <ul className="stats-list">
-                                <li>
-                                    <p>Afspraken deze week</p>
-                                    <strong>{company.appointmentsThisWeek}</strong>
-                                </li>
-                                <li>
-                                    <p>Totale omzet</p>
-                                    <strong>€{company.revenuesThisWeek}</strong>
-                                </li>
-                            </ul>
-                        </article>
-
-                    </section>
-
-                </main>
-            </div>
-
-        </>
-    )
+            </main>
+        </div>
+    );
 }
 
 export default Homepage;

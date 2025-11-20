@@ -1,35 +1,32 @@
-import './Agenda.css'
+import './Agenda.css';
 import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
-import React, {useEffect, useRef, useState} from "react";
-import {useParams} from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from '@fullcalendar/daygrid'
+import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import axios from "axios";
-import {companies} from "../../../dummy-data/companies.js";
+import api from "../../../api/api.js";
+import { useAuth } from "../../../context/AuthContext.jsx";
+import { convertToISO } from "../../../helpers/date.js";
+import { calculateEndTime } from "../../../helpers/time.js";
 
 
 function Agenda() {
-    const {companyId} = useParams();
+    const { user } = useAuth();
     const [events, setEvents] = useState([]);
-    const company = companies.find(company => company.title === company.title);
     const [calendarView, setCalendarView] = useState("timeGridWeek");
     const calendarRef = useRef(null);
 
+    // 📌 Resizing (week naar day)
     useEffect(() => {
         function handleResize() {
-            if (window.innerWidth <= 768) {
-                setCalendarView("timeGridDay");
-            } else {
-                setCalendarView("timeGridWeek");
-            }
+            setCalendarView(window.innerWidth <= 768 ? "timeGridDay" : "timeGridWeek");
         }
 
         handleResize();
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, [])
+    }, []);
 
     useEffect(() => {
         const calendarApi = calendarRef.current?.getApi();
@@ -38,89 +35,89 @@ function Agenda() {
         }
     }, [calendarView]);
 
-
-    // Dit haalt de afspraken op via de axios.get.
+    // 📌 Afspraak laden uit NOVI API
     useEffect(() => {
         async function fetchAppointments() {
             try {
-                const res = await axios.get(`https://api.tijdslot.nl/companies/${companyId}/appointments`, {})
+                const res = await api.get(`/appointments?userId=${user.userId}`);
 
-                const formattedEvents = res.data.map((appointment) => ({
-                    title: appointment.clientName,
-                    start: `${appointment.date}T${appointment.time}`,
-                    end: `${appointment.date}T${calculateEndTime(appointment.time, 30)}`, // 30 min default duur
+                const formatted = res.data.map(appt => ({
+                    id: appt.id,
+                    title: appt.clientName,
+                    start: `${convertToISO(appt.date)}T${appt.time}`,
+                    end: `${convertToISO(appt.date)}T${calculateEndTime(appt.time, 30)}`,
                 }));
-                setEvents(formattedEvents);
-            } catch (error) {
-                console.log("Fout bij het ophalen van de afspraken", error);
+
+                setEvents(formatted);
+            } catch (err) {
+                console.log("Fout bij ophalen afspraken:", err);
             }
         }
 
         fetchAppointments();
-    }, [companyId]);
+    }, [user.userId]);
 
-    // Functie om eindtijd te berekenen
-    function calculateEndTime(startTime, durationMinutes) {
-        const [hours, minutes] = startTime.split(":").map(Number);
-        const date = new Date();
-        date.setHours(hours)
-        date.setMinutes(minutes + durationMinutes);
-        return date.toTimeString().slice(0, 5);
-    }
 
-    // Als je op een datum klikt, komt er een alert voor een nieuwe afspraak
+
+    // 📌 Nieuwe afspraak toevoegen
     const handleDateClick = async (info) => {
-        const confirmNew = window.confirm(`Nieuwe afspraak op ${info.dateStr}`
-        );
+        const confirmNew = window.confirm(`Nieuwe afspraak op: ${info.dateStr}?`);
         if (!confirmNew) return;
 
-        const naam = prompt("Naam klant")
-        const email = prompt("E-mail klant")
+        const clientName = prompt("Naam klant:");
+        const clientEmail = prompt("Email klant:");
+
+        const [date, time] = info.dateStr.split("T");
 
         try {
-            await axios.post(`https://api.tijdslot.nl/companies/${companyId}/appointments`, {
-                clientName: naam,
-                clientEmail: email,
-                date: info.dateStr.split("T")[0],
-                time: info.dateStr.split("T")[1].slice(0, 5)
+            // POST i.p.v. GET
+            await api.post(`/appointments`, {
+                userId: user.userId,
+                clientName,
+                clientEmail,
+                date,
+                time
             });
-            alert("Afspraak toegevoegd");
 
-            //     Herladen van afspraken na een nieuwe
-            const response = await axios.get(`https://api.tijdslot.nl/companies/${companyId}/appointments`, {})
-            setEvents(response.data.map((appointment) => ({
-                title: appointment.clientName,
-                start: `${appointment.date}T${appointment.time}`,
-                end: `${appointment.date}T${appointment.time}`,
-            })))
-        } catch (error) {
-            console.log("Fout bij het maken van deze afspraak", error);
+            alert("Afspraak toegevoegd!");
+
+            // Reload afspraken
+            const res = await api.get(`/appointments?userId=${user.userId}`);
+            const formatted = res.data.map(appt => ({
+                title: appt.clientName,
+                start: `${appt.date}T${appt.time}`,
+                end: `${appt.date}T${appt.time}`,
+            }));
+
+            setEvents(formatted);
+
+        } catch (err) {
+            console.log("Fout bij toevoegen afspraak:", err);
         }
-    }
+    };
 
     return (
-        <>
-            <div className="dashboard">
-                <SideBar/>
+        <div className="dashboard">
+            <SideBar />
 
-                <main className="agenda-container">
-                    <h1>Agenda van {company.title}</h1>
-                    <FullCalendar
-                        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                        initialView="timeGridWeek"
-                        ref={calendarRef} // zorgt ervoor dat Grid naar DAY gaat en geen week op telefoon
-                        locale="nl"
-                        allDaySlot={false}
-                        slotMinTime="08:00:00"
-                        slotMaxTime="18:00:00"
-                        events={events}
-                        height="80vh"
-                        dateClick={handleDateClick}
-                    />
-                </main>
-            </div>
-        </>
-    )
+            <main className="agenda-container">
+                <h1>Agenda van bedrijf #{user.userId}</h1>
+
+                <FullCalendar
+                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                    initialView="timeGridWeek"
+                    ref={calendarRef}
+                    locale="nl"
+                    allDaySlot={false}
+                    slotMinTime="08:00:00"
+                    slotMaxTime="18:00:00"
+                    height="80vh"
+                    events={events}
+                    dateClick={handleDateClick}
+                />
+            </main>
+        </div>
+    );
 }
 
 export default Agenda;
