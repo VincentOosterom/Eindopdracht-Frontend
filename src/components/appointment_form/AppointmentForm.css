@@ -1,0 +1,19 @@
+.appointment-form {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 500px;
+    margin: auto;
+
+}
+
+.appointment-form h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.appointment-form label {
+    margin-bottom: 1rem;
+}

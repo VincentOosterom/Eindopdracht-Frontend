@@ -14,6 +14,7 @@ function Homepage() {
     function handleGoToAgenda() {
         navigate(`/dashboard/${companyId}/agenda`);
     }
+    
 
     return (
         <>

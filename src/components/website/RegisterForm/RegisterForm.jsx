@@ -42,51 +42,70 @@ function RegisterForm() {
         try {
             // 1. USER REGISTEREN
             const registerResponse = await axios.post(
-                "https://https://novi-backend-api-wgsgz.ondigitalocean.app/api/users",
+                "https://novi-backend-api-wgsgz.ondigitalocean.app/api/users",
                 {
                     email,
                     password,
                     confirmPassword,
                     firstname: name,
                     lastname: company,
-                }, {
+                    role: "admin"
+                },
+                {
                     headers: {
                         'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
                     }
                 }
             );
 
+            // userId ophalen
             const userId = registerResponse.data.userId;
 
-            // 2. PROFIEL AANMAKEN
+            // 2. LOGIN OM TOKEN TE KRIJGEN
+            const loginResponse = await axios.post(
+                "https://novi-backend-api-wgsgz.ondigitalocean.app/api/login",
+                {
+                    email,
+                    password
+                },
+                {
+                    headers: {
+                        'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
+                    }
+                }
+            );
+
+            const token = loginResponse.data.token;
+
+            // 3. PROFIEL AANMAKEN MET TOKEN
             await axios.post(
                 "https://novi-backend-api-wgsgz.ondigitalocean.app/api/profiles",
                 {
                     userId: userId,
                     companyName: company,
                     bio: "",
-                    profileImageUrl: "",
-                },{
+                    profileImageUrl: ""
+                },
+                {
                     headers: {
-                        'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
+                        'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e',
+                        'Authorization': `Bearer ${token}`
                     }
                 }
             );
 
+            // 4. SUCCES MELDING + NAVIGATE
             setSuccess(true);
-
-            // 3. Naar inloggen
             setTimeout(() => navigate("/inloggen"), 1500);
 
         } catch (err) {
             console.error(err);
-            setError("Er ging iets mis tijdens het registeren.");
+            setError("Er ging iets mis tijdens het registreren.");
         } finally {
             setLoading(false);
         }
-
-
     }
+
 
 
     return (

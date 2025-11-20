@@ -47,6 +47,10 @@
     gap: 7px;
 }
 
+.register-form-inputs label {
+    display: none;
+}
+
 .register-form ul{
     display: flex;
     flex-direction: row;
