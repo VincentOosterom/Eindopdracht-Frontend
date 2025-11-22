@@ -4,18 +4,22 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
 function RegisterForm() {
-    const [name, setName] = useState("");
-    const [company, setCompany] = useState("");
+    const [name, setName] = useState(""); // voornaam
+    const [company, setCompany] = useState(""); // bedrĳfsnaam
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
-    const [success, setSuccess] = useState(false);
+    const [success, setSuccess] = useState("");
 
     const navigate = useNavigate();
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+
+    function decodeJwt(token) {
+        const payload = token.split(".")[1];
+        return JSON.parse(atob(payload));
+    }
 
     async function Register(e) {
         e.preventDefault();
@@ -33,69 +37,77 @@ function RegisterForm() {
 
         if (!passwordRegex.test(password)) {
             setError("Wachtwoord moet minimaal 8 tekens, 1 hoofdletter, 1 cijfer en 1 speciaal teken bevatten");
-            setPasswordError(true);
             return;
         }
 
         setLoading(true);
 
         try {
-            // 1. USER REGISTEREN
-            const registerResponse = await axios.post(
+            // 1. USER AANMAKEN
+            const userRes = await axios.post(
                 "https://novi-backend-api-wgsgz.ondigitalocean.app/api/users",
                 {
                     email,
                     password,
-                    confirmPassword,
                     firstname: name,
-                    lastname: company,
-                    role: "admin"
+                    lastname: "",
+                    roles: ["admin"],
+                    companyId: null
                 },
                 {
                     headers: {
-                        'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
+                        "novi-education-project-id": "d6200c4d-2a0a-435d-aba6-6171c6a7296e"
                     }
                 }
             );
 
-            // userId ophalen
-            const userId = registerResponse.data.userId;
+            console.log(userRes.data);
 
-            // 2. LOGIN OM TOKEN TE KRIJGEN
-            const loginResponse = await axios.post(
+            // 2. DIRECT INLOGGEN
+            const loginRes = await axios.post(
                 "https://novi-backend-api-wgsgz.ondigitalocean.app/api/login",
-                {
-                    email,
-                    password
-                },
+                { email, password },
                 {
                     headers: {
-                        'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
+                        "novi-education-project-id": "d6200c4d-2a0a-435d-aba6-6171c6a7296e"
                     }
                 }
             );
 
-            const token = loginResponse.data.token;
+            const token = loginRes.data.token;
+            const decoded = decodeJwt(token);
+            const userId = (decoded.userId);
 
-            // 3. PROFIEL AANMAKEN MET TOKEN
-            await axios.post(
-                "https://novi-backend-api-wgsgz.ondigitalocean.app/api/profiles",
+            // Auth headers voor alles daarna
+            const authHeaders = {
+                "novi-education-project-id": "d6200c4d-2a0a-435d-aba6-6171c6a7296e",
+                "Authorization": `Bearer ${token}`
+            };
+
+            // 3. COMPANY AANMAKEN
+            const companyRes = await axios.post(
+                "https://novi-backend-api-wgsgz.ondigitalocean.app/api/companies",
                 {
-                    userId: userId,
-                    companyName: company,
+                    ownerUserId: Number(userId),
+                    name: company,
                     bio: "",
                     profileImageUrl: ""
+
                 },
-                {
-                    headers: {
-                        'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e',
-                        'Authorization': `Bearer ${token}`
-                    }
-                }
+                { headers: authHeaders }
             );
 
-            // 4. SUCCES MELDING + NAVIGATE
-            setSuccess(true);
+            const createdCompanyId = companyRes.data.id;
+
+            // 4. USER KOPPELEN AAN COMPANY
+            await axios.patch(
+                `https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/${userId}`,
+                { companyId: createdCompanyId },
+                { headers: authHeaders }
+            );
+
+            // 5. SUCCES
+            setLoading(true);
             setTimeout(() => navigate("/inloggen"), 1500);
 
         } catch (err) {
@@ -105,7 +117,6 @@ function RegisterForm() {
             setLoading(false);
         }
     }
-
 
 
     return (
@@ -152,7 +163,7 @@ function RegisterForm() {
                         type="password"
                         value={password}
                         placeholder="Wachtwoord"
-                        className={passwordError ? "error" : ""}
+                        className={error ? "error" : ""}
                         onChange={(e) => setPassword(e.target.value)}
                     />
 
@@ -169,7 +180,7 @@ function RegisterForm() {
                         type="password"
                         value={confirmPassword}
                         placeholder="Bevestig wachtwoord"
-                        className={passwordError ? "error" : ""}
+                        className={error ? "error" : ""}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                 </div>
@@ -181,7 +192,6 @@ function RegisterForm() {
             </form>
 
             {error && <p className="error-message">{error}</p>}
-            {success && <p className="success-message">Uw account is succesvol aangemaakt!</p>}
         </section>
     );
 }
