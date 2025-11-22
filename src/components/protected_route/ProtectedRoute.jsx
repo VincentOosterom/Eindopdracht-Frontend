@@ -5,20 +5,21 @@ export default function ProtectedRoute({ children }) {
     const { user } = useAuth();
     const { companyId } = useParams();
 
-    // FIX: Als user nog aan het laden is, render niks
-    if (user === null) {
+    // 1. AuthContext is nog aan het laden
+    if (user === undefined) {
         return <p>Loading...</p>;
     }
 
-    // Niet ingelogd
-    if (!user.userId) {
+    // 2. Niet ingelogd
+    if (!user || !user.companyId) {
         return <Navigate to="/inloggen" replace />;
     }
 
-    // Verkeerde gebruiker
-    if (String(companyId) !== String(user.userId)) {
-        return <Navigate to={`/dashboard/${user.userId}`} replace />;
+    // 3. Proberen dashboard van ander bedrijf te openen
+    if (companyId && String(companyId) !== String(user.companyId)) {
+        return <Navigate to={`/dashboard/${user.companyId}`} replace />;
     }
 
+    // 4. Toegang OK
     return children;
 }

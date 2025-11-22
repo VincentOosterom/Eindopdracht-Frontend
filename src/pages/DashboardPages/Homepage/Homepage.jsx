@@ -5,53 +5,58 @@ import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/Heade
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../../api/api.js";
 import { useAuth } from "../../../context/AuthContext.jsx";
-import { convertToISO, isToday } from "../../../helpers/date.js";
+import { convertToISO } from "../../../helpers/date.js"; // pad evt. a
 
 
 function Homepage() {
     const { companyId } = useParams();
     const navigate = useNavigate();
-    const { user } = useAuth();
 
-    // STATES
-    const [profile, setProfile] = useState(null);
-    const [appointmentsToday, setAppointmentsToday] = useState([]);
+    const [company, setCompany] = useState(null);
     const [appointments, setAppointments] = useState([]);
+    const [appointmentsToday, setAppointmentsToday] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // === FETCH DASHBOARD DATA ===
     useEffect(() => {
         async function loadDashboard() {
             try {
-                // 1. PROFIEL (bedrijfnaam etc)
-                const profileRes = await api.get(`/profiles/${user.userId}`);
-                setProfile(profileRes.data);
+                // 1. Company ophalen
+                const companyRes = await api.get(`/companies/${companyId}`);
+                setCompany(companyRes.data);
 
-                // 2. APPOINTMENTS
-                const appointmentRes = await api.get(`/appointments?userId=${user.userId}`);
-                const allAppointments = appointmentRes.data;
+                // 2. Afspraken ophalen voor dit bedrijf
+                const apptRes = await api.get(
+                    `/appointments?companyId=${companyId}`
+                );
+                const allAppointments = apptRes.data;
                 setAppointments(allAppointments);
 
-                // Vandaag filteren
-                const today = new Date().toISOString().split("T")[0];
-                const todayList = allAppointments.filter(a => isToday(a.date));
-                setAppointmentsToday(todayList);
+                // 3. Vandaag filteren (API geeft dd-mm-yyyy)
+                const todayIso = new Date().toISOString().split("T")[0];
 
-            } catch (error) {
-                console.error("Fout bij ophalen dashboard data:", error);
+                const todayList = allAppointments.filter(
+                    (appt) => convertToISO(appt.date) === todayIso
+                );
+
+                setAppointmentsToday(todayList);
+            } catch (err) {
+                console.error("Fout bij ophalen dashboard data:", err);
             } finally {
                 setLoading(false);
             }
         }
 
         loadDashboard();
-    }, [user.userId]);
+    }, [companyId]);
 
     function handleGoToAgenda() {
         navigate(`/dashboard/${companyId}/agenda`);
     }
 
     if (loading) return <p>Dashboard laden...</p>;
+    if (!company) return <p>Bedrijf niet gevonden.</p>;
+
+    const nextAppointment = appointmentsToday[0];
 
     return (
         <div className="dashboard">
@@ -61,7 +66,7 @@ function Homepage() {
                 {/* HEADER */}
                 <HeaderDashboard
                     title="Welkom terug,"
-                    company={profile?.companyName ?? "Jouw bedrijf"}
+                    company={company.name ?? ""}
                 />
 
                 {/* SECTION: Vandaag */}
@@ -75,7 +80,7 @@ function Homepage() {
                         <h3>Volgende afspraak</h3>
                         <p>
                             {appointmentsToday.length > 0
-                                ? `${appointmentsToday[0].time} - ${appointmentsToday[0].clientName}`
+                                ? `${nextAppointment.time} - ${nextAppointment.clientName}`
                                 : "Geen afspraken gepland"}
                         </p>
                     </article>

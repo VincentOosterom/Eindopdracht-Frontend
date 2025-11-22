@@ -6,21 +6,24 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import api from "../../../api/api.js";
-import { useAuth } from "../../../context/AuthContext.jsx";
 import { convertToISO } from "../../../helpers/date.js";
 import { calculateEndTime } from "../../../helpers/time.js";
+import {useParams} from "react-router-dom";
 
 
 function Agenda() {
-    const { user } = useAuth();
+    const { companyId } = useParams();
     const [events, setEvents] = useState([]);
     const [calendarView, setCalendarView] = useState("timeGridWeek");
     const calendarRef = useRef(null);
 
-    // 📌 Resizing (week naar day)
     useEffect(() => {
         function handleResize() {
-            setCalendarView(window.innerWidth <= 768 ? "timeGridDay" : "timeGridWeek");
+            if (window.innerWidth <= 768) {
+                setCalendarView("timeGridDay");
+            } else {
+                setCalendarView("timeGridWeek");
+            }
         }
 
         handleResize();
@@ -35,73 +38,91 @@ function Agenda() {
         }
     }, [calendarView]);
 
-    // 📌 Afspraak laden uit NOVI API
+    // Afspraken ophalen
     useEffect(() => {
         async function fetchAppointments() {
             try {
-                const res = await api.get(`/appointments?userId=${user.userId}`);
+                const res = await api.get(
+                    `/appointments?companyId=${companyId}`
+                );
 
-                const formatted = res.data.map(appt => ({
-                    id: appt.id,
-                    title: appt.clientName,
-                    start: `${convertToISO(appt.date)}T${appt.time}`,
-                    end: `${convertToISO(appt.date)}T${calculateEndTime(appt.time, 30)}`,
+                const formattedEvents = res.data.map((appointment) => ({
+                    id: appointment.id,
+                    title: appointment.clientName,
+                    start: `${convertToISO(appointment.date)}T${
+                        appointment.time
+                    }`,
+                    end: `${convertToISO(appointment.date)}T${calculateEndTime(
+                        appointment.time,
+                        30
+                    )}`, // 30 min default
                 }));
 
-                setEvents(formatted);
-            } catch (err) {
-                console.log("Fout bij ophalen afspraken:", err);
+                setEvents(formattedEvents);
+            } catch (error) {
+                console.log(
+                    "Fout bij het ophalen van de afspraken",
+                    error
+                );
             }
         }
 
         fetchAppointments();
-    }, [user.userId]);
+    }, [companyId]);
 
-
-
-    // 📌 Nieuwe afspraak toevoegen
+    // Nieuwe afspraak maken
     const handleDateClick = async (info) => {
-        const confirmNew = window.confirm(`Nieuwe afspraak op: ${info.dateStr}?`);
+        const confirmNew = window.confirm(
+            `Nieuwe afspraak op ${info.dateStr}?`
+        );
         if (!confirmNew) return;
 
         const clientName = prompt("Naam klant:");
-        const clientEmail = prompt("Email klant:");
+        const clientEmail = prompt("E-mail klant:");
 
-        const [date, time] = info.dateStr.split("T");
+        if (!clientName || !clientEmail) return;
+
+        const [isoDate, time] = info.dateStr.split("T");
+        // isoDate = YYYY-MM-DD, maar jouw backend verwacht dd-mm-yyyy
+        const [year, month, day] = isoDate.split("-");
+        const backendDate = `${day}-${month}-${year}`;
 
         try {
-            // POST i.p.v. GET
             await api.post(`/appointments`, {
-                userId: user.userId,
+                companyId: Number(companyId),
                 clientName,
                 clientEmail,
-                date,
-                time
+                serviceId: 1, // TODO: koppelen aan echte service
+                date: backendDate,
+                time: time.slice(0, 5),
             });
 
-            alert("Afspraak toegevoegd!");
-
-            // Reload afspraken
-            const res = await api.get(`/appointments?userId=${user.userId}`);
-            const formatted = res.data.map(appt => ({
-                title: appt.clientName,
-                start: `${appt.date}T${appt.time}`,
-                end: `${appt.date}T${appt.time}`,
+            // Na toevoegen opnieuw laden:
+            const res = await api.get(
+                `/appointments?companyId=${companyId}`
+            );
+            const formatted = res.data.map((appointment) => ({
+                id: appointment.id,
+                title: appointment.clientName,
+                start: `${convertToISO(appointment.date)}T${
+                    appointment.time
+                }`,
+                end: `${convertToISO(appointment.date)}T${calculateEndTime(
+                    appointment.time,
+                    30
+                )}`,
             }));
-
             setEvents(formatted);
-
-        } catch (err) {
-            console.log("Fout bij toevoegen afspraak:", err);
+        } catch (error) {
+            console.log("Fout bij het maken van deze afspraak", error);
         }
     };
-
     return (
         <div className="dashboard">
             <SideBar />
 
             <main className="agenda-container">
-                <h1>Agenda van bedrijf #{user.userId}</h1>
+                <h1>Agenda van bedrijf</h1>
 
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}

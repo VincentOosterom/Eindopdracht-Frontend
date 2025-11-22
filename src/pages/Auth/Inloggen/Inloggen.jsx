@@ -7,59 +7,81 @@ import {faLeftLong} from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../../context/AuthContext";
 
 
+function decodeJwt(token) {
+    const payload = token.split(".")[1];
+    return JSON.parse(atob(payload));
+}
+
 function Inloggen() {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [error, setError] = useState(false)
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const { login } = useAuth();
 
-    function handleBack() {
-        navigate('/')
-    }
-
-    function decodeJwt(token) {
-        const payload = token.split(".")[1];
-        return JSON.parse(atob(payload));
+    function handleBack(){
+        navigate("/");
     }
 
     async function handleSubmit(e) {
         e.preventDefault();
         setLoading(true);
+        setError("");
 
         try {
-            const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/login',
-                {
-                    email,
-                    password,
-                },
+            // 1. Inloggen bij NOVI API
+            const response = await axios.post(
+                "https://novi-backend-api-wgsgz.ondigitalocean.app/api/login",
+                { email, password },
                 {
                     headers: {
-                            'novi-education-project-id': 'd6200c4d-2a0a-435d-aba6-6171c6a7296e'
-                    }
-                },)
-
-            console.log(response)
+                        "novi-education-project-id":
+                            "d6200c4d-2a0a-435d-aba6-6171c6a7296e",
+                    },
+                }
+            );
 
             const token = response.data.token;
+
             const decoded = decodeJwt(token);
             const userId = decoded.userId;
 
+
+            const userRes = await axios.get(
+                `https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/${userId}`,
+                {
+                    headers: {
+                        "novi-education-project-id":
+                            "d6200c4d-2a0a-435d-aba6-6171c6a7296e",
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+
+            const companyId = userRes.data.companyId ?? userId;
+            const roles = userRes.data.roles;
+
+            // 4. Opslaan in AuthContext + localStorage
             login({
-                token: token,
-                userId: userId,
+                token,
+                userId,
+                companyId,
+                roles,
             });
 
-            navigate(`/dashboard/${userId}`);
-
-        } catch (error) {
-            console.log(error)
-            setError("Verkeerd wachtwoord of e-mailadres")
+            // 5. Door naar dashboard van dat bedrijf
+            navigate(`/dashboard/${companyId}`);
+            console.log("companyId =", companyId);
+            console.log("FULL USER DATA", userRes.data);
+        } catch (err) {
+            console.error(err);
+            setError("Verkeerd e-mailadres of wachtwoord.");
         } finally {
             setLoading(false);
         }
     }
+
 
     return (
         <>

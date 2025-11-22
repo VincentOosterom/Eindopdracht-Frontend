@@ -1,17 +1,23 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-    const [user, setUser] = useState(null);
+    // undefined = aan het laden, null = niet ingelogd, object = ingelogd
+    const [user, setUser] = useState(undefined);
 
     useEffect(() => {
         const stored = localStorage.getItem("user");
         if (stored) {
-            const parsed = JSON.parse(stored);
-            if (parsed.token && parsed.userId) {
+            try {
+                const parsed = JSON.parse(stored);
                 setUser(parsed);
+            } catch (e) {
+                console.error("Kon user niet parsen uit localStorage", e);
+                setUser(null);
             }
+        } else {
+            setUser(null);
         }
     }, []);
 
