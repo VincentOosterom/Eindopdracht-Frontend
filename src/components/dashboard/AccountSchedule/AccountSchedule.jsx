@@ -167,11 +167,7 @@ function AccountSchedule({ days, services, companyId }) {
         } catch (error) {
             console.log(error);
             alert("Kon de dienst niet verwijderen, probeer het opnieuw")
-
         }
-
-
-
     }
 
     async function handleServiceSubmit(e) {
@@ -282,31 +278,25 @@ function AccountSchedule({ days, services, companyId }) {
                                 }
                             />
                             <input
-                                type="number"
-                                value={service.duration}
-                                min="5"
-                                onChange={(e) =>
-                                    handleServiceChange(
-                                        index,
-                                        "duration",
-                                        Number(e.target.value)
-                                    )
-                                }
-                                placeholder="Duur (min.)"
+                                type="text"
+                                value={`${service.duration} min`}
+                                onChange={(e) => {
+                                    const numeric = e.target.value.replace(/[^0-9]/g, '');
+                                    const numberValue = parseInt(numeric) || 0;
+
+                                    handleServiceChange(index, "duration", numberValue);
+                                }}
                             />
                             <input
-                                type="number"
-                                value={service.price}
-                                min="0"
-                                step="0.01"
-                                onChange={(e) =>
-                                    handleServiceChange(
-                                        index,
-                                        "price",
-                                        Number(e.target.value)
-                                    )
-                                }
-                                placeholder="Prijs (€)"
+                                type="text"
+                                value={`€${service.price}`}
+                                onChange={(e) => {
+                                    const numeric = e.target.value.replace(/[^0-9.,]/g, '');
+
+                                    const numberValue = parseFloat(numeric.replace(',', '.')) || 0;
+
+                                    handleServiceChange(index, "price", numberValue);
+                                }}
                             />
 
                             <button

@@ -4,7 +4,6 @@ import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
 import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../../api/api.js";
-import { useAuth } from "../../../context/AuthContext.jsx";
 import { convertToISO } from "../../../helpers/date.js"; // pad evt. a
 
 

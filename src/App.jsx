@@ -9,7 +9,7 @@ import Agenda from "./pages/DashboardPages/Agenda/Agenda.jsx";
 import Settings from "./pages/DashboardPages/Instellingen/Settings.jsx";
 import Clients from "./pages/DashboardPages/Klanten/Clients.jsx";
 import NotFound from "./pages/Website/NotFound/NotFound.jsx";
-import ProtectedRoute from "./components/protected_route/ProtectedRoute.jsx";
+import ProtectedRoute from "./components/routes/protected_route/ProtectedRoute.jsx";
 
 
 function App() {
