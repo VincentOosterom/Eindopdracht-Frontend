@@ -1,66 +1,338 @@
-import './AccountSchedule.css'
+import { useState, useEffect } from "react";
+import api from "../../../api/api";
+import "./AccountSchedule.css";
 
-function AccountSchedule({days, services}) {
+function AccountSchedule({ days, services, companyId }) {
+    const [availabilities, setAvailabilities] = useState([]);
+    const [serviceList, setServiceList] = useState([]);
+    const [savingAvail, setSavingAvail] = useState(false);
+    const [savingServices, setSavingServices] = useState(false);
+
+    const [succes, setSucces] = useState(false);
+
+    const DAY_ORDER = [
+        "Maandag",
+        "Dinsdag",
+        "Woensdag",
+        "Donderdag",
+        "Vrijdag",
+        "Zaterdag",
+        "Zondag",
+    ];
+
+    useEffect(() => {
+        // ----- AVAILABILITIES LADEN -----
+        const dayMap = {};
+
+        if (Array.isArray(days)) {
+            days.forEach((d) => {
+                dayMap[d.dayOfWeek] = {
+                    id: d.id,
+                    dayOfWeek: d.dayOfWeek,
+                    startTime: d.startTime || "09:00",
+                    endTime: d.endTime || "18:00",
+                    closed: false, // record bestaat = open
+                };
+            });
+        }
+
+        const mergedDays = DAY_ORDER.map((day) => {
+            if (dayMap[day]) {
+                return dayMap[day];
+            }
+            // geen record in API = gesloten
+            return {
+                id: null,
+                dayOfWeek: day,
+                startTime: "09:00",
+                endTime: "18:00",
+                closed: true,
+            };
+        });
+
+        setAvailabilities(mergedDays);
+
+        // ----- SERVICES LADEN -----
+        if (Array.isArray(services)) {
+            setServiceList(
+                services.map((s) => ({
+                    id: s.id,
+                    name: s.name,
+                    duration: s.duration,
+                    price: s.price,
+                }))
+            );
+        }
+    }, [days, services]);
+
+    // ====== AVAILABILITY HANDLERS ======
+    function handleAvailabilityChange(index, field, value) {
+        setAvailabilities((prev) =>
+            prev.map((item, i) =>
+                i === index ? { ...item, [field]: value } : item
+            )
+        );
+    }
+
+    function handleClosedToggle(index, checked) {
+        setAvailabilities((prev) =>
+            prev.map((item, i) =>
+                i === index
+                    ? {
+                        ...item,
+                        closed: checked,
+                        // tijden zijn niet zo belangrijk als hij gesloten is
+                    }
+                    : item
+            )
+        );
+    }
+
+    async function handleAvailabilitySubmit(e) {
+        e.preventDefault();
+        setSavingAvail(true);
+        setSucces(false);
+
+        try {
+            for (const a of availabilities) {
+
+                if (a.closed) {
+                    if (a.id != null) {
+                        await api.delete(`/availabilities/${a.id}`);
+                    }
+                    continue;
+                }
+
+                if (a.id == null) {
+                    await api.post("/availabilities", {
+                        companyId: Number(companyId),
+                        dayOfWeek: a.dayOfWeek,
+                        startTime: a.startTime || "09:00",
+                        endTime: a.endTime || "18:00",
+                    });
+                } else {
+                    await api.patch(`/availabilities/${a.id}`, {
+                        companyId: Number(companyId),
+                        dayOfWeek: a.dayOfWeek,
+                        startTime: a.closed ? "" : a.startTime,
+                        endTime: a.closed ? "" : a.endTime,
+                    });
+                }
+            }
+
+            alert("Openingstijden opgeslagen!");
+        } catch (err) {
+            console.error("Fout bij opslaan openingstijden:", err);
+            alert("Er ging iets mis tijdens het opslaan.");
+        } finally {
+            setSavingAvail(false);
+        }
+    }
+
+    // ====== SERVICES HANDLERS (mag gewoon blijven zoals is) ======
+    function handleServiceChange(index, field, value) {
+        setServiceList((prev) =>
+            prev.map((item, i) =>
+                i === index ? { ...item, [field]: value } : item
+            )
+        );
+    }
+
+    function handleAddService() {
+        setServiceList((prev) => [
+            ...prev,
+            {
+                id: null,
+                name: "",
+                duration: "",
+                price: "",
+            },
+        ]);
+    }
+
+    async function handleDeleteService(serivceId,  index){
+
+        if (serivceId == null) {
+            setServiceList((prev) => prev.filter((_, i) => i !== index));
+            return
+        }
+
+        const confirmDelete = window.confirm("Weet je zeker dat je deze dienst wilt verwijderen?")
+        if (!confirmDelete) return;
+
+        try {
+            await api.delete(`/services/${serivceId}`);
+            setServiceList((prev) => prev.filter((_, i) => i !== index));
+            setSucces(true)
+        } catch (error) {
+            console.log(error);
+            alert("Kon de dienst niet verwijderen, probeer het opnieuw")
+
+        }
+
+
+
+    }
+
+    async function handleServiceSubmit(e) {
+        e.preventDefault();
+        setSavingServices(true);
+
+        try {
+            for (const s of serviceList) {
+                if (!s.name) continue;
+
+                if (s.id == null) {
+                    await api.post("/services", {
+                        companyId: Number(companyId),
+                        name: s.name,
+                        duration: s.duration,
+                        price: s.price,
+                    });
+                } else {
+                    await api.patch(`/services/${s.id}`, {
+                        companyId: Number(companyId),
+                        name: s.name,
+                        duration: s.duration,
+                        price: s.price,
+                    });
+                }
+            }
+            alert("Diensten opgeslagen!");
+        } catch (err) {
+            console.error("Fout bij opslaan diensten:", err);
+            alert("Er ging iets mis tijdens het opslaan.");
+        } finally {
+            setSavingServices(false);
+        }
+    }
+
     return (
         <section className="account-schedule">
+            {/* OPENINGSTIJDEN */}
             <article className="account-availabilities">
-                <h2>Beschikbaarheid</h2>
-                <form className="availability-form">
+                <h2>Openingstijden</h2>
+                <form className="availability-form" onSubmit={handleAvailabilitySubmit}>
                     <div className="availability-list">
-                        {days.map((dayName, index) => (
-                            <div className="availability-row" key={index}>
-                                <span className="day-label">{dayName}</span>
+                        {availabilities.map((day, index) => (
+                            <div className="availability-row" key={day.dayOfWeek}>
+                                <span className="day-label">{day.dayOfWeek}</span>
 
                                 <input
                                     type="time"
-                                    name={`start-${index}`}
-                                    defaultValue="09:00"
+                                    value={day.startTime}
+                                    disabled={day.closed}
+                                    onChange={(e) =>
+                                        handleAvailabilityChange(
+                                            index,
+                                            "startTime",
+                                            e.target.value
+                                        )
+                                    }
                                 />
 
                                 <input
                                     type="time"
-                                    name={`end-${index}`}
-                                    defaultValue="18:00"
+                                    value={day.endTime}
+                                    disabled={day.closed}
+                                    onChange={(e) =>
+                                        handleAvailabilityChange(
+                                            index,
+                                            "endTime",
+                                            e.target.value
+                                        )
+                                    }
                                 />
 
-                                <div className="closed-checkbox">
-                                    <label>
-                                        Gesloten
-                                        <input type="checkbox"/>
-                                    </label>
-                                </div>
+                                <label className="closed-checkbox">
+                                    Gesloten
+                                    <input
+                                        type="checkbox"
+                                        checked={day.closed}
+                                        onChange={(e) =>
+                                            handleClosedToggle(
+                                                index,
+                                                e.target.checked
+                                            )
+                                        }
+                                    />
+                                </label>
                             </div>
                         ))}
                     </div>
-                    <button type="submit" className="btn">
-                        Openingstijden opslaan
+
+                    <button type="submit" className="btn" disabled={savingAvail}>
+                        {savingAvail ? "Opslaan..." : "Openingstijden opslaan"}
                     </button>
                 </form>
             </article>
 
+            {/* DIENSTEN */}
             <article className="account-availabilities">
                 <h2>Diensten</h2>
-                <form className="service-form">
-                    {services.map((service, index) => (
-                        <div className="service-row" key={index}>
+                <form className="service-form" onSubmit={handleServiceSubmit}>
+                    {serviceList.map((service, index) => (
+                        <div className="service-row" key={service.id ?? index}>
                             <input
                                 type="text"
-                                name={service}
-                                defaultValue={service}/>
+                                value={service.name}
+                                placeholder="Naam dienst"
+                                onChange={(e) =>
+                                    handleServiceChange(index, "name", e.target.value)
+                                }
+                            />
+                            <input
+                                type="number"
+                                value={service.duration}
+                                min="5"
+                                onChange={(e) =>
+                                    handleServiceChange(
+                                        index,
+                                        "duration",
+                                        Number(e.target.value)
+                                    )
+                                }
+                                placeholder="Duur (min.)"
+                            />
+                            <input
+                                type="number"
+                                value={service.price}
+                                min="0"
+                                step="0.01"
+                                onChange={(e) =>
+                                    handleServiceChange(
+                                        index,
+                                        "price",
+                                        Number(e.target.value)
+                                    )
+                                }
+                                placeholder="Prijs (€)"
+                            />
+
+                            <button
+                                type="button"
+                                className="delete-btn"
+                                onClick={() => handleDeleteService(service.id, index)}
+                            >
+                                🗑️
+                            </button>
                         </div>
                     ))}
-                    <div className="service-btns">
-                        <button type="submit" className="btn">
+
+                    {succes && <p>Uw diensten zijn bijgewerkt</p>}
+
+                    <div className="services-btn">
+                        <button type="button" className="btn" onClick={handleAddService}>
                             Dienst toevoegen
                         </button>
-                        <button type="submit" className="btn">
-                            Diensten opslaan
+                        <button type="submit" className="btn" disabled={savingServices}>
+                            {savingServices ? "Opslaan..." : "Diensten opslaan"}
                         </button>
                     </div>
                 </form>
             </article>
         </section>
-    )
+    );
 }
 
-export default AccountSchedule
+export default AccountSchedule;
