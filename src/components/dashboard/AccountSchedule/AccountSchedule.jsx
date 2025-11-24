@@ -8,6 +8,8 @@ function AccountSchedule({ days, services, companyId }) {
     const [savingAvail, setSavingAvail] = useState(false);
     const [savingServices, setSavingServices] = useState(false);
 
+    const [succes, setSucces] = useState(false);
+
     const DAY_ORDER = [
         "Maandag",
         "Dinsdag",
@@ -89,10 +91,11 @@ function AccountSchedule({ days, services, companyId }) {
     async function handleAvailabilitySubmit(e) {
         e.preventDefault();
         setSavingAvail(true);
+        setSucces(false);
 
         try {
             for (const a of availabilities) {
-                // GESLOTEN → record verwijderen als hij bestaat
+
                 if (a.closed) {
                     if (a.id != null) {
                         await api.delete(`/availabilities/${a.id}`);
@@ -100,7 +103,6 @@ function AccountSchedule({ days, services, companyId }) {
                     continue;
                 }
 
-                // OPEN → POST of PATCH
                 if (a.id == null) {
                     await api.post("/availabilities", {
                         companyId: Number(companyId),
@@ -146,6 +148,30 @@ function AccountSchedule({ days, services, companyId }) {
                 price: "",
             },
         ]);
+    }
+
+    async function handleDeleteService(serivceId,  index){
+
+        if (serivceId == null) {
+            setServiceList((prev) => prev.filter((_, i) => i !== index));
+            return
+        }
+
+        const confirmDelete = window.confirm("Weet je zeker dat je deze dienst wilt verwijderen?")
+        if (!confirmDelete) return;
+
+        try {
+            await api.delete(`/services/${serivceId}`);
+            setServiceList((prev) => prev.filter((_, i) => i !== index));
+            setSucces(true)
+        } catch (error) {
+            console.log(error);
+            alert("Kon de dienst niet verwijderen, probeer het opnieuw")
+
+        }
+
+
+
     }
 
     async function handleServiceSubmit(e) {
@@ -282,10 +308,20 @@ function AccountSchedule({ days, services, companyId }) {
                                 }
                                 placeholder="Prijs (€)"
                             />
+
+                            <button
+                                type="button"
+                                className="delete-btn"
+                                onClick={() => handleDeleteService(service.id, index)}
+                            >
+                                🗑️
+                            </button>
                         </div>
                     ))}
 
-                    <div className="service-btns">
+                    {succes && <p>Uw diensten zijn bijgewerkt</p>}
+
+                    <div className="services-btn">
                         <button type="button" className="btn" onClick={handleAddService}>
                             Dienst toevoegen
                         </button>
