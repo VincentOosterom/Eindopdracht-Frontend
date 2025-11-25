@@ -4,17 +4,25 @@ import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/Heade
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import api from "../../../api/api.js";
+import AddClientForm from "../../../components/dashboard/AddClientForm/AddClientForm.jsx";
+
 
 function Clients() {
-    const { companyId } = useParams();
+    const {companyId} = useParams();
     const [clients, setClients] = useState([]);
-    const [company , setCompany] = useState([]);
+    const [company, setCompany] = useState([]);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [showForm, setShowForm] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(false);
 
     // STATE: zoekterm input
     const [searchClient, setSearchClient] = useState("");
 
+    // FILTER: filter klanten op zoekterm
+    const filteredClients = clients.filter((client) =>
+        client.name.toLowerCase().includes(searchClient.toLowerCase())
+    );
 
     // API CALL: haal alle klanten op
     useEffect(() => {
@@ -41,12 +49,32 @@ function Clients() {
     if (loading) return <p>Klanten worden geladen</p>;
     if (!company) return <p>Bedrijf niet gevonden.</p>;
 
+    function handleClientAdded(newClient) {
+        setClients((prev) => [...prev, newClient]);
+        setShowForm(false);
+    }
 
+    async function handleDeleteClient(clientId) {
+        if (!clientId) return;
 
-    // FILTER: filter klanten op zoekterm
-    const filteredClients = clients.filter((client) =>
-        client.name.toLowerCase().includes(searchClient.toLowerCase())
-    );
+        const confirmDelete = window.confirm(
+            "Weet je zeker dat je deze klant wilt verwijderen?"
+        );
+        if (!confirmDelete) return;
+
+        try {
+            await api.delete(`/clients/${clientId}`);
+
+            // Verwijder lokaal
+            setClients((prev) => prev.filter((c) => c.id !== clientId));
+
+            setSuccessMessage(true);
+
+        } catch (err) {
+            console.error("Fout bij verwijderen klant:", err);
+            alert("Kon de klant niet verwijderen.");
+        }
+    }
 
 
     return (
@@ -61,12 +89,31 @@ function Clients() {
                     <div className="clients-content">
                         <h2>Alle klanten</h2>
 
-                        <input
-                            type="text"
-                            placeholder="Zoek klant..."
-                            value={searchClient}
-                            onChange={(e) => setSearchClient(e.target.value)}
-                        />
+                        <div className="search_add">
+                            <input
+                                type="text"
+                                placeholder="Zoek klant..."
+                                value={searchClient}
+                                onChange={(e) => setSearchClient(e.target.value)}
+                            />
+                            <button className="btn"
+                                    onClick={() => setShowForm(true)}>
+                                + Klant toevoegen
+                            </button>
+                        </div>
+
+                        {showForm && (
+                            <div className="modal-overlay">
+                                <div className="modal-content">
+                                    <AddClientForm
+                                        companyId={companyId}
+                                        onClientAdded={handleClientAdded}
+                                        onCancel={() => setShowForm(false)}
+                                    />
+                                </div>
+                            </div>
+                        )}
+
                     </div>
 
                     <section className="clients-table">
@@ -78,6 +125,9 @@ function Clients() {
                                         <td>Klantnummer : {client.id}</td>
                                         <td>Voornaam : {client.name}</td>
                                         <td>E-mailadres : {client.email}</td>
+                                        <td onClick={() => handleDeleteClient(client.id)} className="client-delete">
+                                            🗑️ Klant verwijderen
+                                        </td>
                                     </tr>
                                 ))
                             ) : (
@@ -86,8 +136,9 @@ function Clients() {
                                 </tr>
                             )}
                             </tbody>
-                            {error && <p>Er is een fout opgetreden</p>}
                         </table>
+                        {error && <p>Er is een fout opgetreden</p>}
+                        {successMessage && <p>Klant is succesvol verwijderd</p>}
                     </section>
                 </section>
 

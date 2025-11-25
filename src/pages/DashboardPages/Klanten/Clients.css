@@ -9,6 +9,16 @@
     max-width: 200px;
 }
 
+.search_add{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.search_add button {
+    width: 10rem;
+}
+
 
 /* ========== TABLE ========== */
 
@@ -24,6 +34,11 @@
 
 .clients-table thead {
     display: flex;
+}
+
+.client-delete:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 
@@ -78,6 +93,10 @@
         justify-content: space-between;
     }
 
+    .clients-content h2 {
+        margin-bottom: 1rem;
+    }
+
     .clients-table {
         display: flex;
         flex-direction: column;
@@ -109,7 +128,7 @@
     }
 
     .clients-table td::before {
-        content: attr(data-label); /* gebruik attribuut als label */
+        content: attr(data-label);
         font-weight: 600;
         color: var(--color-primary);
     }
