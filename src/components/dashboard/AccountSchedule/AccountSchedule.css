@@ -26,13 +26,6 @@
     gap: 1rem;
 }
 
-
-.services-btn {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
 .account-availabilities h2 {
     margin-bottom: 1.2rem;
 }
@@ -42,19 +35,12 @@
     width: 100%;
 }
 
-.closed-checkbox label {
-    align-items: center;
-    gap: 0.5rem;
-    display: flex;
-}
-
-.closed-checkbox input {
-    margin: 0;
-    width: 16px
-}
-
 .service-row input {
     margin-bottom: 0.5rem;
+}
+
+.saving-btn{
+    margin-top: 0.5rem;
 }
 
 .delete-btn {
@@ -67,6 +53,70 @@
     cursor: pointer;
     font-size: 14px;
 }
+
+.services-btn {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+
+/* ========== SLIDER TOGGLE ========== */
+
+.closed-toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+
+.toggle-text {
+    font-weight: 600;
+}
+
+
+.closed-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+.slider {
+    position: relative;
+    width: 45px;
+    height: 24px;
+    background-color: #b5f1b5; /* grijs als open */
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    top: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+/* --- CHECKED STATE --- */
+.closed-toggle input:checked + .slider {
+    background-color: #e11d48;
+}
+
+.closed-toggle input:checked + .slider::before {
+    transform: translateX(21px);
+
+}
+
 
 
 /* ========== MOBILE RESPONSIVE ========== */
@@ -86,25 +136,17 @@
         border-bottom: 1px solid #ddd;
     }
 
+    .availability-row input[type="time"] {
+        width: 15rem;
+    }
+
     .day-label {
         font-weight: 600;
         margin-bottom: 0.3rem;
     }
 
-    .availability-row input[type="time"] {
-        width: 15rem;
-    }
-
-    .closed-checkbox label {
-        justify-content: flex-start;
-    }
-
     .service-form {
         flex-direction: column;
-    }
-
-    .delete-btn{
-        margin-left: 0.8rem;
     }
 
     .service-row input {
@@ -118,6 +160,10 @@
         gap: 1rem;
         width: 100%;
         max-width: 200px;
+    }
+
+    .delete-btn{
+        margin-left: 0.8rem;
     }
 
 

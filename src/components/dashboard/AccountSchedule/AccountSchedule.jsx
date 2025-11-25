@@ -240,24 +240,22 @@ function AccountSchedule({ days, services, companyId }) {
                                     }
                                 />
 
-                                <label className="closed-checkbox">
-                                    Gesloten
+                                <label className="closed-toggle">
+                                    <span className="toggle-text">Gesloten</span>
+
                                     <input
                                         type="checkbox"
                                         checked={day.closed}
-                                        onChange={(e) =>
-                                            handleClosedToggle(
-                                                index,
-                                                e.target.checked
-                                            )
-                                        }
+                                        onChange={(e) => handleClosedToggle(index, e.target.checked)}
                                     />
+
+                                    <span className="slider"></span>
                                 </label>
                             </div>
                         ))}
                     </div>
 
-                    <button type="submit" className="btn" disabled={savingAvail}>
+                    <button type="submit" className="btn, saving-btn" disabled={savingAvail}>
                         {savingAvail ? "Opslaan..." : "Openingstijden opslaan"}
                     </button>
                 </form>
