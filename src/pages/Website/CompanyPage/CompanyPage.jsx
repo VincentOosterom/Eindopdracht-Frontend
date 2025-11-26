@@ -1,63 +1,92 @@
 import './CompanyPage.css';
 import {useParams} from "react-router-dom";
 import NavBar from "../../../components/website/NavBar/NavBar.jsx";
-import { companies } from "/src/dummy-data/companies.js";
 import AppointmentForm from "../../../components/website/Appointment_form/AppointmentForm.jsx";
 import {useEffect, useState} from "react";
-import axios from "axios";
-
+import api from "../../../api/api";
+import SearchResultCard from "../../../components/website/SearchResult/SearchResultCard.jsx";
+import Footer from "../../../components/website/Footer/Footer.jsx";
 
 function CompanyPage() {
-
-    const [services, setServices] = useState([]);
-
     const {companyId} = useParams();
-    const company = companies.find(c => c.companyId === companyId);
 
-    if (!company) return <p>Bedrijf niet gevonden</p>
+    const [company, setCompany] = useState(null);
+    const [services, setServices] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [availabilities, setAvailabilities] = useState([]);
 
+    // ---- BEDRIJF OPHALEN ----
+    useEffect(() => {
+        async function fetchCompany() {
+            try {
+                const res = await api.get(`/companies/${companyId}`);
+                setCompany(res.data);
+            } catch (err) {
+                console.error("Kon bedrijf niet ophalen:", err);
+            }
+        }
+
+        fetchCompany();
+    }, [companyId]);
+
+    // ---- SERVICES OPHALEN ----
     useEffect(() => {
         async function fetchServices() {
-            const token = localStorage.getItem("token");
+            try {
+                const res = await api.get(`/services?companyId=${companyId}`);
+                setServices(res.data);
 
-            const response = await axios.get(
-                `https://novi-backend-api-wgsgz.ondigitalocean.app/api/services?userId=${companyId}`,
-                {
-                    headers: {
-                        "novi-education-project-id": "d6200c4d-2a0a-435d-aba6-6171c6a7296e",
-                        "Authorization": `Bearer ${token}`
-                    }
-                }
-            );
+                const AvailResponse = await api.get(`/availabilities?companyId=${companyId}`);
+                setAvailabilities(AvailResponse.data);
 
-            setServices(response.data);
+            } catch (err) {
+                console.error("Kon services niet ophalen:", err);
+            } finally {
+                setLoading(false);
+            }
         }
 
         fetchServices();
     }, [companyId]);
 
 
+    if (!company) return <p>Bedrijf niet gevonden</p>;
+    if (loading) return <p>Loading...</p>;
+
     return (
         <>
             <header className="company-page-header">
-                <div>
-                    <NavBar/>
-                </div>
-                <div className="companies-page">
-                    <img src={company.image} alt="Bedrijfslogo"/>
-                    <div className="companies-page-content">
-                        <h1>{company.title}</h1>
-                        <p>{company.description}</p>
-                        <p>{company.address}</p>
+                <NavBar/>
+
+                <div className="full-company-content">
+                    <div className="company-info">
+                        <SearchResultCard
+                            key={company.id}
+                            title={company.name}
+                            description={company.bio}
+                            company={company}
+                            address={company.address}
+                            name="Boek nu"
+                        />
+                        <h3>Onze openingstijden</h3>
+                        {availabilities.length > 0 &&
+                            availabilities.map((availability) => (
+                                <p key={availability.id}>{availability.dayOfWeek} - {availability.startTime} tot {availability.endTime}</p>
+                            ))
+                        }
+                    </div>
+
+                    <div className="appointment-content">
+                        <AppointmentForm
+                            companyId={companyId}
+                            services={services}
+                        />
                     </div>
                 </div>
-                <div className="appointment-content">
-                    <AppointmentForm companyId={companyId} services={services} />
-                </div>
             </header>
+            <Footer/>
         </>
-
-    )
+    );
 }
 
 export default CompanyPage;

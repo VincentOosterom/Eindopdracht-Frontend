@@ -1,6 +1,6 @@
 /* ========== MAIN ========== */
 
-.main{
+.main {
     background-color: #000;
     display: flex;
     flex-direction: column;
@@ -16,7 +16,17 @@
 
 /* ========== SECTION 1 ========== */
 
-.search-result{
+.search-result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 100px;
+    flex-wrap: wrap;
+}
+
+.search-result-grid {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -28,9 +38,9 @@
 
 /* ========== SECTION 2 ========== */
 
-.how-it-works{
+.how-it-works {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 1rem;
@@ -38,10 +48,18 @@
     flex-wrap: wrap;
 }
 
+.how-it-works-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
 
 /* ========== MEDIA QUERIES ========== */
 
 @media (max-width: 480px) {
+
     /*MAIN*/
 
     /* ========== SECTION 1 ========== */

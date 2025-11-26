@@ -1,9 +1,15 @@
-.company-card{
-    display: flex;
+.company-card {
+    display: grid;
     flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    align-items: flex-start;
+    gap: 1rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+    width: 500px;
+    min-height: 170px;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
 .company-info h3,
@@ -41,5 +47,24 @@
     max-width: 250px;
     max-height: 200px;
     border-radius: 15px;
+}
+
+@media screen and (max-width: 480px){
+
+    .company-card {
+        display: grid;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1rem;
+        background: white;
+        padding: 1rem;
+        border-radius: 15px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+        width: 500px;
+        min-height: 170px;
+        transition: transform 0.15s ease, box-shadow 0.2s ease;
+    }
+
+
 }
 
