@@ -12,6 +12,8 @@ function AccountInfo({company}) {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+
 
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
@@ -42,6 +44,11 @@ function AccountInfo({company}) {
 
         if (newPassword !== confirmNewPassword) {
             setError("Nieuw wachtwoord komt niet overeen.");
+            return;
+        }
+
+        if (!passwordRegex.test(newPassword)) {
+            setError("Wachtwoord moet minimaal 8 tekens, 1 hoofdletter, 1 cijfer en 1 speciaal teken bevatten");
             return;
         }
 

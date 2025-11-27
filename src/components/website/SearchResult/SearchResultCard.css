@@ -1,45 +1,51 @@
-.company-card{
+.search-result-card {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    align-items: flex-start;
+    gap: 1rem;
+
+    background: white;
+    padding: 1rem;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+
+    max-width: 500px;
+    width: 100%;
+    min-height: 170px;
+
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
 }
 
-.company-info h3,
-.company-info p{
+.search-result-card-content h3,
+.search-result-card-content p {
     color: black;
+    margin-bottom: 0.5rem;
 }
 
-.company-info h3{
+.search-result-card-content h3 {
     font-size: 1.5rem;
 }
 
-.company-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 0.5rem;
-    background-color: #ffffff;
-    border-radius: 15px;
-    padding: 1rem;
-    min-width: 400px;
-    min-height: 200px;
-}
 
-.company-logo{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    max-width: 250px;
-    max-height: 200px;
-    border-radius: 15px;
 
-}
+/* Mobiel */
+@media screen and (max-width: 480px) {
+    .search-result-card {
+        flex-direction: column;
+        width: 100%;
+        max-width: 350px;
+        min-height: auto;
+        margin: auto;
+    }
 
-.company-logo img{
-    max-width: 250px;
-    max-height: 200px;
-    border-radius: 15px;
+    .company-logo {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .company-logo img {
+        width: 100%;
+        height: auto;
+    }
 }
 

@@ -1,23 +1,35 @@
-import './SearchResultCard.css'
-import { Link} from "react-router-dom";
+import './SearchResultCard.css';
+import {useNavigate} from "react-router-dom";
 
+function SearchResultCard({ company }) {
+    const navigate = useNavigate();
 
-function SearchResultCard({title, description, name, image, address, companyId}) {
+    const {
+        id,
+        name,
+        bio,
+        address
+    } = company;
+
+    function handleGoCompanyPage(){
+        navigate(`/boek-nu/${id}`);
+    }
+
     return (
-        <article className="company-card">
-            <div className="company-logo">
-                <img src={image} alt="logo-company"/>
-            </div>
-            <div className="company-info">
-                <h3>{title}</h3>
-                <p>{description}</p>
-                <p>{address}</p>
-                <Link to={`/boek-nu/${companyId}`}>
-                <button>{name}</button>
-                    </Link>
-            </div>
+        <article className="search-result-card">
+            <div className="search-result-card-content">
+                    <h3>{name}</h3>
+
+                    <p className="bio">
+                        {bio || "Dit bedrijf heeft nog geen beschrijving toegevoegd."}
+                    </p>
+
+                    {address && <p className="address">{address}</p>}
+
+                    <button className="book-btn" onClick={handleGoCompanyPage}>Boek nu</button>
+                </div>
         </article>
-    )
+    );
 }
 
 export default SearchResultCard;

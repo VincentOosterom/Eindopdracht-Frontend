@@ -1,4 +1,4 @@
-.how-work-card{
+.info-card{
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -13,27 +13,27 @@
     flex-wrap: wrap;
 }
 
-.how-work-card h3{
+.info-card h3{
     color: black;
     font-size: 2rem;
 }
 
-.how-work-card p{
+.info-card p{
     color: black;
 }
 
-.how-work-card img{
+.info-card img{
     width: 100px;
     height: 100px;
 }
 
-.how-work-card:hover {
+.info-card:hover {
     box-shadow: 0 8px 25px rgba(246, 173, 85, 0.5);
     transition: 0.5s;
 }
 
 @media (max-width: 480px) {
-    .how-work-card{
+    .info-card{
         flex-direction: column;
         text-align: center;
         max-width: 350px;

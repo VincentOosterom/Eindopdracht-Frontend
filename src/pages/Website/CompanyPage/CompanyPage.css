@@ -1,37 +1,72 @@
-/* ========== Company Header ========== */
+/* ========== Company Page ========== */
 
 .company-page-header {
-    height: 100vh;
+    height: auto;
     background: linear-gradient(0deg, #000 12.02%, #F6AD55 100%);
 }
 
-.companies-page img {
-    max-width: 250px;
-    max-height: 200px;
-    border-radius: 15px;
-}
-
-.companies-page {
+.full-company-content {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
-    margin: 3rem;
+    gap: 3rem;
+    justify-content: center;
+    align-items: center;
 }
 
-.companies-page-content {
+.company-info{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    max-width: 500px;
+    height: auto;
+}
+
+.appointment-content p {
     color: white;
 }
 
+.company-info-description{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.company-info-availabilities,
+.company-info-services {
+    display: flex;
+    flex-direction: column;
+}
+
+.company-info-availabilities h3,
+.company-info-services h3{
+    margin-bottom: 0.8rem;
+}
+
+
 
 /* ========== MEDIA QUERIES ========== */
-@media screen and (max-width: 480px) {
+@media (max-width: 480px) {
 
-    .companies-page {
+    .company-page {
         flex-direction: column;
         text-align: center;
         margin: 80px;
+    }
+
+    .company-info{
+        display: flex;
+        flex-direction: column;
+        max-width: 200px;
+        margin: 2rem auto;
+        height: auto;
+    }
+
+    .full-company-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+
+    .company-info-description{
+        flex-direction: column;
     }
 }
