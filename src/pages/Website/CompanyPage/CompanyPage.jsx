@@ -57,30 +57,37 @@ function CompanyPage() {
         <>
             <header className="company-page-header">
                 <NavBar/>
-                <section className="full-company-content">
-                    <article className="company-info">
-                        <h2>{company.name}</h2>
-                        <p>
-                            {company.bio || "Bedrijf heeft nog geen bio toegevoegd!"}
-                        </p>
-                    </article>
-                    <article className="company-info-description">
-                        <div className="company-info-availabilities">
-                            <h3>Onze openingstijden</h3>
-                            {availabilities.length > 0 &&
-                                availabilities.map((availability) => (
-                                    <p key={availability.id}>{availability.dayOfWeek} - {availability.startTime} tot {availability.endTime}</p>
-                                ))
-                            }
-                        </div>
-                        <article className="company-info-services">
-                            <h3>Onze diensten</h3>
-                            {services.length > 0 &&
-                                services.map((service) => (
-                                    <p key={service.id}>{service.name}</p>
-                                ))}
+                <section className="full-info-section">
+                    <div className="full-company-content">
+                        <article className="company-info">
+                            <h2>{company.name}</h2>
+                            <p>
+                                {company.bio || "Bedrijf heeft nog geen bio toegevoegd!"}
+                            </p>
                         </article>
-                    </article>
+                        <article className="company-info-description">
+                            <div className="company-info-availabilities">
+                                <h3>Onze openingstijden</h3>
+                                {availabilities.length > 0 &&
+                                    availabilities.map((availability) => (
+                                        <p key={availability.id}>{availability.dayOfWeek} - {availability.startTime} tot {availability.endTime}</p>
+                                    ))
+                                }
+                            </div>
+                            <div className="company-info-services">
+                                <h3>Onze diensten</h3>
+                                {services.length > 0 ? (
+                                    services.map((service) => (
+                                        <p key={service.id}>{service.name} (€{service.price} & {service.duration} min)
+                                            </p>
+
+                                    ))
+                                ) : (
+                                    <p>Geen diensten gevonden</p>
+                                )}
+                            </div>
+                        </article>
+                    </div>
 
                     <section className="appointment-content">
                         <AppointmentForm

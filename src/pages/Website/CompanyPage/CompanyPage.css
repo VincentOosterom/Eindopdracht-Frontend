@@ -5,18 +5,42 @@
     background: linear-gradient(0deg, #000 12.02%, #F6AD55 100%);
 }
 
-.full-company-content {
+.full-info-section {
     display: flex;
     flex-direction: row;
     gap: 3rem;
     justify-content: center;
     align-items: center;
+    margin-top: 3rem;
 }
 
-.company-info{
+.full-company-content {
     display: flex;
     flex-direction: column;
-    max-width: 500px;
+    color: var(--color-black);
+    gap: 1rem;
+}
+
+.company-info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    max-width: 600px;
+    height: auto;
+    background-color: var(--color-white);
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+.company-info-description {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    background-color: var(--color-white);
+    padding: 2rem;
+    border-radius: 1rem;
+    max-width: 600px;
     height: auto;
 }
 
@@ -24,11 +48,6 @@
     color: white;
 }
 
-.company-info-description{
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-}
 
 .company-info-availabilities,
 .company-info-services {
@@ -37,36 +56,39 @@
 }
 
 .company-info-availabilities h3,
-.company-info-services h3{
-    margin-bottom: 0.8rem;
+.company-info-services h3,
+.company-info h2 {
+    margin-bottom: 1rem;
 }
-
 
 
 /* ========== MEDIA QUERIES ========== */
 @media (max-width: 480px) {
 
-    .company-page {
+    .full-info-section {
         flex-direction: column;
-        text-align: center;
-        margin: 80px;
-    }
-
-    .company-info{
-        display: flex;
-        flex-direction: column;
-        max-width: 200px;
-        margin: 2rem auto;
-        height: auto;
     }
 
     .full-company-content {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+
+    .company-info {
+        max-width: 100%;
+    }
+
+    .company-info-description {
+        display: flex;
         flex-direction: column;
-        text-align: center;
+        width: 100%;
+    }
+
+    .appointment-content{
+        max-width: 400px;
+        width: 100%;
+        margin-bottom: 1rem;
     }
 
 
-    .company-info-description{
-        flex-direction: column;
-    }
 }
