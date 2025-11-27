@@ -54,12 +54,8 @@ function Home() {
                     {loading && <p>Bedrijven laden...</p>}
 
                     <div className="search-result-grid">
-
                         {!loading && filteredCompanies.length === 0 && (
-                            <p>Geen bedrijven gevonden…</p>
-                        )}
-
-                        {/* ✔ Toon de echte bedrijven */}
+                            <p>Geen bedrijven gevonden…</p>)}
 
                         {filteredCompanies.map((company) => (
                             <SearchResultCard

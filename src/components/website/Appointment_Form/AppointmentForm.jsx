@@ -13,7 +13,7 @@ function AppointmentForm({services, companyId}) {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        const response = await axios.post('https://novi-backend-api-wgsgz.ondigitalocean.app/api/appointments',
+        const response = await axios.post('/api/appointments',
             {
                 userId: companyId,
                 clientName,

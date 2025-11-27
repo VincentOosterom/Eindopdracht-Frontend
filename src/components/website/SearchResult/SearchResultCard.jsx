@@ -1,5 +1,5 @@
 import './SearchResultCard.css';
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 function SearchResultCard({ company }) {
     const navigate = useNavigate();
@@ -11,13 +11,13 @@ function SearchResultCard({ company }) {
         address
     } = company;
 
-    function handleCompanyPage(){
+    function handleGoCompanyPage(){
         navigate(`/boek-nu/${id}`);
     }
 
     return (
-        <article className="company-card">
-            <div className="company-info">
+        <article className="search-result-card">
+            <div className="search-result-card-content">
                     <h3>{name}</h3>
 
                     <p className="bio">
@@ -26,9 +26,8 @@ function SearchResultCard({ company }) {
 
                     {address && <p className="address">{address}</p>}
 
-                    <button className="book-btn" onClick={handleCompanyPage}>Boek nu</button>
+                    <button className="book-btn" onClick={handleGoCompanyPage}>Boek nu</button>
                 </div>
-
         </article>
     );
 }

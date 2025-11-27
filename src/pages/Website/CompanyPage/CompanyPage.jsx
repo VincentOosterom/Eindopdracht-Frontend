@@ -1,7 +1,7 @@
 import './CompanyPage.css';
 import {useParams} from "react-router-dom";
 import NavBar from "../../../components/website/NavBar/NavBar.jsx";
-import AppointmentForm from "../../../components/website/Appointment_form/AppointmentForm.jsx";
+import AppointmentForm from "../../../components/website/Appointment_Form/AppointmentForm.jsx";
 import {useEffect, useState} from "react";
 import api from "../../../api/api";
 import SearchResultCard from "../../../components/website/SearchResult/SearchResultCard.jsx";
@@ -29,7 +29,7 @@ function CompanyPage() {
         fetchCompany();
     }, [companyId]);
 
-    // ---- SERVICES OPHALEN ----
+    // ---- SERVICES OPHALEN & AVAILABILITIES OPHALEN ----
     useEffect(() => {
         async function fetchServices() {
             try {
@@ -57,32 +57,38 @@ function CompanyPage() {
         <>
             <header className="company-page-header">
                 <NavBar/>
+                <section className="full-company-content">
+                    <article className="company-info">
+                        <h2>{company.name}</h2>
+                        <p>
+                            {company.bio || "Bedrijf heeft nog geen bio toegevoegd!"}
+                        </p>
+                    </article>
+                    <article className="company-info-description">
+                        <div className="company-info-availabilities">
+                            <h3>Onze openingstijden</h3>
+                            {availabilities.length > 0 &&
+                                availabilities.map((availability) => (
+                                    <p key={availability.id}>{availability.dayOfWeek} - {availability.startTime} tot {availability.endTime}</p>
+                                ))
+                            }
+                        </div>
+                        <article className="company-info-services">
+                            <h3>Onze diensten</h3>
+                            {services.length > 0 &&
+                                services.map((service) => (
+                                    <p key={service.id}>{service.name}</p>
+                                ))}
+                        </article>
+                    </article>
 
-                <div className="full-company-content">
-                    <div className="company-info">
-                        <SearchResultCard
-                            key={company.id}
-                            title={company.name}
-                            description={company.bio}
-                            company={company}
-                            address={company.address}
-                            name="Boek nu"
-                        />
-                        <h3>Onze openingstijden</h3>
-                        {availabilities.length > 0 &&
-                            availabilities.map((availability) => (
-                                <p key={availability.id}>{availability.dayOfWeek} - {availability.startTime} tot {availability.endTime}</p>
-                            ))
-                        }
-                    </div>
-
-                    <div className="appointment-content">
+                    <section className="appointment-content">
                         <AppointmentForm
                             companyId={companyId}
                             services={services}
                         />
-                    </div>
-                </div>
+                    </section>
+                </section>
             </header>
             <Footer/>
         </>
