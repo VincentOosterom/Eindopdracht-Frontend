@@ -15,6 +15,7 @@ function Homepage() {
     const [appointments, setAppointments] = useState([]);
     const [appointmentsToday, setAppointmentsToday] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [service, setService] = useState(null);
 
     useEffect(() => {
         async function loadDashboard() {
@@ -29,6 +30,9 @@ function Homepage() {
                 );
                 const allAppointments = apptRes.data;
                 setAppointments(allAppointments);
+
+                const services = await api.get(`/services/${companyId}`);
+                setService(services);
 
                 // 3. Vandaag filteren (API geeft dd-mm-yyyy)
                 const todayIso = new Date().toISOString().split("T")[0];
