@@ -21,6 +21,10 @@ function AddClientForm({ companyId, onClientAdded, onCancel }) {
             return;
         }
 
+        if (!email.includes("@") || !email.includes("."))  {
+            setError("Vul een geldig e-mailadres in.");
+        }
+
         setLoading(true);
 
         try {

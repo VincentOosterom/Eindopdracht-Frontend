@@ -1,4 +1,4 @@
-.info-card{
+.info-card {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -13,16 +13,16 @@
     flex-wrap: wrap;
 }
 
-.info-card h3{
+.info-card h3 {
     color: black;
     font-size: 2rem;
 }
 
-.info-card p{
+.info-card p {
     color: black;
 }
 
-.info-card img{
+.info-card img {
     width: 100px;
     height: 100px;
 }
@@ -33,7 +33,8 @@
 }
 
 @media (max-width: 480px) {
-    .info-card{
+
+    .info-card {
         flex-direction: column;
         text-align: center;
         max-width: 350px;

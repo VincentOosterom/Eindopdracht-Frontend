@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import api from "../../../api/api";
 import "./AccountSchedule.css";
 
-function AccountSchedule({ days, services, companyId }) {
+function AccountSchedule({days, services, companyId}) {
     const [availabilities, setAvailabilities] = useState([]);
     const [serviceList, setServiceList] = useState([]);
     const [savingAvail, setSavingAvail] = useState(false);
     const [savingServices, setSavingServices] = useState(false);
 
-    const [succes, setSucces] = useState(false);
+    const [error, setError] = useState("");
+    const [succes, setSucces] = useState("");
 
     const DAY_ORDER = [
         "Maandag",
@@ -20,10 +21,24 @@ function AccountSchedule({ days, services, companyId }) {
         "Zondag",
     ];
 
+    // VOOR SUCCES MESSAGE
+    useEffect(() => {
+        let timer;
+
+        if (succes) {
+            timer = setTimeout(() => setSucces(""), 3000);
+        }
+
+        if (error) {
+            timer = setTimeout(() => setError(""), 3000);
+        }
+
+        return () => clearTimeout(timer);
+    }, [succes, error]);
+
     useEffect(() => {
         // ----- AVAILABILITIES LADEN -----
         const dayMap = {};
-
         if (Array.isArray(days)) {
             days.forEach((d) => {
                 dayMap[d.dayOfWeek] = {
@@ -69,7 +84,7 @@ function AccountSchedule({ days, services, companyId }) {
     function handleAvailabilityChange(index, field, value) {
         setAvailabilities((prev) =>
             prev.map((item, i) =>
-                i === index ? { ...item, [field]: value } : item
+                i === index ? {...item, [field]: value} : item
             )
         );
     }
@@ -120,10 +135,10 @@ function AccountSchedule({ days, services, companyId }) {
                 }
             }
 
-            alert("Openingstijden opgeslagen!");
+            setSucces("Openingstijden opgeslagen!");
         } catch (err) {
             console.error("Fout bij opslaan openingstijden:", err);
-            alert("Er ging iets mis tijdens het opslaan.");
+            setError("Er ging iets mis tijdens het opslaan.");
         } finally {
             setSavingAvail(false);
         }
@@ -133,7 +148,7 @@ function AccountSchedule({ days, services, companyId }) {
     function handleServiceChange(index, field, value) {
         setServiceList((prev) =>
             prev.map((item, i) =>
-                i === index ? { ...item, [field]: value } : item
+                i === index ? {...item, [field]: value} : item
             )
         );
     }
@@ -150,7 +165,7 @@ function AccountSchedule({ days, services, companyId }) {
         ]);
     }
 
-    async function handleDeleteService(serivceId,  index){
+    async function handleDeleteService(serivceId, index) {
 
         if (serivceId == null) {
             setServiceList((prev) => prev.filter((_, i) => i !== index));
@@ -163,10 +178,10 @@ function AccountSchedule({ days, services, companyId }) {
         try {
             await api.delete(`/services/${serivceId}`);
             setServiceList((prev) => prev.filter((_, i) => i !== index));
-            setSucces(true)
+            setSucces("Uw dienst in succesvol verwijderd")
         } catch (error) {
             console.log(error);
-            alert("Kon de dienst niet verwijderen, probeer het opnieuw")
+            setError("Het is niet gelukt om deze dienst te verwijderen")
         }
     }
 
@@ -194,10 +209,11 @@ function AccountSchedule({ days, services, companyId }) {
                     });
                 }
             }
-            alert("Diensten opgeslagen!");
+            setSucces("Diensten opgeslagen!");
+
         } catch (err) {
             console.error("Fout bij opslaan diensten:", err);
-            alert("Er ging iets mis tijdens het opslaan.");
+            setError("Er ging iets mis tijdens het opslaan.");
         } finally {
             setSavingServices(false);
         }
@@ -226,7 +242,6 @@ function AccountSchedule({ days, services, companyId }) {
                                         )
                                     }
                                 />
-
                                 <input
                                     type="time"
                                     value={day.endTime}
@@ -239,7 +254,6 @@ function AccountSchedule({ days, services, companyId }) {
                                         )
                                     }
                                 />
-
                                 <label className="closed-toggle">
                                     <span className="toggle-text">Gesloten</span>
 
@@ -254,7 +268,6 @@ function AccountSchedule({ days, services, companyId }) {
                             </div>
                         ))}
                     </div>
-
                     <button type="submit" className="btn, saving-btn" disabled={savingAvail}>
                         {savingAvail ? "Opslaan..." : "Openingstijden opslaan"}
                     </button>
@@ -306,9 +319,6 @@ function AccountSchedule({ days, services, companyId }) {
                             </button>
                         </div>
                     ))}
-
-                    {succes && <p>Uw diensten zijn bijgewerkt</p>}
-
                     <div className="services-btn">
                         <button type="button" className="btn" onClick={handleAddService}>
                             Dienst toevoegen
@@ -317,6 +327,9 @@ function AccountSchedule({ days, services, companyId }) {
                             {savingServices ? "Opslaan..." : "Diensten opslaan"}
                         </button>
                     </div>
+
+                    {succes && <p className="succes-message">{succes}</p>}
+                    {error && <p className="error-message">{error}</p>}
                 </form>
             </article>
         </section>

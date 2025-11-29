@@ -18,6 +18,9 @@
     --color-bg: #ffffff;
     --color-white: #ffffff;
     --color-black: #000000;
+    --color-green: #b5f1b5;
+    --color-red: #e84242;
+
 
     --border-radius-input: 15px;
     --border-radius-button: 10px;
@@ -61,6 +64,18 @@ button:hover {
     color: #000;
 }
 
+
+/* ========== ERROR & SUCCES MESSAGE ========== */
+.succes-message  {
+    color: var(--color-green);
+    margin-top: 0.8rem;
+}
+
+.error-message  {
+    color: var(--color-red);
+    margin-top: 0.8rem;
+}
+
 /* ========== FORMS ========== */
 input, textarea, select {
     border: var(--border-line);
@@ -73,9 +88,17 @@ input, textarea, select {
 }
 
 /* ========== UTILITIES ========== */
-.text-primary { color: var(--color-primary); }
-.bg-primary { background-color: var(--color-primary); }
-.text-center { text-align: center; }
+.text-primary {
+    color: var(--color-primary);
+}
+
+.bg-primary {
+    background-color: var(--color-primary);
+}
+
+.text-center {
+    text-align: center;
+}
 
 
 /* ========== DASHBOARD BASIS ========== */
@@ -98,7 +121,7 @@ input, textarea, select {
 :root {
     --fc-page-bg-color: var(--color-bg);
     --fc-neutral-bg-color: var(--color-bg);
-    --fc-border-color: rgba(0,0,0,.12);
+    --fc-border-color: rgba(0, 0, 0, .12);
 
     --fc-button-bg-color: var(--color-bg);
     --fc-button-text-color: var(--color-text);

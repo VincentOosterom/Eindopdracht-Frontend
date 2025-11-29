@@ -4,7 +4,8 @@ import {NavLink, useNavigate,} from "react-router-dom";
 import axios from "axios";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLeftLong} from "@fortawesome/free-solid-svg-icons";
-import { useAuth } from "../../../context/AuthContext";
+import {useAuth} from "../../../context/AuthContext";
+import api from "../../../api/api.js";
 
 
 function decodeJwt(token) {
@@ -18,9 +19,9 @@ function Inloggen() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const {login} = useAuth();
 
-    function handleBack(){
+    function handleBack() {
         navigate("/");
     }
 
@@ -31,49 +32,34 @@ function Inloggen() {
 
         try {
             // 1. Inloggen bij NOVI API
-            const response = await axios.post(
-                "https://novi-backend-api-wgsgz.ondigitalocean.app/api/login",
-                { email, password },
-                {
-                    headers: {
-                        "novi-education-project-id":
-                            "d6200c4d-2a0a-435d-aba6-6171c6a7296e",
-                    },
-                }
-            );
+            const response = await api.post("login", {email, password});
 
             const token = response.data.token;
-
             const decoded = decodeJwt(token);
             const userId = decoded.userId;
 
+// 1. Bedrijf zoeken via ownerUserId
+            const companyRes = await api.get(`/companies?ownerUserId=${userId}`);
+            const company = companyRes.data[0];
 
-            const userRes = await axios.get(
-                `https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/${userId}`,
-                {
-                    headers: {
-                        "novi-education-project-id":
-                            "d6200c4d-2a0a-435d-aba6-6171c6a7296e",
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
+            if (!company) {
+                setError("Geen bedrijf gevonden voor deze gebruiker.");
+                return;
+            }
 
-            const companyId = userRes.data.companyId ?? userId;
-            const roles = userRes.data.roles;
+            const companyId = company.id;
 
-            // 4. Opslaan in AuthContext + localStorage
+// 2. Opslaan in AuthContext
             login({
                 token,
                 userId,
                 companyId,
-                roles,
+                roles: decoded.roles || [],
             });
 
-            // 5. Door naar dashboard van dat bedrijf
+// 3. Navigeren
             navigate(`/dashboard/${companyId}`);
             console.log("companyId =", companyId);
-            console.log("FULL USER DATA", userRes.data);
         } catch (err) {
             console.error(err);
             setError("Verkeerd e-mailadres of wachtwoord.");

@@ -2,6 +2,7 @@ import './RegisterForm.css'
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import api from "../../../api/api.js";
 
 function RegisterForm() {
     const [name, setName] = useState(""); // voornaam
@@ -30,6 +31,10 @@ function RegisterForm() {
             return;
         }
 
+        if (!email.includes("@") || !email.includes("."))  {
+            setError("Vul een geldig e-mailadres in.");
+        }
+
         if (password !== confirmPassword) {
             setError("Wachtwoorden komen niet overeen");
             return;
@@ -44,8 +49,8 @@ function RegisterForm() {
 
         try {
             // 1. USER AANMAKEN
-            const userRes = await axios.post(
-                "https://novi-backend-api-wgsgz.ondigitalocean.app/api/users",
+            const userRes = await api.post(
+                "/users",
                 {
                     email,
                     password,
@@ -64,9 +69,9 @@ function RegisterForm() {
             console.log(userRes.data);
 
             // 2. DIRECT INLOGGEN
-            const loginRes = await axios.post(
-                "https://novi-backend-api-wgsgz.ondigitalocean.app/api/login",
-                { email, password },
+            const loginRes = await api.post(
+                "/login",
+                {email, password},
                 {
                     headers: {
                         "novi-education-project-id": "d6200c4d-2a0a-435d-aba6-6171c6a7296e"
@@ -85,8 +90,8 @@ function RegisterForm() {
             };
 
             // 3. COMPANY AANMAKEN
-            const companyRes = await axios.post(
-                "https://novi-backend-api-wgsgz.ondigitalocean.app/api/companies",
+            const companyRes = await api.post(
+                "/companies",
                 {
                     ownerUserId: Number(userId),
                     name: company,
@@ -94,16 +99,16 @@ function RegisterForm() {
                     profileImageUrl: ""
 
                 },
-                { headers: authHeaders }
+                {headers: authHeaders}
             );
 
             const createdCompanyId = companyRes.data.id;
 
             // 4. USER KOPPELEN AAN COMPANY
-            await axios.patch(
-                `https://novi-backend-api-wgsgz.ondigitalocean.app/api/users/${userId}`,
-                { companyId: createdCompanyId },
-                { headers: authHeaders }
+            await api.patch(
+                `/users/${userId}`,
+                {companyId: createdCompanyId},
+                {headers: authHeaders}
             );
 
             // 5. SUCCES
@@ -112,7 +117,28 @@ function RegisterForm() {
 
         } catch (err) {
             console.error(err);
-            setError("Er ging iets mis tijdens het registreren.");
+            if (axios.isAxiosError(err)) {
+                // --- Dubbel e-mail adres ---
+                if (err.response?.status === 409) {
+                    setError("Dit e-mailadres is al in gebruik. Probeer in te loggen of gebruik een ander e-mailadres.");
+                    return;
+                }
+
+                // --- Validatie fout van backend ---
+                if (err.response?.status === 400) {
+                    setError("Ongeldige invoer. Controleer je gegevens.");
+                    return;
+                }
+
+                // --- Geen autorisatie (token probleem) ---
+                if (err.response?.status === 401 || err.response?.status === 403) {
+                    setError("Onvoldoende rechten om dit account aan te maken.");
+                    return;
+                }
+            }
+
+            // Standaard fout
+            setError("Er ging iets mis bij het registreren. Probeer het opnieuw.");
         } finally {
             setLoading(false);
         }

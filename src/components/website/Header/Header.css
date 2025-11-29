@@ -20,6 +20,7 @@
     font-size: clamp(2rem, 5vw, 4rem);
     word-break: break-word;
     color: var(--color-white);
+    max-width: 900px;
 }
 
 .header-content p {

@@ -68,10 +68,13 @@ function CompanyPage() {
                         <article className="company-info-description">
                             <div className="company-info-availabilities">
                                 <h3>Onze openingstijden</h3>
-                                {availabilities.length > 0 &&
+                                {availabilities.length > 0 ? (
                                     availabilities.map((availability) => (
                                         <p key={availability.id}>{availability.dayOfWeek} - {availability.startTime} tot {availability.endTime}</p>
                                     ))
+                                ) : (
+                                    <p>Geen openingstijden gevonden</p>
+                                )
                                 }
                             </div>
                             <div className="company-info-services">
@@ -93,6 +96,8 @@ function CompanyPage() {
                         <AppointmentForm
                             companyId={companyId}
                             services={services}
+                            availabilities={availabilities}
+
                         />
                     </section>
                 </section>

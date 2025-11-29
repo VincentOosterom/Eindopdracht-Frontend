@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import api from "../../../api/api";
 import "./AccountInfo.css";
 
@@ -6,7 +6,7 @@ function AccountInfo({company}) {
     // Bedrijfsinfo
     const [name, setName] = useState(company.name || "");
     const [bio, setBio] = useState(company.bio || "");
-    const [profileImageUrl, setProfileImageUrl] = useState(company.profileImageUrl || "");
+    const [email, setEmail] = useState("");
 
     // Wachtwoord
     const [oldPassword, setOldPassword] = useState("");
@@ -18,13 +18,13 @@ function AccountInfo({company}) {
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
 
+
     // ====== HANDLE COMPANY INFO SAVE ======
     async function handleSaveCompany() {
         try {
             await api.patch(`/companies/${company.id}`, {
                 name,
                 bio,
-                profileImageUrl
             });
 
             setSuccess("Bedrijfsinformatie is bijgewerkt!");
@@ -82,7 +82,6 @@ function AccountInfo({company}) {
                         onChange={(e) => setName(e.target.value)}
                     />
                 </label>
-
                 <label>
                     Bio / Beschrijving
                     <textarea
@@ -91,19 +90,18 @@ function AccountInfo({company}) {
                         onChange={(e) => setBio(e.target.value)}
                     />
                 </label>
-
                 <label>
-                    Profielfoto URL
-                    <input
-                        type="text"
-                        value={profileImageUrl}
-                        onChange={(e) => setProfileImageUrl(e.target.value)}
-                        placeholder="https://..."
-                    />
+                    <input type="email"
+                           value={email}
+                           onChange={(e) => setEmail(e.target.value)}/>
                 </label>
-                <button onClick={handleSaveCompany} className="account-button">
+                <button
+                    type="submit"
+                    onClick={handleSaveCompany}
+                    className="account-button">
                     Bedrijfsinformatie opslaan
                 </button>
+
             </div>
 
 

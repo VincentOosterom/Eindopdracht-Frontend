@@ -32,6 +32,13 @@ function NavBar() {
             <ul className={`nav-links ${isOpen ? "open" : ""}`}>
                 <li>
                     <NavLink
+                        to="/" className={`nav-link active ${isOpen ? "active" : ""}`}
+                    >
+                        Home
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink
                         to="/inloggen"
                         className={({ isActive }) => (isActive ? "active" : "")}
                     >
