@@ -1,8 +1,4 @@
-.agenda {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-}
+
 
 .agenda-container {
     display: flex;
@@ -97,5 +93,40 @@
 
     .fc .fc-button {
         padding: .35rem .6rem;
+    }
+}
+
+/* MOBIEL: toolbar knoppen kleiner en niet te breed */
+@media (max-width: 768px) {
+    .agenda{
+
+    }
+    .fc-header-toolbar {
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 4px;
+    }
+
+    .fc-toolbar-title {
+        font-size: 1rem !important;
+        text-align: center;
+        flex-grow: 1;
+    }
+
+    /* BUTTONS */
+    .fc .fc-button {
+        padding: 4px 6px !important;
+        font-size: 0.7rem !important;
+        min-width: unset !important;
+        width: auto !important;
+        flex: 0 0 auto !important;
+        white-space: nowrap !important;
+    }
+
+    /* Volgende/vorige pijltjes kleiner */
+    .fc .fc-prev-button,
+    .fc .fc-next-button {
+        padding: 4px 6px !important;
     }
 }

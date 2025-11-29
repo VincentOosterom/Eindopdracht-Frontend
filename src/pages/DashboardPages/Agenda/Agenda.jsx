@@ -96,6 +96,8 @@ function Agenda() {
         function handleResize() {
             setCalendarView(window.innerWidth <= 768 ? "timeGridDay" : "timeGridWeek");
         }
+
+
         handleResize();
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
@@ -105,6 +107,7 @@ function Agenda() {
         const api = calendarRef.current?.getApi();
         if (api) api.changeView(calendarView);
     }, [calendarView]);
+
 
 
     // ====================== 5. Nieuwe afspraak ======================
@@ -176,6 +179,11 @@ function Agenda() {
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                     initialView="timeGridWeek"
+                    headerToolbar={{
+                        left: "prev,next today",
+                        center: "title",
+                        right: "dayGridMonth,timeGridWeek,timeGridDay"
+                    }}
                     ref={calendarRef}
                     locale="nl"
                     allDaySlot={false}
