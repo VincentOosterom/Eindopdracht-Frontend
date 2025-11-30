@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import api from "../../../api/api";
 import "./AccountInfo.css";
 
@@ -6,7 +6,6 @@ function AccountInfo({company}) {
     // Bedrijfsinfo
     const [name, setName] = useState(company.name || "");
     const [bio, setBio] = useState(company.bio || "");
-    const [email, setEmail] = useState("");
 
     // Wachtwoord
     const [oldPassword, setOldPassword] = useState("");
@@ -89,11 +88,6 @@ function AccountInfo({company}) {
                         value={bio}
                         onChange={(e) => setBio(e.target.value)}
                     />
-                </label>
-                <label>
-                    <input type="email"
-                           value={email}
-                           onChange={(e) => setEmail(e.target.value)}/>
                 </label>
                 <button
                     type="submit"
