@@ -38,6 +38,7 @@ function Inloggen() {
             const decoded = decodeJwt(token);
             const userId = decoded.userId;
 
+
 // 1. Bedrijf zoeken via ownerUserId
             const companyRes = await api.get(`/companies?ownerUserId=${userId}`);
             const company = companyRes.data[0];

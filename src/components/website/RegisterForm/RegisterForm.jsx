@@ -12,6 +12,7 @@ function RegisterForm() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
 
 
     const navigate = useNavigate();
@@ -31,7 +32,7 @@ function RegisterForm() {
             return;
         }
 
-        if (!email.includes("@") || !email.includes("."))  {
+        if (!email.includes("@") || !email.includes(".")) {
             setError("Vul een geldig e-mailadres in.");
         }
 
@@ -57,95 +58,70 @@ function RegisterForm() {
                     firstname: name,
                     lastname: "",
                     roles: ["admin"],
-                    companyId: null
-                },
-                {
-                    headers: {
-                        "novi-education-project-id": "d6200c4d-2a0a-435d-aba6-6171c6a7296e"
-                    }
+                    // companyId hoeft niet, want we koppelen op ID
                 }
             );
 
-            console.log(userRes.data);
+            console.log("Nieuw user:", userRes.data);
 
-            // 2. DIRECT INLOGGEN
+            const userId = userRes.data.id;
+
+            // 2. DIRECT INLOGGEN (token krijgen)
             const loginRes = await api.post(
                 "/login",
                 {email, password},
-                {
-                    headers: {
-                        "novi-education-project-id": "d6200c4d-2a0a-435d-aba6-6171c6a7296e"
-                    }
-                }
             );
 
             const token = loginRes.data.token;
             const decoded = decodeJwt(token);
-            const userId = (decoded.userId);
+            console.log("Decoded JWT:", decoded);
 
-            // Auth headers voor alles daarna
-            const authHeaders = {
-                "novi-education-project-id": "d6200c4d-2a0a-435d-aba6-6171c6a7296e",
-                "Authorization": `Bearer ${token}`
-            };
-
-            // 3. COMPANY AANMAKEN
+            // 3. COMPANY AANMAKEN MET ZELFDE ID ALS USER
             const companyRes = await api.post(
                 "/companies",
                 {
-                    ownerUserId: Number(userId),
+                    id: userId,            // ★ BELANGRIJK: ID = USER ID
+                    ownerUserId: userId,   // ★ koppelt automatisch
                     name: company,
                     bio: "",
-                    profileImageUrl: ""
-
+                    profileImageUrl: "",
                 },
-                {headers: authHeaders}
             );
 
-            const createdCompanyId = companyRes.data.id;
+            console.log("Company aangemaakt:", companyRes.data);
 
-            // 4. USER KOPPELEN AAN COMPANY
-            await api.patch(
-                `/users/${userId}`,
-                {companyId: createdCompanyId},
-                {headers: authHeaders}
-            );
 
             // 5. SUCCES
-            setLoading(true);
+            setSuccess("Account succesvol aangemaakt!");
             setTimeout(() => navigate("/inloggen"), 1500);
 
         } catch (err) {
             console.error(err);
+
             if (axios.isAxiosError(err)) {
-                // --- Dubbel e-mail adres ---
                 if (err.response?.status === 409) {
-                    setError("Dit e-mailadres is al in gebruik. Probeer in te loggen of gebruik een ander e-mailadres.");
+                    setError("Dit e-mailadres is al in gebruik.");
                     return;
                 }
 
-                // --- Validatie fout van backend ---
                 if (err.response?.status === 400) {
                     setError("Ongeldige invoer. Controleer je gegevens.");
                     return;
                 }
 
-                // --- Geen autorisatie (token probleem) ---
                 if (err.response?.status === 401 || err.response?.status === 403) {
                     setError("Onvoldoende rechten om dit account aan te maken.");
                     return;
                 }
             }
 
-            // Standaard fout
-            setError("Er ging iets mis bij het registreren. Probeer het opnieuw.");
+            setError("Er ging iets mis bij het registreren. Probeer opnieuw.");
         } finally {
             setLoading(false);
         }
     }
 
-
-    return (
+        return (
         <section className="register-container">
             <form onSubmit={Register} className="register-form">
 
@@ -212,7 +188,7 @@ function RegisterForm() {
                 </div>
 
                 <button type="submit" disabled={loading}>
-                    {loading ? "Uw account wordt aangemaakt..." : "Registreren"}
+                    {success ? "Uw account wordt aangemaakt..." : "Registreren"}
                 </button>
 
             </form>
