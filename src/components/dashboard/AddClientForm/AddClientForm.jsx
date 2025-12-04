@@ -1,10 +1,10 @@
 import './AddClientForm.css'
 
-import { useState } from "react";
+import {useState} from "react";
 import api from "../../../api/api";
 import "./AddClientForm.css";
 
-function AddClientForm({ companyId, onClientAdded, onCancel }) {
+function AddClientForm({companyId, onClientAdded, onCancel}) {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -21,8 +21,14 @@ function AddClientForm({ companyId, onClientAdded, onCancel }) {
             return;
         }
 
-        if (!email.includes("@") || !email.includes("."))  {
+        if (!email.includes("@") || !email.includes(".")) {
             setError("Vul een geldig e-mailadres in.");
+            return;
+        }
+
+        if (phone.length > 10 || phone.length < 10) {
+            setError("Telefoonnummer is niet correct");
+            return;
         }
 
         setLoading(true);
@@ -76,7 +82,7 @@ function AddClientForm({ companyId, onClientAdded, onCancel }) {
                         type="text"
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Telefoonnummer"/>
+                        placeholder="Telefoonnummer"/>
                 </label>
 
                 {error && <p className="error-msg">{error}</p>}

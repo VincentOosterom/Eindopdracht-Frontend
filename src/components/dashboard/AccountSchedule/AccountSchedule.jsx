@@ -144,7 +144,7 @@ function AccountSchedule({days, services, companyId}) {
         }
     }
 
-    // ====== SERVICES HANDLERS (mag gewoon blijven zoals is) ======
+    // ====== SERVICES HANDLERS  ======
     function handleServiceChange(index, field, value) {
         setServiceList((prev) =>
             prev.map((item, i) =>

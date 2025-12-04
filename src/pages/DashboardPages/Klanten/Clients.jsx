@@ -11,10 +11,10 @@ function Clients() {
     const {companyId} = useParams();
     const [clients, setClients] = useState([]);
     const [company, setCompany] = useState([]);
-    const [error, setError] = useState(false);
+    const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
-    const [successMessage, setSuccessMessage] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
 
     // STATE: zoekterm input
     const [searchClient, setSearchClient] = useState("");
@@ -52,6 +52,10 @@ function Clients() {
     function handleClientAdded(newClient) {
         setClients((prev) => [...prev, newClient]);
         setShowForm(false);
+        setSuccessMessage("Nieuw klant toegevoegd");
+        setInterval(() => {
+            setSuccessMessage("");
+        }, 1500)
     }
 
     async function handleDeleteClient(clientId) {
@@ -72,7 +76,7 @@ function Clients() {
 
         } catch (err) {
             console.error("Fout bij verwijderen klant:", err);
-            alert("Kon de klant niet verwijderen.");
+            setError("Kon de klant niet verwijderen.")
         }
     }
 
@@ -125,6 +129,7 @@ function Clients() {
                                         <td>Klantnummer : {client.id}</td>
                                         <td>Voornaam : {client.name}</td>
                                         <td>E-mailadres : {client.email}</td>
+                                        <td>Telefoonnummer: {client.phone}</td>
                                         <td onClick={() => handleDeleteClient(client.id)} className="client-delete">
                                             🗑️ Klant verwijderen
                                         </td>
@@ -138,7 +143,7 @@ function Clients() {
                             </tbody>
                         </table>
                         {error && <p>Er is een fout opgetreden</p>}
-                        {successMessage && <p>Klant is succesvol verwijderd</p>}
+                        {successMessage && <p>{successMessage}</p>}
                     </section>
                 </section>
 

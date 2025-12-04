@@ -138,7 +138,7 @@ function Agenda() {
             time: time.slice(0, 5),
         });
 
-        refreshAppointments();
+        await refreshAppointments();
     };
 
 
