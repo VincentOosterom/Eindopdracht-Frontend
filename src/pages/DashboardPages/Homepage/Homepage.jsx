@@ -33,7 +33,6 @@ function Homepage() {
 
                 const getServices = api.get(`/services?companyId=${companyId}`);
 
-
                 const allServices = getServices.data;
                 setService(allServices);
 

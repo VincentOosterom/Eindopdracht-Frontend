@@ -21,7 +21,7 @@ function Clients() {
 
     // FILTER: filter klanten op zoekterm
     const filteredClients = clients.filter((client) =>
-        client.name.toLowerCase().includes(searchClient.toLowerCase())
+        client?.name?.toLowerCase().includes(searchClient.toLowerCase())
     );
 
     // API CALL: haal alle klanten op

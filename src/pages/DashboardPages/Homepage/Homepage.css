@@ -27,7 +27,8 @@
 
 .dashboard-today p {
     color: var(--color-black);
-    font-size: 1.5rem;
+    margin-top: 0.8rem;
+    font-size: 1.0rem;
 }
 
 /* ========== DASHBOARD BUTTON ========== */

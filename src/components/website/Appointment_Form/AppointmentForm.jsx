@@ -17,6 +17,7 @@ function AppointmentForm({ services, companyId, availabilities }) {
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
 
+
     // 1. Haal alle bestaande afspraken op voor dit bedrijf
     useEffect(() => {
         async function fetchAppointments() {
@@ -131,6 +132,7 @@ function AppointmentForm({ services, companyId, availabilities }) {
                 date: backendDate,
                 time: selectedTime,
             });
+
 
             setSuccess("Afspraak is succesvol geplaatst");
 

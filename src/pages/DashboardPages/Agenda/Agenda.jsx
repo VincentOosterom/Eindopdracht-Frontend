@@ -184,6 +184,14 @@ function Agenda() {
                         center: "title",
                         right: "dayGridMonth,timeGridWeek,timeGridDay"
                     }}
+
+                    buttonText={{
+                        today: "Vandaag",
+                        month: "Maand",
+                        week: "Week",
+                        day: "Dag",
+                        list: "Lijst"
+                    }}
                     ref={calendarRef}
                     locale="nl"
                     allDaySlot={false}
