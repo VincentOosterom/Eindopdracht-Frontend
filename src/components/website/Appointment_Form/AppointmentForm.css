@@ -7,7 +7,6 @@
     max-width: 500px;
     width: 100%;
     margin: auto;
-
 }
 
 .appointment-form h2 {
@@ -17,6 +16,14 @@
 
 .appointment-form label {
     margin-bottom: 1rem;
+}
+
+@media (max-width: 480px) {
+
+    .appointment-form {
+        width: 85%;
+        text-align: center;
+    }
 }
 
 

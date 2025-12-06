@@ -1,16 +1,18 @@
 import './AppointmentForm.css';
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import api from "../../../api/api";
-import { doTimesOverlap } from "../../../helpers/appointments";
+import {doTimesOverlap} from "../../../helpers/appointments";
 
 
-function AppointmentForm({ services, companyId, availabilities }) {
+function AppointmentForm({services, companyId, availabilities}) {
 
     const [clientName, setClientName] = useState('');
     const [clientEmail, setClientEmail] = useState('');
+    const [clientPhone, setClientPhone] = useState('');
     const [selectedService, setSelectedService] = useState('');
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedTime, setSelectedTime] = useState('');
+
 
     const [availableTimes, setAvailableTimes] = useState([]);
     const [appointments, setAppointments] = useState([]);
@@ -24,9 +26,9 @@ function AppointmentForm({ services, companyId, availabilities }) {
             const res = await api.get(`/appointments?companyId=${companyId}`);
             setAppointments(res.data);
         }
+
         fetchAppointments();
     }, [companyId]);
-
 
 
     // 3. Genereer alle tijden op basis van openingstijden + service duur + bestaande afspraken
@@ -109,15 +111,14 @@ function AppointmentForm({ services, companyId, availabilities }) {
         });
         setAvailableTimes(freeTimes);
 
-        }, [selectedDate, selectedService, appointments, services, availabilities]);
+    }, [selectedDate, selectedService, appointments, services, availabilities]);
 
 
     async function handleSubmit(e) {
         e.preventDefault();
 
         if (!clientName || !clientEmail || !selectedDate || !selectedTime) {
-            alert("Vul alle velden in.");
-            setError("Vul alle velden in");
+            setError("Vul alle velden in.");
             return;
         }
 
@@ -133,6 +134,12 @@ function AppointmentForm({ services, companyId, availabilities }) {
                 time: selectedTime,
             });
 
+            await api.post("/clients", {
+                companyId: Number(companyId),
+                name: clientName,
+                email: clientEmail,
+                phone: clientPhone,
+            });
 
             setSuccess("Afspraak is succesvol geplaatst");
 
@@ -141,25 +148,30 @@ function AppointmentForm({ services, companyId, availabilities }) {
             setSelectedService("");
             setSelectedDate("");
             setSelectedTime("");
+            setClientPhone("");
 
         } catch (err) {
             console.error(err);
-            alert("Kon de afspraak niet opslaan.");
+            setError("Kon de afspraak niet opslaan.");
         }
     }
 
     return (
         <form className="appointment-form" onSubmit={handleSubmit}>
             <h2>Maak hier uw afspraak</h2>
-
             <label>
                 Voornaam
-                <input value={clientName} onChange={(e) => setClientName(e.target.value)} />
+                <input value={clientName} onChange={(e) => setClientName(e.target.value)}/>
             </label>
 
             <label>
                 E-mail
-                <input value={clientEmail} onChange={(e) => setClientEmail(e.target.value)} />
+                <input value={clientEmail} onChange={(e) => setClientEmail(e.target.value)}/>
+            </label>
+
+            <label>
+                Telefoonnummer:
+                <input value={clientPhone} onChange={(e) => setClientPhone(e.target.value)}/>
             </label>
 
             <label>
