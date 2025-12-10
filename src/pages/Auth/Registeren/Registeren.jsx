@@ -9,13 +9,13 @@ function Register() {
         <>
             <header className="register-header">
                 <NavBar/>
-                <div className="register">
+                <section className="register">
                     <div className="register-title">
                         <h1>Tijdslot. De eerste 14 dagen gratis</h1>
                         <p>Maak een account aan en begin met het plannen van je afspraken.</p>
                     </div>
                     <RegisterForm/>
-                </div>
+                </section>
             </header>
             <Footer/>
         </>

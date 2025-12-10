@@ -8,6 +8,9 @@ function RegisterForm() {
     const [name, setName] = useState(""); // voornaam
     const [company, setCompany] = useState(""); // bedrĳfsnaam
     const [email, setEmail] = useState("");
+    const [street, setStreet] = useState("");
+    const [zip, setZip] = useState("");
+    const [city, setCity] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
@@ -85,6 +88,10 @@ function RegisterForm() {
                     name: company,
                     bio: "",
                     profileImageUrl: "",
+                    street: street,
+                    city: city,
+                    zip: zip,
+
                 },
             );
 
@@ -108,11 +115,6 @@ function RegisterForm() {
                     setError("Ongeldige invoer. Controleer je gegevens.");
                     return;
                 }
-
-                if (err.response?.status === 401 || err.response?.status === 403) {
-                    setError("Onvoldoende rechten om dit account aan te maken.");
-                    return;
-                }
             }
 
             setError("Er ging iets mis bij het registreren. Probeer opnieuw.");
@@ -121,7 +123,7 @@ function RegisterForm() {
         }
     }
 
-        return (
+    return (
         <section className="register-container">
             <form onSubmit={Register} className="register-form">
 
@@ -158,6 +160,27 @@ function RegisterForm() {
                         placeholder="Zakelijk e-mailadres"
                         onChange={(e) => setEmail(e.target.value)}
                     />
+                    <label htmlFor="zipcode">Postcode</label>
+                    <input type="text"
+                           id="zipcode"
+                           value={zip}
+                           placeholder="Uw postcode"
+                           onChange={(e) => setZip(e.target.value)}
+                    />
+                    <label htmlFor="city">Plaats</label>
+                    <input type="text"
+                           id="city"
+                           value={city}
+                           placeholder="Uw plaats"
+                           onChange={(e) => setCity(e.target.value)}
+                    />
+                    <label htmlFor="street">Straat & Huisnummer</label>
+                    <input type="text"
+                           id="street"
+                           value={street}
+                           placeholder="Straat & Huisnummer"
+                           onChange={(e) => setStreet(e.target.value)}
+                    />
 
                     <label htmlFor="company-password">Wachtwoord</label>
                     <input
@@ -190,10 +213,10 @@ function RegisterForm() {
                 <button type="submit" disabled={loading}>
                     {success ? "Uw account wordt aangemaakt..." : "Registreren"}
                 </button>
-
+                {error && <p className="error-message">{error}</p>}
             </form>
 
-            {error && <p className="error-message">{error}</p>}
+
         </section>
     );
 }

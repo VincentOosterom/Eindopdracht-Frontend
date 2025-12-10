@@ -31,7 +31,7 @@ function Homepage() {
                 const allAppointments = apptRes.data;
                 setAppointments(allAppointments);
 
-                const getServices = api.get(`/services?companyId=${companyId}`);
+                const getServices = await api.get(`/services?companyId=${companyId}`);
 
                 const allServices = getServices.data;
                 setService(allServices);
@@ -143,7 +143,7 @@ function Homepage() {
                             </li>
                             <li>
                                 <p>Totale omzet</p>
-                                <strong>€0</strong>
+                                <strong>0</strong>
                                 {/* omzet komt als jij services koppelt */}
                             </li>
                         </ul>

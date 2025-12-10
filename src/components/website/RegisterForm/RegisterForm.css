@@ -4,7 +4,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 850px;
+    max-width: 850px;
+    width: 100%;
     height: auto;
     border-radius: 15px;
     background: rgba(255, 255, 255, 0.01);
@@ -17,8 +18,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 40px;
-    max-width: 600px;
+    margin-bottom: 2rem;
+    max-width: 500px;
     width: 100%;
 }
 
@@ -30,10 +31,12 @@
 
 .register-form-title h2 {
     font-size: clamp(1.5rem, 2.5vw, 2rem);
+    margin-bottom: 0.4rem;
 }
 
 .register-form-title p {
     font-size: clamp(0.8rem, 2.5vw, 1rem);
+    margin-bottom: 0.4rem;
 }
 
 .register-form-inputs {
@@ -44,7 +47,7 @@
     min-width: 200px;
     max-width: 500px;
     width: 100%;
-    gap: 7px;
+    gap: 0.8rem;
 }
 
 .register-form-inputs label {
@@ -85,11 +88,7 @@
     color: white;
 }
 
-.error-message {
-    text-align: center;
-    color: red;
-    margin-bottom: 2rem;
-}
+
 
 .password-input.error {
     border: 2px solid #e63946;
@@ -115,7 +114,6 @@
 
     .register-form button{
         width: 100%;
-        background-color: #F6AD55;
     }
 
     .register-form-inputs input{
