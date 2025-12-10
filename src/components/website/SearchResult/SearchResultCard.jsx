@@ -8,7 +8,9 @@ function SearchResultCard({ company }) {
         id,
         name,
         bio,
-        address
+        street,
+        city,
+        zip,
     } = company;
 
     function handleGoCompanyPage(){
@@ -24,7 +26,9 @@ function SearchResultCard({ company }) {
                         {bio || "Dit bedrijf heeft nog geen beschrijving toegevoegd."}
                     </p>
 
-                    {address && <p className="address">{address}</p>}
+                    {street
+                        &&
+                        <p className="address">Onze adres: {street} - {zip} - {city}</p>}
 
                     <button className="book-btn" onClick={handleGoCompanyPage}>Boek nu</button>
                 </div>

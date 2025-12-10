@@ -7,6 +7,7 @@ function AccountInfo({company}) {
     const [name, setName] = useState(company.name || "");
     const [bio, setBio] = useState(company.bio || "");
 
+
     // Wachtwoord
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
@@ -89,6 +90,7 @@ function AccountInfo({company}) {
                         onChange={(e) => setBio(e.target.value)}
                     />
                 </label>
+
                 <button
                     type="submit"
                     onClick={handleSaveCompany}

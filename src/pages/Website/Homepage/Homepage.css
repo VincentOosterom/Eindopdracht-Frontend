@@ -16,6 +16,10 @@
     margin-bottom: 2rem;
 }
 
+.main p {
+    color: var(--color-text);
+}
+
 /* ========== SECTION 1 ========== */
 
 .search-result {

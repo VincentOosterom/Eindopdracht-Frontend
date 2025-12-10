@@ -14,7 +14,7 @@
 
     --color-primary: #F6AD55;
     --color-button: #000000;
-    --color-text: #00000;
+    --color-text: #ffffff;
     --color-bg: #ffffff;
     --color-white: #ffffff;
     --color-black: #000000;
@@ -83,6 +83,7 @@ input, textarea, select {
     padding: 10px;
     font-family: var(--font-body), serif;
     font-size: 1rem;
+    max-width: 500px;
     width: 100%;
     box-sizing: border-box;
 }

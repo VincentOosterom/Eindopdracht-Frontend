@@ -20,6 +20,7 @@ function Home() {
             try {
                 const res = await api.get("/companies");
                 setCompanies(res.data);
+                console.log(res.data);
             } catch (err) {
                 console.error("Kon bedrijven niet ophalen:", err);
             } finally {
@@ -64,13 +65,14 @@ function Home() {
                                 description={company.bio}
                                 image={company.profileImageUrl}
                                 company={company}
-                                address={company.address}
+                                street={company.street}
+                                city={company.city}
+                                zipcode={company.zipcode}
                                 name="Boek nu"
                             />
                         ))}
                     </div>
                 </section>
-
                 <section className="how-it-works">
                     <h2>Hoe werkt het?</h2>
                     <div className="how-it-works-grid">
@@ -91,9 +93,7 @@ function Home() {
                         />
                     </div>
                 </section>
-
             </main>
-
             <Footer />
         </>
     );

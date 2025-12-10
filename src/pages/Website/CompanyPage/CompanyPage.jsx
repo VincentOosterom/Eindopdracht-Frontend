@@ -77,7 +77,7 @@ function CompanyPage() {
                                 )
                                 }
                             </div>
-                            <div className="company-info-services">
+                            <article className="company-info-services">
                                 <h3>Onze diensten</h3>
                                 {services.length > 0 ? (
                                     services.map((service) => (
@@ -88,7 +88,7 @@ function CompanyPage() {
                                 ) : (
                                     <p>Geen diensten gevonden</p>
                                 )}
-                            </div>
+                            </article>
                         </article>
                     </div>
 

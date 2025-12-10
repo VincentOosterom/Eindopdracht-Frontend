@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
 import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
 import AccountInfo from "../../../components/dashboard/AccountInfo/AccountInfo.jsx";
@@ -8,9 +8,10 @@ import api from "../../../api/api.js";
 import "./Settings.css";
 
 function Settings() {
-    const { companyId } = useParams();
+    const {companyId} = useParams();
 
     const [company, setCompany] = useState(null);
+    const [user, setUser] = useState(null);
     const [services, setServices] = useState([]);
     const [days, setDays] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -26,6 +27,10 @@ function Settings() {
                 const servicesRes = await api.get(`/services?companyId=${companyId}`);
                 setServices(servicesRes.data);
 
+                const users = await api.get(`/users?companyId=${companyId}`);
+                setUser(users.data);
+                console.log(users.data);
+
                 // 3. OPENINGSTIJDEN OPHALEN
                 const availRes = await api.get(`/availabilities?companyId=${companyId}`);
                 setDays(availRes.data);
@@ -40,20 +45,21 @@ function Settings() {
         loadData();
     }, [companyId]);
 
+
     if (loading) return <p>Instellingen laden...</p>;
     if (!company) return <p>Bedrijf niet gevonden.</p>;
 
     return (
         <div className="dashboard">
-            <SideBar />
+            <SideBar/>
             <main className="dashboard-main">
-                <HeaderDashboard title="Instellingen" company={company.name} />
+                <HeaderDashboard title="Instellingen" company={company.name}/>
 
                 {/* Bedrijfsgegevens */}
-                <AccountInfo company={company}  />
+                <AccountInfo company={company} user={user}/>
 
                 {/* Dienstaanbod + openingstijden */}
-                <AccountSchedule days={days} services={services} companyId={companyId} />
+                <AccountSchedule days={days} services={services} companyId={companyId}/>
             </main>
         </div>
     );
