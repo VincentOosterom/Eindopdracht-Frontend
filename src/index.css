@@ -14,7 +14,7 @@
 
     --color-primary: #F6AD55;
     --color-button: #000000;
-    --color-text: #ffffff;
+    --color-text: #000000;
     --color-bg: #ffffff;
     --color-white: #ffffff;
     --color-black: #000000;
@@ -47,6 +47,10 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
+p, label{
+    color: var(--color-black);
+}
+
 /* ========== BUTTONS ========== */
 button {
     background-color: var(--color-black);
@@ -66,12 +70,12 @@ button:hover {
 
 
 /* ========== ERROR & SUCCES MESSAGE ========== */
-.succes-message  {
+.succes-message {
     color: var(--color-green);
     margin-top: 0.8rem;
 }
 
-.error-message  {
+.error-message {
     color: var(--color-red);
     margin-top: 0.8rem;
 }

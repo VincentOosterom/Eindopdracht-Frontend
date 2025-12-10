@@ -44,14 +44,15 @@
 }
 
 .delete-btn {
-    background: var(--color-black);
+    background: transparent;
     color: white;
     border: none;
     padding: 6px 10px;
     margin-bottom: 0.5rem;
+    margin-left: 0.5rem;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .services-btn {

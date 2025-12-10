@@ -309,7 +309,6 @@ function AccountSchedule({days, services, companyId}) {
                                     handleServiceChange(index, "price", numberValue);
                                 }}
                             />
-
                             <button
                                 type="button"
                                 className="delete-btn"

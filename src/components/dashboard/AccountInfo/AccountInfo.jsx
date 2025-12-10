@@ -1,4 +1,4 @@
-import { useState} from "react";
+import {useState} from "react";
 import api from "../../../api/api";
 import "./AccountInfo.css";
 
@@ -17,10 +17,12 @@ function AccountInfo({company}) {
 
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
 
     // ====== HANDLE COMPANY INFO SAVE ======
     async function handleSaveCompany() {
+        setLoading(false);
         try {
             await api.patch(`/companies/${company.id}`, {
                 name,
@@ -34,6 +36,7 @@ function AccountInfo({company}) {
             console.error(err);
             setError("Bijwerken mislukt.");
         }
+        setLoading(false);
     }
 
     // ====== HANDLE PASSWORD CHANGE ======
@@ -73,7 +76,8 @@ function AccountInfo({company}) {
     return (
         <section className="account-info">
             <h2>Bedrijfsgegevens</h2>
-            <div className="company-data">
+            <article
+                className="company-data">
                 <label>
                     Bedrijfsnaam
                     <input
@@ -94,11 +98,11 @@ function AccountInfo({company}) {
                 <button
                     type="submit"
                     onClick={handleSaveCompany}
-                    className="account-button">
+                    className="account-button"
+                    disabled={loading}>
                     Bedrijfsinformatie opslaan
                 </button>
-
-            </div>
+            </article>
 
 
             {/* 🟢 WACHTWOORD MUTATION */}

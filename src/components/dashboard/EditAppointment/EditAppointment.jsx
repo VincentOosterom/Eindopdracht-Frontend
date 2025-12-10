@@ -19,7 +19,7 @@ function EditAppointmentModal({
     const [clientEmail, setClientEmail] = useState(event.extendedProps.clientEmail);
     const [serviceId, setServiceId] = useState(initialService?.id || "");
     const [date, setDate] = useState(event.start.toISOString().slice(0, 10));
-    const [time, setTime] = useState(event.start.toISOString().slice(11, 16));
+    const [time, setTime] = useState(event.start.toLocaleTimeString("en-Gb", {hour: "2-digit", minute: "2-digit"}));
 
     return (
         <div className="modal-overlay" onClick={onClose}>

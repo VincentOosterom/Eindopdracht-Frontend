@@ -1,5 +1,3 @@
-
-
 .agenda-container {
     display: flex;
     flex: 1;
@@ -98,14 +96,11 @@
 
 /* MOBIEL: toolbar knoppen kleiner en niet te breed */
 @media (max-width: 768px) {
-    .agenda{
-
-    }
     .fc-header-toolbar {
         flex-wrap: nowrap;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
-        gap: 4px;
+        gap: 0.4rem;
     }
 
     .fc-toolbar-title {
