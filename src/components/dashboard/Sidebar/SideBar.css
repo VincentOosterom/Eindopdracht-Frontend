@@ -66,7 +66,18 @@
     align-items: center;
     margin-top: auto;
     cursor: pointer;
+    color: var(--color-white);
+    background-color: black;
+}
+
+.logout-btn:hover {
+    background-color: var(--color-primary);
     color: var(--color-black);
+}
+
+.logout-btn span {
+    font-size: 1rem;
+
 }
 
 

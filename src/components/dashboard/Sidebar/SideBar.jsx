@@ -1,23 +1,38 @@
-import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {NavLink, useNavigate, useParams,} from "react-router-dom";
 import "./SideBar.css"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faHome, faCalendar, faPerson, faGear, faBackwardStep} from '@fortawesome/free-solid-svg-icons';
+import {
+    faHome,
+    faCalendar,
+    faPerson,
+    faGear,
+    faSpinner,
+    faRightFromBracket
+} from '@fortawesome/free-solid-svg-icons';
+import {useState} from "react";
 
 
 
 function SideBar() {
     const navigate = useNavigate();
-    const { companyId } = useParams();
+    const { companyId } = useParams()
+    const [loading, setLoading] = useState(false)
+
 
     function handleLogout() {
-        navigate("/inloggen");
+        setLoading(true)
+        localStorage.removeItem("token");
+        setTimeout(() => {
+            setLoading(false)
+            navigate("/inloggen");
+        }, 1500);
 
     }
 
     return (
         <>
             <aside className="sidebar">
-                <div className="content">
+                <section className="content">
                     <div className="logo-sidebar">
                         <h3>Tijdslot</h3>
                     </div>
@@ -43,13 +58,18 @@ function SideBar() {
                             </li>
                         </ul>
                     </nav>
-                    <div className="logout-btn" onClick={handleLogout}>
-                        <FontAwesomeIcon icon={faBackwardStep} className="icon"/>
-                        <h3>
-                           <span>Uitloggen</span>
-                        </h3>
-                    </div>
-                </div>
+                    <button className="logout-btn" onClick={handleLogout} disabled={loading}>
+                        <FontAwesomeIcon
+                            icon={loading ? faSpinner : faRightFromBracket}
+                            spin={loading}
+                            className="icon"
+                        />
+
+                        <span>
+                            {loading ? "Uitloggen..." : "Uitloggen"}
+                        </span>
+                    </button>
+                </section>
             </aside>
         </>
     )
