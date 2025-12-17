@@ -122,6 +122,12 @@ function AppointmentForm({services, companyId, availabilities}) {
             return;
         }
 
+        const selectedDateTime = new Date(`${selectedDate}T${selectedTime}`);
+        if (selectedDateTime < new Date()) {
+            setError("Je kunt geen afspraak in het verleden maken.");
+            return;
+        }
+
         const backendDate = selectedDate.split("-").reverse().join("-");
 
         try {
@@ -195,7 +201,9 @@ function AppointmentForm({services, companyId, availabilities}) {
                     type="date"
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
+                    min={new Date().toISOString().split("T")[0]}
                 />
+
             </label>
 
             <label>
