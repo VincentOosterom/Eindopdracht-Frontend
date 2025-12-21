@@ -1,57 +1,53 @@
-import './NavBar.css'
+import "./NavBar.css";
 import {useEffect, useState} from "react";
 import {NavLink} from "react-router-dom";
 
-
 function NavBar() {
     const [isOpen, setIsOpen] = useState(false);
-    const [scrollY, setScrollY] = useState(0);
-    const toggleMenu = () => setIsOpen(!isOpen);
+    const [hideBurger, setHideBurger] = useState(false);
 
-    // Houd scroll in de gaten, zodra naar beneden, hamburger verdwijnt.
+    const toggleMenu = () => setIsOpen(prev => !prev);
+    const closeMenu = () => setIsOpen(false);
+
     useEffect(() => {
+        let lastScroll = 0;
+
         function handleScroll() {
-            const y = window.scrollY || window.pageYOffset;
-            setScrollY(y);
+            const current = window.scrollY;
+            setHideBurger(current > lastScroll && current > 50);
+            lastScroll = current;
         }
+
         window.addEventListener("scroll", handleScroll, {passive: true});
-        handleScroll();
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        }
-    })
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     return (
         <nav className="navbar">
             <div className="app-logo">
                 <p className="logo"> Tijdslot</p>
             </div>
-            <div className={`hamburger ${scrollY  ? "hidden" : ""}`} onClick={toggleMenu}>
-                ☰
-            </div>
+            <button
+                className={`hamburger ${isOpen ? "open" : ""} ${hideBurger ? "hidden" : ""}`}
+                onClick={toggleMenu}
+                aria-label="Menu"
+            >
+                <span/>
+                <span/>
+                <span/>
+            </button>
+
             <ul className={`nav-links ${isOpen ? "open" : ""}`}>
-                <li>
-                    <NavLink
-                        to="/" className={({isActive}) => isActive ? " active" : ""}
-                    >
-                        Home
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink
-                        to="/inloggen"
-                        className={({ isActive }) => (isActive ? "active" : "")}
-                    >
-                        Inloggen
-                    </NavLink>
-                </li>
-                <li className="button-register">
-                    <NavLink to="/registeren" className={({ isActive }) => (isActive ? "active" : "")}>Registreren</NavLink>
+                <li><NavLink to="/" onClick={closeMenu}>Home</NavLink></li>
+                <li><NavLink to="/inloggen" onClick={closeMenu}>Inloggen</NavLink></li>
+                <li className="cta">
+                    <NavLink to="/registeren" onClick={closeMenu}>Registreren</NavLink>
                 </li>
             </ul>
-        </nav>
 
-    )
+            {isOpen && <div className="backdrop" onClick={closeMenu}/>}
+        </nav>
+    );
 }
 
 export default NavBar;

@@ -3,7 +3,7 @@
     position: sticky;
     top: 0;
     height: 100vh;
-    overflow-y: auto; /* als de sidebar zelf te lang is */
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -20,7 +20,7 @@
 
 .logo-sidebar h3 {
     color: var(--color-black);
-    font-size: 2.5rem;
+    font-size: clamp(1rem, 2.5vw, 3.5rem);
 }
 
 .content {
@@ -97,11 +97,8 @@
         padding: 20px;
     }
 
-    .logo-sidebar h3 {
-        display: none
-    }
 
-    .nav-sidebar ul{
+    .nav-sidebar ul {
         gap: 50px;
         padding: 0;
     }
@@ -124,15 +121,15 @@
         font-size: 0.8rem;
     }
 
-    .nav-sidebar ul li .icon{
+    .nav-sidebar ul li .icon {
         margin: 0 auto;
     }
 
-    .nav-sidebar ul li span{
+    .nav-sidebar ul li span {
         display: none;
     }
 
-    .logout-btn span{
+    .logout-btn span {
         display: none;
     }
 
@@ -141,8 +138,6 @@
         padding: 5px;
         background-color: var(--color-bg);
     }
-
-
 
 
 }

@@ -1,7 +1,15 @@
+/* ========== ACCOUNT INFO ========== */
+
 .account-info {
     display: flex;
     flex-direction: column;
+}
+
+.account-info-compleet {
+    display: flex;
+    flex-direction: row;
     gap: 0.8rem;
+    margin-top: 0.8rem;
 }
 
 .account-info label {
@@ -18,6 +26,16 @@
     flex-direction: column;
     gap: 0.8rem;
     max-width: 500px;
+    width: 100%;
+}
+
+/* ========== PASSWORD FORM ========== */
+
+.password-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    width: 100%;
 }
 
 .account-button {
@@ -27,6 +45,16 @@
 .account-button:disabled {
     opacity: 0.8;
     cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+
+    .account-info-compleet {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        margin-top: 0.8rem;
+    }
 
 }
 

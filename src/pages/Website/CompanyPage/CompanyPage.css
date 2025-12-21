@@ -1,5 +1,4 @@
 /* ========== Company Page ========== */
-
 .company-page-header {
     height: auto;
     background: linear-gradient(0deg, #000 12.02%, #F6AD55 100%);
@@ -60,6 +59,14 @@
 /* ========== MEDIA QUERIES ========== */
 @media (max-width: 480px) {
 
+    .loading-message-company {
+        display: flex;
+        align-content: center;
+        justify-content: center;
+        font-family: var(--font-heading), serif;
+
+    }
+
     .full-info-section {
         flex-direction: column;
     }
@@ -79,7 +86,7 @@
         width: 100%;
     }
 
-    .appointment-content{
+    .appointment-content {
         max-width: 400px;
         width: 100%;
         margin-bottom: 1rem;

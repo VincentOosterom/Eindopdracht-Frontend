@@ -18,6 +18,7 @@ function AppointmentForm({services, companyId, availabilities}) {
     const [appointments, setAppointments] = useState([]);
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
 
     // 1. Haal alle bestaande afspraken op voor dit bedrijf
@@ -130,6 +131,11 @@ function AppointmentForm({services, companyId, availabilities}) {
 
         const backendDate = selectedDate.split("-").reverse().join("-");
 
+        setLoading(false);
+        setTimeout(() => {
+            setLoading(true)
+        }, 1500);
+
         try {
             await api.post("/appointments", {
                 companyId: Number(companyId),
@@ -203,7 +209,6 @@ function AppointmentForm({services, companyId, availabilities}) {
                     onChange={(e) => setSelectedDate(e.target.value)}
                     min={new Date().toISOString().split("T")[0]}
                 />
-
             </label>
 
             <label>
@@ -219,9 +224,9 @@ function AppointmentForm({services, companyId, availabilities}) {
                 </select>
             </label>
 
-            <button type="submit">Afspraak maken</button>
-            {success && <p className="succes-message">{success}</p>}
-            {error && <p className="error-message">{error}</p>}
+            <button type="submit">{loading ? "Afspraak wordt gemaakt" : "Afspraak maken"}</button>
+            {success && <p className="succes-message form-success">{success}</p>}
+            {error && <p className="error-message form-error">{error}</p>}
         </form>
     );
 }

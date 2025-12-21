@@ -20,10 +20,15 @@
     color: var(--color-black);
 }
 
-@media (max-width: 480px) {
+.form-success,
+.form-error {
+    text-align: center;
+}
 
+
+@media (max-width: 480px) {
     .appointment-form {
-        width: 85%;
+        width: 90%;
         text-align: center;
     }
 }
