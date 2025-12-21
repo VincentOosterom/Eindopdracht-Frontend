@@ -5,6 +5,7 @@ import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import api from "../../../api/api.js";
 import AddClientForm from "../../../components/dashboard/AddClientForm/AddClientForm.jsx";
+import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 
 
 function Clients() {
@@ -46,7 +47,7 @@ function Clients() {
         fetchClients();
     }, [companyId]); // opnieuw laden wanneer companyId verandert
 
-    if (loading) return <p>Klanten worden geladen</p>;
+    if (loading) return <DashboardLoader text="Klanten laden..."/>;
     if (!company) return <p>Bedrijf niet gevonden.</p>;
 
     function handleClientAdded(newClient) {

@@ -1,15 +1,15 @@
 import "./Homepage.css";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
 import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
-import { useNavigate, useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import api from "../../../api/api.js";
-import { convertToISO } from "../../../helpers/date.js"; // pad evt. a
-
+import {convertToISO, getEndOfWeek, getStartOfWeek} from "../../../helpers/date.js";
+import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx"; // pad evt. a
 
 
 function Homepage() {
-    const { companyId } = useParams();
+    const {companyId} = useParams();
     const navigate = useNavigate();
 
     const [company, setCompany] = useState(null);
@@ -17,6 +17,13 @@ function Homepage() {
     const [appointmentsToday, setAppointmentsToday] = useState([]);
     const [loading, setLoading] = useState(true);
     const [services, setService] = useState([]);
+
+    const [error, setError] = useState("");
+
+
+    function handleGoToAgenda() {
+        navigate(`/dashboard/${companyId}/agenda`);
+    }
 
     useEffect(() => {
         async function loadDashboard() {
@@ -29,23 +36,28 @@ function Homepage() {
                 const apptRes = await api.get(
                     `/appointments?companyId=${companyId}`
                 );
+
+                // Alle afspraken opslaan in variable
                 const allAppointments = apptRes.data;
                 setAppointments(allAppointments);
 
+                // Service ophalen
                 const getServices = await api.get(`/services?companyId=${companyId}`);
 
+                // Alle services opslaan in variable
                 const allServices = getServices.data;
                 setService(allServices);
+                console.log(allServices);
+
 
                 const todayIso = new Date().toISOString().split("T")[0];
 
                 const todayList = allAppointments.filter(
                     (appt) => convertToISO(appt.date) === todayIso
                 );
-
                 setAppointmentsToday(todayList);
-            } catch (err) {
-                console.error("Fout bij ophalen dashboard data:", err);
+            } catch {
+                setError("Fout bij ophalen dashboard gegevens");
             } finally {
                 setLoading(false);
             }
@@ -54,26 +66,38 @@ function Homepage() {
         loadDashboard();
     }, [companyId]);
 
-    function handleGoToAgenda() {
-        navigate(`/dashboard/${companyId}/agenda`);
-    }
 
-    if (loading) return <p>Dashboard laden...</p>;
+    // eerst laden - geen bedrijf gevonden? dan return
+    if (loading) return <DashboardLoader text="Homepage laden.." />;
     if (!company) return <p>Bedrijf niet gevonden.</p>;
 
     const nextAppointment = appointmentsToday[0];
 
+    // Aantal afspraken per week tonen
+    const now = new Date();
+    const startOfWeek = getStartOfWeek(now);
+    const endOfWeek = getEndOfWeek(now);
+
+    const appointmentsThisWeek = appointments.filter((a) => {
+        if (!a.date) return false;
+        const iso = convertToISO(a.date);        // "11-12-2025" → "2025-12-11"
+        const date = new Date(`${iso}T00:00:00`);
+        return date >= startOfWeek && date <= endOfWeek;
+    });
+
     return (
         <div className="dashboard">
-            <SideBar />
+            <SideBar/>
             <main className="dashboard-main">
+
+                {/*Deze heb ik express hier gezet omdat die dan gelijk zichtbaar is*/}
+                {error && <p className="error-message">{error}</p>}
 
                 {/* HEADER */}
                 <HeaderDashboard
                     title="Welkom terug,"
                     company={company.name ?? ""}
                 />
-
                 {/* SECTION: Vandaag */}
                 <section className="dashboard-today">
                     <article>
@@ -84,9 +108,9 @@ function Homepage() {
                     <article>
                         <h3>Volgende afspraak</h3>
                         <p>
-                            {appointmentsToday.length > 0
+                            {nextAppointment
                                 ? `${nextAppointment.time} - ${nextAppointment.clientName}`
-                                : "Geen afspraken gepland"}
+                                : "Geen afspraken meer vandaag"}
                         </p>
                     </article>
 
@@ -117,6 +141,7 @@ function Homepage() {
                                     <tr key={appt.id}>
                                         <td>{appt.time}</td>
                                         <td>{appt.clientName}</td>
+                                        <td>{services.name}</td>
 
                                     </tr>
                                 ))
@@ -140,7 +165,7 @@ function Homepage() {
                         <ul className="stats-list">
                             <li>
                                 <p>Afspraken deze week</p>
-                                <strong>{appointments.length}</strong>
+                                <strong>{appointmentsThisWeek.length}</strong>
                             </li>
                             <li>
                                 <p>Totale omzet</p>
@@ -150,7 +175,6 @@ function Homepage() {
                         </ul>
                     </article>
                 </section>
-
             </main>
         </div>
     );
