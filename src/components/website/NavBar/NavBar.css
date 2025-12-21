@@ -9,12 +9,13 @@
     padding: 20px 20px;
 }
 
+
+/* ========== LOGO ========== */
 .logo {
     font-size: clamp(2rem, 4vw, 2.5rem);
     font-family: Kavoon, sans-serif;
     color: white;
     margin-top: 10px;
-
 }
 
 .logo a {
@@ -22,6 +23,7 @@
     text-decoration: none;
 }
 
+/* ========== NAV-LINKS ========== */
 .nav-links {
     display: flex;
     align-items: center;
@@ -35,12 +37,6 @@
     list-style: none;
 }
 
-.hamburger {
-    display: none;
-    font-size: 2rem;
-    cursor: pointer;
-}
-
 .nav-links li a {
     text-decoration: none;
     color: white;
@@ -48,7 +44,14 @@
 
 .active {
     color: white;
-    border-bottom: 3px solid white;
+    border-bottom: 2px solid white;
+}
+
+/* ========== HAMBURGER ========== */
+.hamburger {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
 }
 
 .button-register {
@@ -56,6 +59,7 @@
     padding: 10px;
     border-radius: 10px;
 }
+
 
 /* ========== MEDIA QUERIES ========== */
 @media (max-width: 480px) {
@@ -71,34 +75,67 @@
         position: fixed;
         top: 20px;
         left: 30px;
-        color: white;
+        background-color: transparent;
     }
 
-    .nav-links {
+    .hamburger.hidden {
         display: none;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 20px;
+        height: 2px;
+        background-color: white;
+        border-radius: 2px;
+        margin: 5px 0;
+        transition: transform 0.3s ease, opacity 0.2s ease;
+    }
+
+    .hamburger:hover {
+        background-color: transparent;
+    }
+
+    .hamburger.open span:nth-child(1) {
+        transform: translateY(8px) rotate(50deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+        transform: translateY(-8px) rotate(-50deg);
+    }
+
+    /* ========== NAV-LINKS ========== */
+    .nav-links {
+        display: flex;
         flex-direction: column;
         background: #111;
         position: fixed;
         top: 60px;
-        right: 0;
         left: 10px;
         width: 200px;
         padding: 20px;
-        border-radius: 10px 10px;
+        border-radius: 10px;
+        opacity: 0;
+        transform: translateY(-10px);
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .nav-links.open {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
     }
 
     .button-register {
         background-color: #F6AD55;
         padding: 10px;
         border-radius: 10px;
-    }
-
-    .nav-links.open {
-        display: flex;
-    }
-
-    .hamburger.hidden {
-        display: none;
     }
 }
 

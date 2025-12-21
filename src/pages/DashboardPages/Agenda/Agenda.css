@@ -6,7 +6,7 @@
 }
 
 .agenda-container h1 {
-    color: var(--color-primary);
+    color: var(--color-black);
     font-size: clamp(1.3rem, 4vw, 2rem);
     margin-bottom: 1rem;
 }

@@ -76,76 +76,77 @@ function AccountInfo({company}) {
     return (
         <section className="account-info">
             <h2>Bedrijfsgegevens</h2>
-            <article
-                className="company-data">
-                <label>
-                    Bedrijfsnaam
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </label>
-                <label>
-                    Bio / Beschrijving
-                    <textarea
-                        rows="3"
-                        value={bio}
-                        onChange={(e) => setBio(e.target.value)}
-                    />
-                </label>
+            <section className="account-info-compleet">
+                <article
+                    className="company-data">
+                    <label>
+                        Bedrijfsnaam
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        Bio / Beschrijving
+                        <textarea
+                            rows="3"
+                            value={bio}
+                            onChange={(e) => setBio(e.target.value)}
+                        />
+                    </label>
 
-                <button
-                    type="submit"
-                    onClick={handleSaveCompany}
-                    className="account-button"
-                    disabled={loading}>
-                    Bedrijfsinformatie opslaan
-                </button>
-            </article>
+                    <button
+                        type="submit"
+                        onClick={handleSaveCompany}
+                        className="account-button"
+                        disabled={loading}>
+                        Bedrijfsinformatie opslaan
+                    </button>
+                </article>
 
 
-            {/* 🟢 WACHTWOORD MUTATION */}
-            <form onSubmit={handlePasswordChange} className="password-form">
-                <h2>Wachtwoord wijzigen</h2>
+                {/* 🟢 WACHTWOORD MUTATION */}
+                <form onSubmit={handlePasswordChange} className="password-form">
 
-                <label>
-                    Huidig wachtwoord
-                    <input
-                        type="password"
-                        value={oldPassword}
-                        onChange={(e) => setOldPassword(e.target.value)}
-                        required
-                    />
-                </label>
+                    <label>
+                        Huidig wachtwoord
+                        <input
+                            type="password"
+                            value={oldPassword}
+                            onChange={(e) => setOldPassword(e.target.value)}
+                            required
+                        />
+                    </label>
 
-                <label>
-                    Nieuw wachtwoord
-                    <input
-                        type="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        required
-                    />
-                </label>
+                    <label>
+                        Nieuw wachtwoord
+                        <input
+                            type="password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            required
+                        />
+                    </label>
 
-                <label>
-                    Herhaal nieuw wachtwoord
-                    <input
-                        type="password"
-                        value={confirmNewPassword}
-                        onChange={(e) => setConfirmNewPassword(e.target.value)}
-                        required
-                    />
-                </label>
+                    <label>
+                        Herhaal nieuw wachtwoord
+                        <input
+                            type="password"
+                            value={confirmNewPassword}
+                            onChange={(e) => setConfirmNewPassword(e.target.value)}
+                            required
+                        />
+                    </label>
 
-                <button type="submit" className="account-button">
-                    Wachtwoord wijzigen
-                </button>
-            </form>
+                    <button type="submit" className="account-button">
+                        Wachtwoord wijzigen
+                    </button>
+                </form>
 
-            {success && <p className="success-message">{success}</p>}
-            {error && <p className="error-message">{error}</p>}
+                {success && <p className="success-message">{success}</p>}
+                {error && <p className="error-message">{error}</p>}
+            </section>
         </section>
     );
 }

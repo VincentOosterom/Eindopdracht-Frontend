@@ -10,6 +10,7 @@ import {
     faRightFromBracket
 } from '@fortawesome/free-solid-svg-icons';
 import {useState} from "react";
+import {useAuth} from "../../../context/AuthContext.jsx";
 
 
 
@@ -17,15 +18,16 @@ function SideBar() {
     const navigate = useNavigate();
     const { companyId } = useParams()
     const [loading, setLoading] = useState(false)
+    const { logout } = useAuth();
 
 
     function handleLogout() {
-        setLoading(true)
-        localStorage.removeItem("token");
+        setLoading(true);
         setTimeout(() => {
-            setLoading(false)
-            navigate("/inloggen");
+            setLoading(false);
         }, 1500);
+        logout();
+        navigate("/inloggen");
 
     }
 

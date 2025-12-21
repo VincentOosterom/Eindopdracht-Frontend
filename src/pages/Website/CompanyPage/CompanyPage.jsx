@@ -49,9 +49,8 @@ function CompanyPage() {
         fetchServices();
     }, [companyId]);
 
-
+    if (loading) return <p className="loading-message-company">Loading...</p>;
     if (!company) return <p>Bedrijf niet gevonden</p>;
-    if (loading) return <p>Loading...</p>;
 
     return (
         <>

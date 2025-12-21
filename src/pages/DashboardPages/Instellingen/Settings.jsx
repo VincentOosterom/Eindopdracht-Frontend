@@ -29,7 +29,6 @@ function Settings() {
 
                 const users = await api.get(`/users?companyId=${companyId}`);
                 setUser(users.data);
-                console.log(users.data);
 
                 // 3. OPENINGSTIJDEN OPHALEN
                 const availRes = await api.get(`/availabilities?companyId=${companyId}`);
