@@ -6,6 +6,7 @@ import AccountInfo from "../../../components/dashboard/AccountInfo/AccountInfo.j
 import AccountSchedule from "../../../components/dashboard/AccountSchedule/AccountSchedule.jsx";
 import api from "../../../api/api.js";
 import "./Settings.css";
+import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 
 function Settings() {
     const {companyId} = useParams();
@@ -45,7 +46,7 @@ function Settings() {
     }, [companyId]);
 
 
-    if (loading) return <p>Instellingen laden...</p>;
+    if (loading) return <DashboardLoader text="Instellingen laden..."/>;
     if (!company) return <p>Bedrijf niet gevonden.</p>;
 
     return (

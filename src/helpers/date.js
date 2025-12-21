@@ -16,3 +16,20 @@ export function isToday(dateString) {
     const today = new Date().toISOString().split("T")[0];
     return iso === today;
 }
+
+ export function getStartOfWeek(date) {
+    const d = new Date(date);
+    const day = d.getDay(); // 0 = zondag
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1); // maandag
+    d.setDate(diff);
+    d.setHours(0, 0, 0, 0);
+    return d;
+}
+
+export function getEndOfWeek(date) {
+    const start = getStartOfWeek(date);
+    const end = new Date(start);
+    end.setDate(start.getDate() + 6);
+    end.setHours(23, 59, 59, 999);
+    return end;
+}

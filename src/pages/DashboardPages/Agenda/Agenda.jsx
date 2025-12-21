@@ -10,6 +10,7 @@ import { convertToISO } from "../../../helpers/date.js";
 import { calculateEndTime } from "../../../helpers/time.js";
 import { useParams } from "react-router-dom";
 import EditAppointmentModal from "../../../components/dashboard/EditAppointment/EditAppointment.jsx";
+import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 
 function Agenda() {
     const { companyId } = useParams();
@@ -36,7 +37,6 @@ function Agenda() {
         }
         fetchCompany();
     }, [companyId]);
-
 
     // ============== 2. Services ophalen ==============
     useEffect(() => {
@@ -89,6 +89,7 @@ function Agenda() {
             refreshAppointments();
         }
     }, [services, companyId]);
+
 
 
     // ====================== 4. Layout responsive ======================
@@ -167,8 +168,6 @@ function Agenda() {
         refreshAppointments();
         setShowModal(false);
     }
-
-
     return (
         <div className="dashboard">
             <SideBar />

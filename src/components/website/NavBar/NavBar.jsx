@@ -13,9 +13,9 @@ function NavBar() {
         let lastScroll = 0;
 
         function handleScroll() {
-            const current = window.scrollY;
-            setHideBurger(current > lastScroll && current > 50);
-            lastScroll = current;
+            lastScroll = window.scrollY;
+            setHideBurger(lastScroll > 0);
+
         }
 
         window.addEventListener("scroll", handleScroll, {passive: true});
@@ -25,7 +25,7 @@ function NavBar() {
     return (
         <nav className="navbar">
             <div className="app-logo">
-                <p className="logo"> Tijdslot</p>
+                <p className="logo">Tijdslot</p>
             </div>
             <button
                 className={`hamburger ${isOpen ? "open" : ""} ${hideBurger ? "hidden" : ""}`}
