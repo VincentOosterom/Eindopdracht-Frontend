@@ -7,12 +7,15 @@ import calender from "../../../assets/calender.svg";
 import Header from "../../../components/website/Header/Header.jsx";
 import Footer from "../../../components/website/Footer/Footer.jsx";
 import api from "../../../api/api";
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
+import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 
 function Home() {
     const [query, setQuery] = useState("");
     const [companies, setCompanies] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [visibleCount, setVisibleCount] = useState(6);
+
 
     // ✔ ECHTE BEDRIJVEN OPHALEN UIT DE NOVI-API
     useEffect(() => {
@@ -20,7 +23,6 @@ function Home() {
             try {
                 const res = await api.get("/companies");
                 setCompanies(res.data);
-                console.log(res.data);
             } catch (err) {
                 console.error("Kon bedrijven niet ophalen:", err);
             } finally {
@@ -30,6 +32,8 @@ function Home() {
 
         fetchCompanies();
     }, []);
+
+    const MAX_RESULTS = 6;
 
     // ✔ FILTEREN OP NAAM
     const filteredCompanies = query
@@ -51,14 +55,14 @@ function Home() {
 
                 <section className="search-result">
                     <h2>Zoek resultaten</h2>
-
-                    {loading && <p>Bedrijven laden...</p>}
+                    {loading && <p className="loading-message">Bedrijven laden</p>}
+                    {!loading && filteredCompanies.length === 0 && (
+                        <p className="loading-message">Geen bedrijven gevonden…</p>)}
 
                     <div className="search-result-grid">
-                        {!loading && filteredCompanies.length === 0 && (
-                            <p>Geen bedrijven gevonden…</p>)}
-
-                        {filteredCompanies.map((company) => (
+                        {filteredCompanies
+                            .slice(0, visibleCount)
+                            .map((company) => (
                             <SearchResultCard
                                 key={company.id}
                                 title={company.name}
@@ -71,6 +75,12 @@ function Home() {
                                 name="Boek nu"
                             />
                         ))}
+
+                        {filteredCompanies.length > visibleCount && (
+                            <button onClick={() => setVisibleCount(visible => visible + 6)}>
+                                Toon meer
+                            </button>
+                        )}
                     </div>
                 </section>
                 <section className="how-it-works">
@@ -94,7 +104,7 @@ function Home() {
                     </div>
                 </section>
             </main>
-            <Footer />
+            <Footer/>
         </>
     );
 }

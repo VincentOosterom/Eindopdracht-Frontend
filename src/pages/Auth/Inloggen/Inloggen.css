@@ -1,6 +1,6 @@
 /* ========== LOGIN PAGE ========== */
 
-.login-page{
+.login-page {
     background: linear-gradient(0deg, #000 12.02%, #F6AD55 100%);
     display: flex;
     flex-direction: column;
@@ -10,26 +10,26 @@
     gap: 1rem;
 }
 
-.login-content{
+.login-content {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.login-container h1{
+.login-container h1 {
     color: white;
     font-size: clamp(3rem, 2.5vw, 4rem);
     margin-bottom: 2rem;
 }
 
-.login-content h2{
+.login-content h2 {
     font-size: clamp(1.5rem, 2.5vw, 2rem);
     color: white;
     margin-bottom: 1rem;
 }
 
 
-.login-container{
+.login-container {
     display: flex;
     position: relative;
     flex-direction: column;
@@ -44,7 +44,7 @@
     box-shadow: 14px 12px 34.5px 3px #F6AD55;
 }
 
-.icon-back{
+.icon-back {
     display: flex;
     align-items: center;
     gap: 0.6rem;
@@ -55,13 +55,13 @@
     cursor: pointer;
 }
 
-.login-form{
+.login-form {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
 }
 
-.login-form input{
+.login-form input {
     width: 300px;
     min-width: 0;
     border: none;
@@ -75,25 +75,45 @@
     margin-bottom: 0.5rem;
 }
 
-.forget-password{
+.password-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.password-wrapper input {
+    padding-right: 35px; /* ruimte voor het oogje */
+}
+
+.toggle-eye {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    user-select: none;
+    font-size: 18px;
+}
+
+.forget-password {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.forget-password a{
+.forget-password a {
     color: white;
     margin: 1rem;
 }
 
-.error-message{
+.error-message {
     color: red;
 }
 
 
 /* ========== MEDIA QUERIES ========== */
 @media (max-width: 480px) {
-    .login-container{
+
+    .login-container {
         max-width: 350px;
     }
 

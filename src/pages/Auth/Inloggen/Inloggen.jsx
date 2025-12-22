@@ -1,7 +1,6 @@
 import './Inloggen.css'
 import {useState} from "react";
 import {NavLink, useNavigate,} from "react-router-dom";
-import axios from "axios";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLeftLong} from "@fortawesome/free-solid-svg-icons";
 import {useAuth} from "../../../context/AuthContext";
@@ -18,6 +17,7 @@ function Inloggen() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const {login} = useAuth();
 
@@ -89,12 +89,19 @@ function Inloggen() {
                             placeholder="Uw E-mail"
                             onChange={(e) => setEmail(e.target.value)}/>
                         <label htmlFor="Password"></label>
-                        <input
-                            type="password"
-                            name="password"
-                            value={password}
-                            placeholder="Uw Wachtwoord"
-                            onChange={(e) => setPassword(e.target.value)}/>
+                        <div className="password-wrapper">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                value={password}
+                                placeholder="Uw Wachtwoord"
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                            <span
+                                className="toggle-eye"
+                                onClick={() => setShowPassword(!showPassword)}
+                            > {showPassword ? "🙈" : "👁️"}</span>
+                        </div>
                         <button
                             type="submit"
                             className="login-btn"
