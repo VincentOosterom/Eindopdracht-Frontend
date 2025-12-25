@@ -153,7 +153,13 @@ function AppointmentForm({services, companyId, availabilities}) {
                 phone: clientPhone,
             });
 
+            setLoading(true);
             setSuccess("Afspraak is succesvol geplaatst");
+
+            setInterval(() => {
+                setSuccess("");
+                setLoading(false);
+            }, 1500);
 
             setClientName("");
             setClientEmail("");

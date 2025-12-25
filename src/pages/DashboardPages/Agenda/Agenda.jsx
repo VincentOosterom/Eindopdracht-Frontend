@@ -195,13 +195,17 @@ function Agenda() {
                     locale="nl"
                     allDaySlot={false}
                     slotMinTime="08:00:00"
-                    slotMaxTime="18:00:00"
+                    slotMaxTime="20:00:00"
                     height="80vh"
+                    nowIndicator={true}
+                    selectOverlap={false}
                     events={events}
+                    editable={true}
                     dateClick={handleDateClick}
                     eventClick={(info) => {
                         setSelectedEvent(info.event);
                         setShowModal(true);
+
                     }}
                 />
 

@@ -32,7 +32,6 @@ function AccountSchedule({days, services, companyId}) {
         if (error) {
             timer = setTimeout(() => setError(""), 3000);
         }
-
         return () => clearTimeout(timer);
     }, [succes, error]);
 
@@ -89,14 +88,12 @@ function AccountSchedule({days, services, companyId}) {
         );
     }
 
+    // Voor gesloten dagen
     function handleClosedToggle(index, checked) {
         setAvailabilities((prev) =>
             prev.map((item, i) =>
                 i === index
-                    ? {
-                        ...item,
-                        closed: checked,
-                        // tijden zijn niet zo belangrijk als hij gesloten is
+                    ? {...item, closed: checked,
                     }
                     : item
             )
@@ -154,8 +151,7 @@ function AccountSchedule({days, services, companyId}) {
     }
 
     function handleAddService() {
-        setServiceList((prev) => [
-            ...prev,
+        setServiceList((prev) => [...prev,
             {
                 id: null,
                 name: "",
@@ -268,7 +264,7 @@ function AccountSchedule({days, services, companyId}) {
                             </div>
                         ))}
                     </div>
-                    <button type="submit" className="btn, saving-btn" disabled={savingAvail}>
+                    <button type="submit" className="btn saving-btn" disabled={savingAvail}>
                         {savingAvail ? "Opslaan..." : "Openingstijden opslaan"}
                     </button>
                 </form>
@@ -300,12 +296,10 @@ function AccountSchedule({days, services, companyId}) {
                             />
                             <input
                                 type="text"
-                                value={`€${service.price}`}
+                                value={`€ ${service.price}`}
                                 onChange={(e) => {
                                     const numeric = e.target.value.replace(/[^0-9.,]/g, '');
-
                                     const numberValue = parseFloat(numeric.replace(',', '.')) || 0;
-
                                     handleServiceChange(index, "price", numberValue);
                                 }}
                             />
@@ -328,7 +322,7 @@ function AccountSchedule({days, services, companyId}) {
                     </div>
 
                     {succes && <p className="succes-message">{succes}</p>}
-                    {error && <p className="error-message">{error}</p>}
+                    {error && <p className="error-message" role="alert">{error} </p>}
                 </form>
             </article>
         </section>

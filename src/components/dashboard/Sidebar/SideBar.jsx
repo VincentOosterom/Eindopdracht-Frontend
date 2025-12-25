@@ -24,10 +24,10 @@ function SideBar() {
     function handleLogout() {
         setLoading(true);
         setTimeout(() => {
-            setLoading(false);
+            logout();
+            navigate("/inloggen");
         }, 1500);
-        logout();
-        navigate("/inloggen");
+
 
     }
 
