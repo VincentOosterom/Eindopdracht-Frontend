@@ -5,7 +5,10 @@ import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/Heade
 import {useNavigate, useParams} from "react-router-dom";
 import api from "../../../api/api.js";
 import {convertToISO, getEndOfWeek, getStartOfWeek} from "../../../helpers/date.js";
-import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx"; // pad evt. a
+import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
+import DashboardAppointmentModal
+    from "../../../components/dashboard/DashboardAppointmentModal/DashboardAppointmentModal.jsx";
+
 
 
 function Homepage() {
@@ -13,10 +16,12 @@ function Homepage() {
     const navigate = useNavigate();
 
     const [company, setCompany] = useState(null);
+    const [availabilities, setAvailabilities] = useState([]);
     const [appointments, setAppointments] = useState([]);
     const [appointmentsToday, setAppointmentsToday] = useState([]);
     const [loading, setLoading] = useState(true);
     const [services, setService] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     const [error, setError] = useState("");
 
@@ -36,7 +41,6 @@ function Homepage() {
                 const apptRes = await api.get(
                     `/appointments?companyId=${companyId}`
                 );
-
                 // Alle afspraken opslaan in variable
                 const allAppointments = apptRes.data;
                 setAppointments(allAppointments);
@@ -47,22 +51,22 @@ function Homepage() {
                 // Alle services opslaan in variable
                 const allServices = getServices.data;
                 setService(allServices);
-                console.log(allServices);
 
+                const availRes = await api.get(`/availabilities?companyId=${companyId}`);
+                setAvailabilities(availRes.data);
 
                 const todayIso = new Date().toISOString().split("T")[0];
 
                 const todayList = allAppointments.filter(
-                    (appt) => convertToISO(appt.date) === todayIso
-                );
+                    (appt) => convertToISO(appt.date) === todayIso);
                 setAppointmentsToday(todayList);
+
             } catch {
                 setError("Fout bij ophalen dashboard gegevens");
             } finally {
                 setLoading(false);
             }
         }
-
         loadDashboard();
     }, [companyId]);
 
@@ -98,6 +102,7 @@ function Homepage() {
                     title="Welkom terug,"
                     company={company.name ?? ""}
                 />
+
                 {/* SECTION: Vandaag */}
                 <section className="dashboard-today">
                     <article>
@@ -114,9 +119,17 @@ function Homepage() {
                         </p>
                     </article>
 
-                    <button className="button-appointment">
+                    <button className="button-appointment" onClick={() => setShowModal(true)}>
                         Nieuwe afspraak
                     </button>
+                    {showModal && (
+                        <DashboardAppointmentModal
+                            services={services}
+                            companyId={companyId}
+                            availabilities={availabilities}
+                            onClose={() => setShowModal(false)}
+                        />
+                    )}
                 </section>
 
                 {/* SECTION: Quick look */}

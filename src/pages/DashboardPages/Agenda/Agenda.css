@@ -84,7 +84,11 @@
     background: var(--fc-today-bg-color);
 }
 
-@media (max-width: 640px) {
+@media (max-width: 480px) {
+
+    .agenda-container h1 {
+        font-size: clamp(1.0rem, 4vw, 1.8rem);
+    }
     .fc .fc-toolbar-title {
         font-size: 1.1rem;
     }

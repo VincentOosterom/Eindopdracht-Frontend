@@ -29,7 +29,6 @@ function Home() {
                 setLoading(false);
             }
         }
-
         fetchCompanies();
     }, []);
 

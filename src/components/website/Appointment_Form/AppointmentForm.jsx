@@ -156,7 +156,7 @@ function AppointmentForm({services, companyId, availabilities}) {
             setLoading(true);
             setSuccess("Afspraak is succesvol geplaatst");
 
-            setInterval(() => {
+            setTimeout(() => {
                 setSuccess("");
                 setLoading(false);
             }, 1500);

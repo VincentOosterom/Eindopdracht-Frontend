@@ -11,6 +11,7 @@ import { calculateEndTime } from "../../../helpers/time.js";
 import { useParams } from "react-router-dom";
 import EditAppointmentModal from "../../../components/dashboard/EditAppointment/EditAppointment.jsx";
 import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
+import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
 
 function Agenda() {
     const { companyId } = useParams();
@@ -173,7 +174,7 @@ function Agenda() {
             <SideBar />
 
             <main className="agenda-container">
-                <h1>Agenda – {company?.name || "Laden..."}</h1>
+                <HeaderDashboard title="Agenda -" company={company?.name} />
 
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
