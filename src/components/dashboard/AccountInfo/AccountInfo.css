@@ -38,6 +38,21 @@
     width: 100%;
 }
 
+.password-wrapper-account {
+    position: relative;
+    display: inline-block;
+}
+
+.toggle-eye-account {
+    position: absolute;
+    right: 15px;
+    top: 69%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+}
+
+
 .account-button {
     margin: 1rem 0 1rem 0;
 }

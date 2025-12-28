@@ -25,7 +25,6 @@
     text-align: center;
 }
 
-
 @media (max-width: 480px) {
     .appointment-form {
         width: 90%;

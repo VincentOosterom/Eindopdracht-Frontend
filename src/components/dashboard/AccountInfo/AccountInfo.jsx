@@ -13,6 +13,7 @@ function AccountInfo({company}) {
     const [newPassword, setNewPassword] = useState("");
     const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+    const [showPassword, setShowPassword] = useState(false);
 
 
     const [success, setSuccess] = useState("");
@@ -32,8 +33,7 @@ function AccountInfo({company}) {
             setSuccess("Bedrijfsinformatie is bijgewerkt!");
             setTimeout(() => setSuccess(""), 2000);
 
-        } catch (err) {
-            console.error(err);
+        } catch {
             setError("Bijwerken mislukt.");
         }
         setLoading(false);
@@ -67,8 +67,7 @@ function AccountInfo({company}) {
             setNewPassword("");
             setConfirmNewPassword("");
 
-        } catch (err) {
-            console.error("Wachtwoord wijzigen mislukt:", err);
+        } catch {
             setError("Wachtwoord wijzigen mislukt.");
         }
     }
@@ -110,13 +109,19 @@ function AccountInfo({company}) {
                 <form onSubmit={handlePasswordChange} className="password-form">
 
                     <label>
-                        Huidig wachtwoord
-                        <input
-                            type="password"
-                            value={oldPassword}
-                            onChange={(e) => setOldPassword(e.target.value)}
-                            required
-                        />
+                        <div className="password-wrapper-account">
+                            Huidig wachtwoord
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                value={oldPassword}
+                                onChange={(e) => setOldPassword(e.target.value)}
+                                required
+                            />
+                            <span
+                                className="toggle-eye-account"
+                                onClick={() => setShowPassword(!showPassword)}
+                            > {showPassword ? "🙈" : "👁️"}</span>
+                        </div>
                     </label>
 
                     <label>

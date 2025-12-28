@@ -12,6 +12,9 @@ import { useParams } from "react-router-dom";
 import EditAppointmentModal from "../../../components/dashboard/EditAppointment/EditAppointment.jsx";
 import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
+import AppointmentForm from "../../../components/website/Appointment_Form/AppointmentForm.jsx";
+import DashboardAppointmentModal
+    from "../../../components/dashboard/DashboardAppointmentModal/DashboardAppointmentModal.jsx";
 
 function Agenda() {
     const { companyId } = useParams();
@@ -24,6 +27,9 @@ function Agenda() {
 
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [showCreateModal, setShowCreateModal] = useState(false);
+    const [clickedSlot, setClickedSlot] = useState(null); // { isoDate, time, backendDate
+
 
 
     // ============== 1. Bedrijf ophalen ==============
@@ -113,34 +119,12 @@ function Agenda() {
 
 
     // ====================== 5. Nieuwe afspraak ======================
-    const handleDateClick = async (info) => {
-        const confirmNew = window.confirm(`Nieuwe afspraak op ${info.dateStr}?`);
-        if (!confirmNew) return;
-
-        const clientName = prompt("Naam klant:");
-        const clientEmail = prompt("E-mail klant:");
-        if (!clientName || !clientEmail) return;
-
-        const serviceOptions = services.map(s => `${s.id}: ${s.name}`).join("\n");
-        const chosen = prompt(`Kies een service:\n${serviceOptions}`);
-        const chosenService = services.find(s => s.id === Number(chosen));
-
-        if (!chosenService) return alert("Ongeldige service.");
-
-        const [isoDate, time] = info.dateStr.split("T");
-        const [year, month, day] = isoDate.split("-");
-        const backendDate = `${day}-${month}-${year}`;
-
-        await api.post(`/appointments`, {
-            companyId: Number(companyId),
-            clientName,
-            clientEmail,
-            serviceId: chosenService.id,
-            date: backendDate,
-            time: time.slice(0, 5),
+    const handleDateClick = (info) => {
+        setClickedSlot({
+            date: info.date,          // Date object
+            dateStr: info.dateStr     // "2025-12-11T13:30"
         });
-
-        await refreshAppointments();
+        setShowCreateModal(true);
     };
 
 
@@ -217,6 +201,19 @@ function Agenda() {
                         onClose={() => setShowModal(false)}
                         onSave={handleSaveEvent}
                         onDelete={handleDeleteEvent}
+                    />
+                )}
+
+                {showCreateModal && clickedSlot && (
+                    <DashboardAppointmentModal
+                        initialDate={clickedSlot.date}
+                        services={services}
+                        companyId={companyId}
+                        onClose={() => setShowCreateModal(false)}
+                        onSuccess={() => {
+                            refreshAppointments();
+                            setShowCreateModal(false);
+                        }}
                     />
                 )}
             </main>

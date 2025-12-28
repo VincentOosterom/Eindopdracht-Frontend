@@ -22,7 +22,7 @@ function EditAppointmentModal({
     const [time, setTime] = useState(event.start.toLocaleTimeString("en-Gb", {hour: "2-digit", minute: "2-digit"}));
 
     return (
-        <div className="modal-overlay" onClick={onClose}>
+        <section className="modal-overlay" onClick={onClose}>
             <div className="modal" onClick={(e) => e.stopPropagation()}>
                 <h2>Afspraak bewerken</h2>
                 <label>
@@ -105,7 +105,7 @@ function EditAppointmentModal({
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }
 
