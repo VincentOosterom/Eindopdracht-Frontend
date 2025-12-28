@@ -10,11 +10,8 @@ import { convertToISO } from "../../../helpers/date.js";
 import { calculateEndTime } from "../../../helpers/time.js";
 import { useParams } from "react-router-dom";
 import EditAppointmentModal from "../../../components/dashboard/EditAppointment/EditAppointment.jsx";
-import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
-import AppointmentForm from "../../../components/website/Appointment_Form/AppointmentForm.jsx";
-import DashboardAppointmentModal
-    from "../../../components/dashboard/DashboardAppointmentModal/DashboardAppointmentModal.jsx";
+
 
 function Agenda() {
     const { companyId } = useParams();
@@ -27,8 +24,6 @@ function Agenda() {
 
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showModal, setShowModal] = useState(false);
-    const [showCreateModal, setShowCreateModal] = useState(false);
-    const [clickedSlot, setClickedSlot] = useState(null); // { isoDate, time, backendDate
 
 
 
@@ -117,17 +112,6 @@ function Agenda() {
     }, [calendarView]);
 
 
-
-    // ====================== 5. Nieuwe afspraak ======================
-    const handleDateClick = (info) => {
-        setClickedSlot({
-            date: info.date,          // Date object
-            dateStr: info.dateStr     // "2025-12-11T13:30"
-        });
-        setShowCreateModal(true);
-    };
-
-
     // ====================== 6. VERWIJDER afspraak ======================
     async function handleDeleteEvent(eventId) {
         if (!window.confirm("Weet je zeker dat je deze afspraak wilt verwijderen?")) return;
@@ -186,7 +170,6 @@ function Agenda() {
                     selectOverlap={false}
                     events={events}
                     editable={true}
-                    dateClick={handleDateClick}
                     eventClick={(info) => {
                         setSelectedEvent(info.event);
                         setShowModal(true);
@@ -201,19 +184,6 @@ function Agenda() {
                         onClose={() => setShowModal(false)}
                         onSave={handleSaveEvent}
                         onDelete={handleDeleteEvent}
-                    />
-                )}
-
-                {showCreateModal && clickedSlot && (
-                    <DashboardAppointmentModal
-                        initialDate={clickedSlot.date}
-                        services={services}
-                        companyId={companyId}
-                        onClose={() => setShowCreateModal(false)}
-                        onSuccess={() => {
-                            refreshAppointments();
-                            setShowCreateModal(false);
-                        }}
                     />
                 )}
             </main>

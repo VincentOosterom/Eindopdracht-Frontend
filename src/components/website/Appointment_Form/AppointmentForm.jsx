@@ -16,26 +16,17 @@ function AppointmentForm({services, companyId, availabilities}) {
 
     const [availableTimes, setAvailableTimes] = useState([]);
     const [appointments, setAppointments] = useState([]);
-    const [clients, setClients] = useState([]);
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                const [appointmentsRes, clientsRes] = await Promise.all([
-                    api.get(`/appointments?companyId=${companyId}`),
-                    api.get(`/clients?companyId=${companyId}`)
-                ]);
-
-                setAppointments(appointmentsRes.data);
-                setClients(clientsRes.data);
-            } catch {
-                setError("Data ophalen mislukt:");
-            }
+        async function fetchAppointments() {
+            const res = await api.get(`/appointments?companyId=${companyId}`);
+            setAppointments(res.data);
+            console.log(res.data);
         }
-        fetchData();
+        fetchAppointments();
     }, [companyId]);
 
 
@@ -153,20 +144,12 @@ function AppointmentForm({services, companyId, availabilities}) {
                 time: selectedTime,
             });
 
-            // Deze kijkt of klant e-mail al bestaat, zo ja, voegt deze klant niet toe.
-            const clientExists = clients.some(client =>
-                client.email.toLowerCase() === clientEmail.toLowerCase()
-            );
-
-
-            if (!clientExists) {
-                await api.post("/clients", {
-                    companyId: Number(companyId),
-                    name: clientName,
-                    email: clientEmail,
-                    phone: clientPhone,
-                });
-            }
+            await api.post("/clients", {
+                companyId: Number(companyId),
+                name: clientName,
+                email: clientEmail,
+                phone: clientPhone,
+            });
 
             setLoading(true);
             setSuccess("Afspraak is succesvol geplaatst");
