@@ -16,19 +16,26 @@ function AppointmentForm({services, companyId, availabilities}) {
 
     const [availableTimes, setAvailableTimes] = useState([]);
     const [appointments, setAppointments] = useState([]);
+    const [clients, setClients] = useState([]);
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
-
-    // 1. Haal alle bestaande afspraken op voor dit bedrijf
     useEffect(() => {
-        async function fetchAppointments() {
-            const res = await api.get(`/appointments?companyId=${companyId}`);
-            setAppointments(res.data);
-        }
+        async function fetchData() {
+            try {
+                const [appointmentsRes, clientsRes] = await Promise.all([
+                    api.get(`/appointments?companyId=${companyId}`),
+                    api.get(`/clients?companyId=${companyId}`)
+                ]);
 
-        fetchAppointments();
+                setAppointments(appointmentsRes.data);
+                setClients(clientsRes.data);
+            } catch {
+                setError("Data ophalen mislukt:");
+            }
+        }
+        fetchData();
     }, [companyId]);
 
 
@@ -146,12 +153,20 @@ function AppointmentForm({services, companyId, availabilities}) {
                 time: selectedTime,
             });
 
-            await api.post("/clients", {
-                companyId: Number(companyId),
-                name: clientName,
-                email: clientEmail,
-                phone: clientPhone,
-            });
+            // Deze kijkt of klant e-mail al bestaat, zo ja, voegt deze klant niet toe.
+            const clientExists = clients.some(client =>
+                client.email.toLowerCase() === clientEmail.toLowerCase()
+            );
+
+
+            if (!clientExists) {
+                await api.post("/clients", {
+                    companyId: Number(companyId),
+                    name: clientName,
+                    email: clientEmail,
+                    phone: clientPhone,
+                });
+            }
 
             setLoading(true);
             setSuccess("Afspraak is succesvol geplaatst");
@@ -168,8 +183,7 @@ function AppointmentForm({services, companyId, availabilities}) {
             setSelectedTime("");
             setClientPhone("");
 
-        } catch (err) {
-            console.error(err);
+        } catch {
             setError("Kon de afspraak niet opslaan.");
         }
     }
