@@ -10,20 +10,36 @@
 
 .modal-content {
     background: #fff;
-    padding: 2rem;
-    border-radius: 10px;
-    width: 100%;
+    width: calc(100% - 2rem);
     max-width: 480px;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border-radius: clamp(8px, 3vw, 10px);
     position: relative;
 }
 
 .modal-close {
     position: absolute;
-    top: 1rem;
-    left: 1rem;
+    top: clamp(0.75rem, 2vw, 1rem);
+    left: clamp(0.75rem, 2vw, 1rem);
     border: none;
     background: transparent;
     color: black;
-    font-size: 1.5rem;
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
     cursor: pointer;
+}
+
+
+@media (max-width: 480px) {
+    .modal-content {
+        height: 100svh;              /* iOS safe viewport */
+        width: 100%;
+        max-width: none;
+        border-radius: 0;
+
+        padding: 1.25rem 1rem;
+        overflow-y: auto;
+    }
+
+
+
 }

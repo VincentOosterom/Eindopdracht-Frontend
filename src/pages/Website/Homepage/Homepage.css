@@ -71,6 +71,10 @@
         justify-items: stretch; /* cards vullen de breedte */
     }
 
+    .search-result {
+        margin-bottom: 0;
+    }
+
     .company-logo img {
         display: none;
     }

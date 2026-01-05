@@ -28,7 +28,7 @@ function SearchResultCard({ company }) {
 
                     {street
                         &&
-                        <p className="address">Onze adres: {street} - {zip} - {city}</p>}
+                        <p className="address">Onze adres: <br/> {street} - {zip} - {city}</p>}
 
                     <button className="book-btn" onClick={handleGoCompanyPage}>Boek nu</button>
                 </div>
