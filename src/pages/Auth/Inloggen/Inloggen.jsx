@@ -60,9 +60,7 @@ function Inloggen() {
 
 // 3. Navigeren
             navigate(`/dashboard/${companyId}`);
-            console.log("companyId =", companyId);
-        } catch (err) {
-            console.error(err);
+        } catch {
             setError("Verkeerd e-mailadres of wachtwoord.");
         } finally {
             setLoading(false);
@@ -106,7 +104,7 @@ function Inloggen() {
                             type="submit"
                             className="login-btn"
                             disabled={loading}
-                        > Inloggen
+                        > {loading ? "Bezig met inloggen" : "Inloggen"}
                         </button>
                         <div className="forget-password">
                             <NavLink to="/wachtwoord-vergeten">Wachtwoord vergeten</NavLink>
@@ -114,8 +112,6 @@ function Inloggen() {
                     </form>
 
                     {error && <p className="error-message">{error}</p>}
-                    {loading && <p>Bezig met inloggen</p>}
-
                 </section>
             </header>
         </>

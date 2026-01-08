@@ -1,5 +1,5 @@
 import "./Homepage.css";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
 import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
 import {useNavigate, useParams} from "react-router-dom";
@@ -8,6 +8,7 @@ import {convertToISO, getEndOfWeek, getStartOfWeek} from "../../../helpers/date.
 import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 import DashboardAppointmentModal
     from "../../../components/dashboard/DashboardAppointmentModal/DashboardAppointmentModal.jsx";
+import { calculateTotalRevenue } from "../../../helpers/calculateTotalRevenue.js";
 
 
 
@@ -20,11 +21,9 @@ function Homepage() {
     const [appointments, setAppointments] = useState([]);
     const [appointmentsToday, setAppointmentsToday] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
     const [services, setService] = useState([]);
     const [showModal, setShowModal] = useState(false);
-
-    const [error, setError] = useState("");
-
 
     function handleGoToAgenda() {
         navigate(`/dashboard/${companyId}/agenda`);
@@ -84,10 +83,17 @@ function Homepage() {
 
     const appointmentsThisWeek = appointments.filter((a) => {
         if (!a.date) return false;
+
         const iso = convertToISO(a.date);        // "11-12-2025" → "2025-12-11"
         const date = new Date(`${iso}T00:00:00`);
+
         return date >= startOfWeek && date <= endOfWeek;
     });
+
+    const revenueThisWeek = calculateTotalRevenue(
+        appointmentsThisWeek,
+        services
+    );
 
     return (
         <div className="dashboard">
@@ -181,9 +187,8 @@ function Homepage() {
                                 <strong>{appointmentsThisWeek.length}</strong>
                             </li>
                             <li>
-                                <p>Totale omzet</p>
-                                <strong>0</strong>
-                                {/* omzet komt als jij services koppelt */}
+                                <p>Totale omzet deze week</p>
+                                <strong>€{revenueThisWeek}</strong>
                             </li>
                         </ul>
                     </article>
