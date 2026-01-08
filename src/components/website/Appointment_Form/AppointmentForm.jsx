@@ -24,13 +24,12 @@ function AppointmentForm({services, companyId, availabilities}) {
         async function fetchAppointments() {
             const res = await api.get(`/appointments?companyId=${companyId}`);
             setAppointments(res.data);
-            console.log(res.data);
         }
         fetchAppointments();
     }, [companyId]);
 
 
-    // 3. Genereer alle tijden op basis van openingstijden + service duur + bestaande afspraken
+    // 3. generate alle time op basis van openingstijden + service duration + bestaande afspraken
     useEffect(() => {
         if (!selectedDate || !selectedService) return;
 
@@ -73,7 +72,6 @@ function AppointmentForm({services, companyId, availabilities}) {
             if (nextTime <= end) {
                 times.push(current);
             }
-
             current = nextTime;
         }
 

@@ -13,9 +13,11 @@ function RegisterForm() {
     const [city, setCity] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [newCompany, setNewCompany] = useState([]);
+
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-    const [success, setSuccess] = useState(false);
+    const [success, setSuccess] = useState("");
 
 
     const navigate = useNavigate();
@@ -56,12 +58,11 @@ function RegisterForm() {
             const userRes = await api.post(
                 "/users",
                 {
+                    firstname: name,
                     email,
                     password,
-                    firstname: name,
                     lastname: "",
                     roles: ["admin"],
-                    // companyId hoeft niet, want we koppelen op ID
                 }
             );
 
@@ -87,36 +88,32 @@ function RegisterForm() {
                     ownerUserId: userId,   // ★ koppelt automatisch
                     name: company,
                     bio: "",
-                    profileImageUrl: "",
                     street: street,
                     city: city,
                     zip: zip,
-
                 },
             );
 
-            console.log("Company aangemaakt:", companyRes.data);
+            setNewCompany(companyRes.data)
 
 
-            // 5. SUCCES
+
             setSuccess("Account succesvol aangemaakt!");
+
             setTimeout(() => navigate("/inloggen"), 1500);
 
         } catch (err) {
-            console.error(err);
 
             if (axios.isAxiosError(err)) {
                 if (err.response?.status === 409) {
                     setError("Dit e-mailadres is al in gebruik.");
                     return;
                 }
-
                 if (err.response?.status === 400) {
                     setError("Ongeldige invoer. Controleer je gegevens.");
                     return;
                 }
             }
-
             setError("Er ging iets mis bij het registreren. Probeer opnieuw.");
         } finally {
             setLoading(false);
@@ -126,7 +123,6 @@ function RegisterForm() {
     return (
         <section className="register-container">
             <form onSubmit={Register} className="register-form">
-
                 <div className="register-form-title">
                     <h2>Maak jouw account aan</h2>
                     <p>Gratis voor 14 dagen, geheel vrijblijvend.</p>
