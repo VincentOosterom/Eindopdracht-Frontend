@@ -75,6 +75,8 @@ function AccountInfo({company}) {
     return (
         <section className="account-info">
             <h2>Bedrijfsgegevens</h2>
+            {success && <p className="succes-message">{success}</p>}
+            {error && <p className="error-message">{error}</p>}
             <section className="account-info-compleet">
                 <article
                     className="company-data">
@@ -148,9 +150,6 @@ function AccountInfo({company}) {
                         Wachtwoord wijzigen
                     </button>
                 </form>
-
-                {success && <p className="success-message">{success}</p>}
-                {error && <p className="error-message">{error}</p>}
             </section>
         </section>
     );

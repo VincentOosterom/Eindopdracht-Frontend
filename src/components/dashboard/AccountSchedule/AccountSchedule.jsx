@@ -93,7 +93,8 @@ function AccountSchedule({days, services, companyId}) {
         setAvailabilities((prev) =>
             prev.map((item, i) =>
                 i === index
-                    ? {...item, closed: checked,
+                    ? {
+                        ...item, closed: checked,
                     }
                     : item
             )
@@ -220,6 +221,8 @@ function AccountSchedule({days, services, companyId}) {
             {/* OPENINGSTIJDEN */}
             <article className="account-availabilities">
                 <h2>Openingstijden</h2>
+                {succes && <p className="succes-message">{succes}</p>}
+                {error && <p className="error-message" role="alert">{error} </p>}
                 <form className="availability-form" onSubmit={handleAvailabilitySubmit}>
                     <div className="availability-list">
                         {availabilities.map((day, index) => (
@@ -251,7 +254,9 @@ function AccountSchedule({days, services, companyId}) {
                                     }
                                 />
                                 <label className="closed-toggle">
-                                    <span className="toggle-text">Gesloten</span>
+                                    <span className="toggle-text">
+                                        {day.closed ? "Gesloten" : "Open"}
+                                    </span>
 
                                     <input
                                         type="checkbox"
@@ -274,55 +279,58 @@ function AccountSchedule({days, services, companyId}) {
             <article className="account-availabilities">
                 <h2>Diensten</h2>
                 <form className="service-form" onSubmit={handleServiceSubmit}>
-                    {serviceList.map((service, index) => (
-                        <div className="service-row" key={service.id ?? index}>
-                            <input
-                                type="text"
-                                value={service.name}
-                                placeholder="Naam dienst"
-                                onChange={(e) =>
-                                    handleServiceChange(index, "name", e.target.value)
-                                }
-                            />
-                            <input
-                                type="text"
-                                value={`${service.duration} min`}
-                                onChange={(e) => {
-                                    const numeric = e.target.value.replace(/[^0-9]/g, '');
-                                    const numberValue = parseInt(numeric) || 0;
-
-                                    handleServiceChange(index, "duration", numberValue);
-                                }}
-                            />
-                            <input
-                                type="text"
-                                value={`€ ${service.price}`}
-                                onChange={(e) => {
-                                    const numeric = e.target.value.replace(/[^0-9.,]/g, '');
-                                    const numberValue = parseFloat(numeric.replace(',', '.')) || 0;
-                                    handleServiceChange(index, "price", numberValue);
-                                }}
-                            />
-                            <button
-                                type="button"
-                                className="delete-btn"
-                                onClick={() => handleDeleteService(service.id, index)}
-                            >
-                                🗑️
-                            </button>
+                    {serviceList.length === 0 ? (
+                        <div>
+                            <p><strong>Nog geen diensten ingesteld</strong></p>
+                            <p>Voeg je eerste dienst toe zodat klanten afspraken kunnen maken.</p>
                         </div>
-                    ))}
-                    <div className="services-btn">
+                    ) : (
+                        serviceList.map((service, index) => (
+                            <article className="service-row" key={service.id ?? index}>
+                                <input
+                                    type="text"
+                                    value={service.name}
+                                    placeholder="Naam dienst"
+                                    onChange={(e) =>
+                                        handleServiceChange(index, "name", e.target.value)
+                                    }
+                                />
+                                <input
+                                    type="text"
+                                    value={`${service.duration} min`}
+                                    onChange={(e) => {
+                                        const numeric = e.target.value.replace(/[^0-9]/g, '');
+                                        const numberValue = parseInt(numeric) || 0;
+
+                                        handleServiceChange(index, "duration", numberValue);
+                                    }}
+                                />
+                                <input
+                                    type="text"
+                                    value={`€ ${service.price}`}
+                                    onChange={(e) => {
+                                        const numeric = e.target.value.replace(/[^0-9.,]/g, '');
+                                        const numberValue = parseFloat(numeric.replace(',', '.')) || 0;
+                                        handleServiceChange(index, "price", numberValue);
+                                    }}
+                                />
+                                <button
+                                    type="button"
+                                    className="delete-btn"
+                                    onClick={() => handleDeleteService(service.id, index)}
+                                >
+                                    🗑️
+                                </button>
+                            </article>
+                        )))}
+                    <section className="services-btn">
                         <button type="button" className="btn" onClick={handleAddService}>
                             Dienst toevoegen
                         </button>
                         <button type="submit" className="btn" disabled={savingServices}>
                             {savingServices ? "Opslaan..." : "Diensten opslaan"}
                         </button>
-                    </div>
-
-                    {succes && <p className="succes-message">{succes}</p>}
-                    {error && <p className="error-message" role="alert">{error} </p>}
+                    </section>
                 </form>
             </article>
         </section>

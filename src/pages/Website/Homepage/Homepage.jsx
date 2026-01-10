@@ -55,7 +55,8 @@ function Home() {
                     <h2>Zoek resultaten</h2>
                     {loading && <p className="loading-message">Bedrijven laden</p>}
                     {!loading && filteredCompanies.length === 0 && (
-                        <p className="loading-message">Geen bedrijven gevonden…</p>)}
+                        <p className="error-message">Geen bedrijven gevonden…</p>)
+                    }
 
                     <div className="search-result-grid">
                         {filteredCompanies
@@ -65,7 +66,6 @@ function Home() {
                                 key={company.id}
                                 title={company.name}
                                 description={company.bio}
-                                image={company.profileImageUrl}
                                 company={company}
                                 street={company.street}
                                 city={company.city}

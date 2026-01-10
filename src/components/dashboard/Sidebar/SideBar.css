@@ -20,7 +20,7 @@
 
 .logo-sidebar h3 {
     color: var(--color-black);
-    font-size: clamp(1rem, 2.5vw, 3.5rem);
+    font-size: 2rem;
 }
 
 .content {
@@ -98,6 +98,10 @@
         padding: 16px;
     }
 
+    .sidebar h3 {
+        font-size: 1.2rem;
+    }
+
     .logo-sidebar {
         margin-bottom: 40px;
     }
@@ -139,6 +143,10 @@
     .sidebar {
         max-width: 70px;
         padding: 20px;
+    }
+
+    .sidebar h3 {
+        font-size: 1rem;
     }
 
 
