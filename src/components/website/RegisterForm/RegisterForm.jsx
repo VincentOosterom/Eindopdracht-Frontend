@@ -93,7 +93,6 @@ function RegisterForm() {
                     zip: zip,
                 },
             );
-
             setNewCompany(companyRes.data)
 
 
@@ -129,7 +128,6 @@ function RegisterForm() {
                 </div>
 
                 <div className="register-form-inputs">
-
                     <label htmlFor="firstname">Voornaam</label>
                     <input
                         id="firstname"
@@ -188,13 +186,6 @@ function RegisterForm() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
 
-                    <ul className="password-required">
-                        <li>Minimaal 8 tekens</li>
-                        <li>Minstens één hoofdletter</li>
-                        <li>Minstens één cijfer</li>
-                        <li>Minstens één speciaal teken</li>
-                    </ul>
-
                     <label htmlFor="confirm-password">Bevestig wachtwoord</label>
                     <input
                         id="confirm-password"
@@ -204,12 +195,20 @@ function RegisterForm() {
                         className={error ? "error" : ""}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
+
+                    <ul className="password-required">
+                        <li>Minimaal 8 tekens</li>
+                        <li>Minstens één hoofdletter</li>
+                        <li>Minstens één cijfer</li>
+                        <li>Minstens één speciaal teken</li>
+                    </ul>
                 </div>
+
 
                 <button type="submit" disabled={loading}>
                     {success ? "Uw account wordt aangemaakt..." : "Registreren"}
                 </button>
-                {error && <p className="error-message">{error}</p>}
+                {error && <p className="error-message" role="alert">{error}</p>}
             </form>
 
 

@@ -51,7 +51,6 @@ function Home() {
             />
 
             <main className="main">
-
                 <section className="search-result">
                     <h2>Zoek resultaten</h2>
                     {loading && <p className="loading-message">Bedrijven laden</p>}

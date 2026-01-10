@@ -110,9 +110,11 @@
 }
 
 
-/* ========== MEDIA QUERIES ========== */
-@media (max-width: 480px) {
+/* =========================
+         MOBILE (≤ 480px)
+         ========================= */
 
+@media (max-width: 480px) {
     .login-container {
         max-width: 350px;
     }

@@ -10,10 +10,10 @@ function Register() {
             <header className="register-header">
                 <NavBar/>
                 <section className="register">
-                    <div className="register-title">
-                        <h1>Tijdslot. De eerste 14 dagen gratis</h1>
+                    <article className="register-title">
+                        <h1>De eerste 14 dagen gratis!</h1>
                         <p>Maak een account aan en begin met het plannen van je afspraken.</p>
-                    </div>
+                    </article>
                     <RegisterForm/>
                 </section>
             </header>

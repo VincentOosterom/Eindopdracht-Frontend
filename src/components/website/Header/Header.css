@@ -14,13 +14,14 @@
     align-items: center;
     text-align: center;
     gap: 1rem;
+
 }
 
 .header-content h1 {
     font-size: clamp(2rem, 5vw, 4rem);
     word-break: break-word;
     color: var(--color-white);
-    max-width: 900px;
+
 }
 
 .header-content p {
@@ -49,7 +50,10 @@
 }
 
 
-/* ========== MEDIA QUERIES ========== */
+/* =========================
+         MOBILE (≤ 480px)
+         ========================= */
+
 @media (max-width: 480px) {
 
     /* ========== HEADER ========== */

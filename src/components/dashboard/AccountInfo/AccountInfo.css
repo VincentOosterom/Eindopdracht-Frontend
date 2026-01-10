@@ -62,6 +62,9 @@
     cursor: not-allowed;
 }
 
+/* =========================
+   MOBILE (≤ 480px)
+   ========================= */
 @media (max-width: 480px) {
 
     .account-info-compleet {

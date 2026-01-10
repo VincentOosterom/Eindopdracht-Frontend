@@ -125,6 +125,32 @@
 
 
 /* ========== MOBILE RESPONSIVE ========== */
+
+/* =========================
+   SMALL TABLET (≤ 1024px)
+   ========================= */
+
+
+@media (max-width: 1024px) {
+    .account-schedule {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+}
+
+/* =========================
+   SMALL TABLET (≤ 768px)
+   ========================= */
+
+@media (max-width: 768px) {
+    .account-schedule {
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
 @media (max-width: 480px) {
 
     .account-schedule {

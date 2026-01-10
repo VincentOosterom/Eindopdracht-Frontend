@@ -103,8 +103,11 @@
     color: white;
 }
 
-/* ========== MEDIA QUERIES ========== */
-@media screen and (max-width: 480px) {
+/* =========================
+   MOBILE (≤ 480px)
+   ========================= */
+
+@media (max-width: 480px) {
     .register-container{
         width: 350px;
     }

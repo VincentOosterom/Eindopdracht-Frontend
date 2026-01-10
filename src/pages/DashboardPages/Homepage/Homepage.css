@@ -148,6 +148,12 @@
 
 /* ========== MEDIA QUERIES ========== */
 
+@media (max-width: 768px) {
+    .quick-look-section{
+        flex-direction: column;
+    }
+}
+
 @media (max-width: 480px) {
     .dashboard-today {
         flex-direction: column;
