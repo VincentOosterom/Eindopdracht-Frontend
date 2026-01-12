@@ -170,7 +170,7 @@
 
     .availability-row {
         grid-template-columns: 1fr;
-        padding: 0.8rem 0;
+        padding: 0.8rem 0.8rem;
         border-bottom: 1px solid #ddd;
     }
 

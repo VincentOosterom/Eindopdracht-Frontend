@@ -101,13 +101,9 @@ function Homepage() {
         <section className="dashboard">
             <SideBar/>
             <main className="dashboard-main">
+                <HeaderDashboard title="Welkom terug," company={company.name ?? ""}/>
                 {error && <p className="error-message">{error}</p>}
-                <HeaderDashboard
-                    title="Welkom terug,"
-                    company={company.name ?? ""}
-                />
-
-                {/* SECTION: Vandaag */}
+                
                 <section className="dashboard-today">
                     <article>
                         <h3>Afspraken vandaag</h3>

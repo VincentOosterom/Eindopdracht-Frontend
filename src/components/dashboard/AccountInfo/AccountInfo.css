@@ -3,13 +3,24 @@
 .account-info {
     display: flex;
     flex-direction: column;
+    margin-bottom: 1rem;
 }
 
-.account-info-compleet {
-    display: flex;
-    flex-direction: row;
-    gap: 0.8rem;
-    margin-top: 0.8rem;
+.account-info h2 {
+    font-size: 1.5rem;
+}
+
+.account-info-data {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* links breder */
+    gap: 1rem;
+    width: 100%;
+}
+
+.company-data,
+.password-form {
+    width: 100%;
+    max-width: none;
 }
 
 .account-info label {
@@ -17,16 +28,17 @@
     flex-direction: column;
 }
 
-.account-info h2 {
-    font-size: 1.5rem;
+.company-data label {
+    margin-bottom: 0.5rem;
 }
 
-.company-data {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-    max-width: 500px;
-    width: 100%;
+.company-data legend,
+.password-form legend {
+    padding: 0.5rem;
+}
+
+.company-data fieldset {
+    padding: 0.8rem;
 }
 
 /* ========== PASSWORD FORM ========== */
@@ -34,9 +46,13 @@
 .password-form {
     display: flex;
     flex-direction: column;
-    max-width: 500px;
     width: 100%;
 }
+
+.password-form fieldset {
+    padding: 0.6rem;
+}
+
 
 .password-wrapper-account {
     position: relative;
@@ -44,14 +60,18 @@
 }
 
 .toggle-eye-account {
+    background-color: transparent;
     position: absolute;
     right: 15px;
-    top: 69%;
+    top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
 }
 
+.toggle-eye-account:hover {
+    background-color: transparent;
+}
 
 .account-button {
     margin: 1rem 0 1rem 0;
@@ -62,16 +82,16 @@
     cursor: not-allowed;
 }
 
+
 /* =========================
    MOBILE (≤ 480px)
    ========================= */
 @media (max-width: 480px) {
-
-    .account-info-compleet {
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
-        margin-top: 0.8rem;
+    .account-info-data {
+        display: grid;
+        grid-template-columns: 1fr; /* links breder */
+        gap: 2rem;
+        width: 100%;
     }
 
 }

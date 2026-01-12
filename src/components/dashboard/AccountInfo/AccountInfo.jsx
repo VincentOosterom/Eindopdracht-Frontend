@@ -73,85 +73,124 @@ function AccountInfo({company}) {
     }
 
     return (
-        <section className="account-info">
-            <h2>Bedrijfsgegevens</h2>
-            {success && <p className="success-message">{success}</p>}
-            {error && <p className="error-message">{error}</p>}
-            <section className="account-info-compleet">
-                <article
-                    className="company-data">
-                    <label>
-                        Bedrijfsnaam
-                        <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </label>
-                    <label>
-                        Bio / Beschrijving
-                        <textarea
-                            rows="3"
-                            value={bio}
-                            onChange={(e) => setBio(e.target.value)}
-                        />
-                    </label>
+        <section className="account-info" aria-labelledby="company-info-heading">
+            <header>
+                <h2 id="company-info-heading">Bedrijfsgegevens</h2>
+            </header>
 
-                    <button
-                        type="submit"
-                        onClick={handleSaveCompany}
-                        className="account-button"
-                        disabled={loading}>
-                        Bedrijfsinformatie opslaan
-                    </button>
-                </article>
+            {success && (
+                <p className="success-message" role="status" aria-live="polite">
+                    {success}
+                </p>
+            )}
 
+            {error && (
+                <p className="error-message" role="alert">
+                    {error}
+                </p>
+            )}
 
-                {/* 🟢 WACHTWOORD MUTATION */}
-                <form onSubmit={handlePasswordChange} className="password-form">
-
-                    <label>
-                        <div className="password-wrapper-account">
-                            Huidig wachtwoord
+            <section className="account-info-data">
+                {/* BEDRIJFSGEGEVENS */}
+                <form className="company-data" onSubmit={handleSaveCompany}>
+                    <fieldset>
+                        <legend className="visually-hidden">Bedrijfsinformatie</legend>
+                        <label>
+                            Bedrijfsnaam
                             <input
-                                type={showPassword ? "text" : "password"}
-                                value={oldPassword}
-                                onChange={(e) => setOldPassword(e.target.value)}
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                                 required
                             />
-                            <span
-                                className="toggle-eye-account"
-                                onClick={() => setShowPassword(!showPassword)}
-                            > {showPassword ? "🙈" : "👁️"}</span>
-                        </div>
-                    </label>
+                        </label>
 
-                    <label>
-                        Nieuw wachtwoord
-                        <input
-                            type="password"
-                            value={newPassword}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            required
-                        />
-                    </label>
+                        <label>
+                            Bio / Beschrijving
+                            <textarea
+                                rows="3"
+                                value={bio}
+                                onChange={(e) => setBio(e.target.value)}
+                            />
+                        </label>
 
-                    <label>
-                        Herhaal nieuw wachtwoord
-                        <input
-                            type="password"
-                            value={confirmNewPassword}
-                            onChange={(e) => setConfirmNewPassword(e.target.value)}
-                            required
-                        />
-                    </label>
-
-                    <button type="submit" className="account-button">
-                        Wachtwoord wijzigen
-                    </button>
+                        <button
+                            type="submit"
+                            className="account-button"
+                            disabled={loading}
+                        >
+                            Bedrijfsinformatie opslaan
+                        </button>
+                    </fieldset>
                 </form>
+
+                {/* WACHTWOORD WIJZIGEN */}
+                <form
+                    onSubmit={handlePasswordChange}
+                    className="password-form"
+                    aria-labelledby="password-heading"
+                >
+                    <fieldset>
+                        <legend id="password-heading">
+                            Wachtwoord wijzigen
+                        </legend>
+
+                        <label>
+                            Huidig wachtwoord
+                            <div className="password-wrapper-account">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    value={oldPassword}
+                                    onChange={(e) => setOldPassword(e.target.value)}
+                                    required
+                                />
+
+                                <button
+                                    type="button"
+                                    className="toggle-eye-account"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    aria-label={
+                                        showPassword
+                                            ? "Verberg wachtwoord"
+                                            : "Toon wachtwoord"
+                                    }
+                                >
+                                    {showPassword ? "🙈" : "👁️"}
+                                </button>
+                            </div>
+                        </label>
+
+                        <label>
+                            Nieuw wachtwoord
+                            <input
+                                type="password"
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                required
+                            />
+                        </label>
+
+                        <label>
+                            Herhaal nieuw wachtwoord
+                            <input
+                                type="password"
+                                value={confirmNewPassword}
+                                onChange={(e) =>
+                                    setConfirmNewPassword(e.target.value)
+                                }
+                                required
+                            />
+                        </label>
+
+                        <button type="submit" className="account-button">
+                            Wachtwoord wijzigen
+                        </button>
+                    </fieldset>
+                </form>
+
             </section>
         </section>
+
     );
 }
 
