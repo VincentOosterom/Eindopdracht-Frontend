@@ -138,7 +138,7 @@ function Agenda() {
         setShowModal(false);
     }
     return (
-        <div className="dashboard">
+        <section className="dashboard">
             <SideBar />
 
             <main className="agenda-container">
@@ -187,7 +187,7 @@ function Agenda() {
                     />
                 )}
             </main>
-        </div>
+        </section>
     );
 }
 

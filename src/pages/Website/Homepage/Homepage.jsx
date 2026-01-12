@@ -58,7 +58,7 @@ function Home() {
                         <p className="error-message">Geen bedrijven gevonden…</p>)
                     }
 
-                    <div className="search-result-grid">
+                    <article className="search-result-grid">
                         {filteredCompanies
                             .slice(0, visibleCount)
                             .map((company) => (
@@ -79,7 +79,7 @@ function Home() {
                                 Toon meer
                             </button>
                         )}
-                    </div>
+                    </article>
                 </section>
                 <section className="how-it-works">
                     <h2>Hoe werkt het?</h2>

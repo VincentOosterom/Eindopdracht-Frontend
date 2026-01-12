@@ -221,54 +221,52 @@ function AccountSchedule({days, services, companyId}) {
             {/* OPENINGSTIJDEN */}
             <article className="account-availabilities">
                 <h2>Openingstijden</h2>
-                {succes && <p className="succes-message">{succes}</p>}
+                {succes && <p className="success-message">{succes}</p>}
                 {error && <p className="error-message" role="alert">{error} </p>}
                 <form className="availability-form" onSubmit={handleAvailabilitySubmit}>
-                    <div className="availability-list">
+                    <ul className="availability-list">
                         {availabilities.map((day, index) => (
-                            <div className="availability-row" key={day.dayOfWeek}>
-                                <span className="day-label">{day.dayOfWeek}</span>
+                            <li key={day.dayOfWeek}>
+                                <fieldset className="availability-row">
+                                    <legend className="day-label">
+                                        {day.dayOfWeek}
+                                    </legend>
+                                    <input
+                                        type="time"
+                                        value={day.startTime}
+                                        disabled={day.closed}
+                                        onChange={(e) =>
+                                            handleAvailabilityChange(
+                                                index,
+                                                "startTime",
+                                                e.target.value )} />
+                                    <input
+                                        type="time"
+                                        value={day.endTime}
+                                        disabled={day.closed}
+                                        onChange={(e) =>
+                                            handleAvailabilityChange(
+                                                index,
+                                                "endTime",
+                                                e.target.value )}/>
 
-                                <input
-                                    type="time"
-                                    value={day.startTime}
-                                    disabled={day.closed}
-                                    onChange={(e) =>
-                                        handleAvailabilityChange(
-                                            index,
-                                            "startTime",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-                                <input
-                                    type="time"
-                                    value={day.endTime}
-                                    disabled={day.closed}
-                                    onChange={(e) =>
-                                        handleAvailabilityChange(
-                                            index,
-                                            "endTime",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-                                <label className="closed-toggle">
+                                    <label className="closed-toggle">
                                     <span className="toggle-text">
                                         {day.closed ? "Gesloten" : "Open"}
                                     </span>
 
-                                    <input
-                                        type="checkbox"
-                                        checked={day.closed}
-                                        onChange={(e) => handleClosedToggle(index, e.target.checked)}
-                                    />
+                                        <input
+                                            type="checkbox"
+                                            checked={day.closed}
+                                            onChange={(e) => handleClosedToggle(index, e.target.checked)}
+                                        />
 
-                                    <span className="slider"></span>
-                                </label>
-                            </div>
+                                        <span className="slider"></span>
+                                    </label>
+                                </fieldset>
+                            </li>
                         ))}
-                    </div>
+                    </ul>
                     <button type="submit" className="btn saving-btn" disabled={savingAvail}>
                         {savingAvail ? "Opslaan..." : "Openingstijden opslaan"}
                     </button>
@@ -278,51 +276,78 @@ function AccountSchedule({days, services, companyId}) {
             {/* DIENSTEN */}
             <article className="account-availabilities">
                 <h2>Diensten</h2>
+
                 <form className="service-form" onSubmit={handleServiceSubmit}>
                     {serviceList.length === 0 ? (
-                        <div>
+                        <section>
                             <p><strong>Nog geen diensten ingesteld</strong></p>
                             <p>Voeg je eerste dienst toe zodat klanten afspraken kunnen maken.</p>
-                        </div>
+                        </section>
                     ) : (
-                        serviceList.map((service, index) => (
-                            <article className="service-row" key={service.id ?? index}>
-                                <input
-                                    type="text"
-                                    value={service.name}
-                                    placeholder="Naam dienst"
-                                    onChange={(e) =>
-                                        handleServiceChange(index, "name", e.target.value)
-                                    }
-                                />
-                                <input
-                                    type="text"
-                                    value={`${service.duration} min`}
-                                    onChange={(e) => {
-                                        const numeric = e.target.value.replace(/[^0-9]/g, '');
-                                        const numberValue = parseInt(numeric) || 0;
+                        <ul className="service-list">
+                            {serviceList.map((service, index) => (
+                                <li key={service.id ?? index}>
+                                    <fieldset className="service-row">
+                                        <legend className="visually-hidden">
+                                            Dienst {service.name}
+                                        </legend>
 
-                                        handleServiceChange(index, "duration", numberValue);
-                                    }}
-                                />
-                                <input
-                                    type="text"
-                                    value={`€ ${service.price}`}
-                                    onChange={(e) => {
-                                        const numeric = e.target.value.replace(/[^0-9.,]/g, '');
-                                        const numberValue = parseFloat(numeric.replace(',', '.')) || 0;
-                                        handleServiceChange(index, "price", numberValue);
-                                    }}
-                                />
-                                <button
-                                    type="button"
-                                    className="delete-btn"
-                                    onClick={() => handleDeleteService(service.id, index)}
-                                >
-                                    🗑️
-                                </button>
-                            </article>
-                        )))}
+                                        <label>
+                                            <input
+                                                type="text"
+                                                value={service.name}
+                                                placeholder="Naam dienst"
+                                                onChange={(e) =>
+                                                    handleServiceChange(index, "name", e.target.value)
+                                                }
+                                            />
+                                        </label>
+
+                                        <label>
+                                            <input
+                                                type="text"
+                                                value={`${service.duration} min`}
+                                                onChange={(e) => {
+                                                    const numeric = e.target.value.replace(/[^0-9]/g, '');
+                                                    handleServiceChange(
+                                                        index,
+                                                        "duration",
+                                                        parseInt(numeric) || 0
+                                                    );
+                                                }}
+                                            />
+                                        </label>
+
+                                        <label>
+                                            <input
+                                                type="text"
+                                                value={`€ ${service.price}`}
+                                                onChange={(e) => {
+                                                    const numeric = e.target.value.replace(/[^0-9.,]/g, '');
+                                                    handleServiceChange(
+                                                        index,
+                                                        "price",
+                                                        parseFloat(numeric.replace(',', '.')) || 0
+                                                    );
+                                                }}
+                                            />
+                                        </label>
+
+                                        <button
+                                            type="button"
+                                            className="delete-btn"
+                                            onClick={() =>
+                                                handleDeleteService(service.id, index)
+                                            }
+                                            aria-label={`Verwijder dienst ${service.name}`}
+                                        >
+                                            🗑️
+                                        </button>
+                                    </fieldset>
+                                </li>
+                            ))}
+                        </ul>
+                        )}
                     <section className="services-btn">
                         <button type="button" className="btn" onClick={handleAddService}>
                             Dienst toevoegen

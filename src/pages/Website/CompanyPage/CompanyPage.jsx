@@ -57,7 +57,7 @@ function CompanyPage() {
             <header className="company-page-header">
                 <NavBar/>
                 <section className="full-info-section">
-                    <div className="full-company-content">
+                    <section className="full-company-content">
                         <article className="company-info">
                             <h2>{company.name}</h2>
                             <p>
@@ -89,7 +89,7 @@ function CompanyPage() {
                                 )}
                             </article>
                         </article>
-                    </div>
+                    </section>
 
                     <section className="appointment-content">
                         <AppointmentForm

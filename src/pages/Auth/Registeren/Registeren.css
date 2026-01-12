@@ -5,6 +5,14 @@
     padding: 0 20px;
 }
 
+.register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
 .register-title {
     text-align: center;
     color: white;
@@ -13,12 +21,4 @@
 
 .register-title h1 {
     margin-bottom: 1rem;
-}
-
-.register{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 3rem;
 }

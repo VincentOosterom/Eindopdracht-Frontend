@@ -5,15 +5,9 @@
     margin: 20px 20px
 }
 
-.agenda-container h1 {
-    color: var(--color-black);
-    font-size: clamp(1.3rem, 4vw, 2rem);
-    margin-bottom: 1rem;
-}
+/* Full Calender API */
 
-
-/* ==== Basis opmaak ==== */
-.fc {
+Ω.fc {
     font-family: var(--font-body), sans-serif;
     color: var(--color-black);
 }
@@ -89,6 +83,7 @@
     .agenda-container h1 {
         font-size: clamp(1.0rem, 4vw, 1.8rem);
     }
+
     .fc .fc-toolbar-title {
         font-size: 1.1rem;
     }
@@ -98,7 +93,9 @@
     }
 }
 
-/* MOBIEL: toolbar knoppen kleiner en niet te breed */
+/* =========================
+   SMALL TABLET (≤ 768px)
+   ========================= */
 @media (max-width: 768px) {
     .fc-header-toolbar {
         flex-wrap: nowrap;
@@ -113,7 +110,6 @@
         flex-grow: 1;
     }
 
-    /* BUTTONS */
     .fc .fc-button {
         padding: 4px 6px !important;
         font-size: 0.7rem !important;
@@ -123,7 +119,6 @@
         white-space: nowrap !important;
     }
 
-    /* Volgende/vorige pijltjes kleiner */
     .fc .fc-prev-button,
     .fc .fc-next-button {
         padding: 4px 6px !important;

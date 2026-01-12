@@ -226,7 +226,7 @@ function AppointmentForm({services, companyId, availabilities}) {
             </label>
 
             <button type="submit">{loading ? "Afspraak wordt gemaakt" : "Afspraak maken"}</button>
-            {success && <p className="succes-message form-success">{success}</p>}
+            {success && <p className="success-message form-success">{success}</p>}
             {error && <p className="error-message form-error">{error}</p>}
         </form>
     );

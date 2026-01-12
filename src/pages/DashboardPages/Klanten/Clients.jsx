@@ -83,7 +83,7 @@ function Clients() {
 
 
     return (
-        <div className="dashboard">
+        <section className="dashboard">
             <SideBar/>
 
             <main className="dashboard-main">
@@ -91,10 +91,10 @@ function Clients() {
                     title="Klanten van" company={company.name ?? ""}
                 />
                 <section className="clients-container">
-                    <div className="clients-content">
+                    <article className="clients-content">
                         <h2>Alle klanten</h2>
 
-                        <div className="search_add">
+                        <article className="search_add">
                             <input
                                 type="text"
                                 placeholder="Zoek klant..."
@@ -105,7 +105,7 @@ function Clients() {
                                     onClick={() => setShowForm(true)}>
                                 + Klant toevoegen
                             </button>
-                        </div>
+                        </article>
 
                         {showForm && (
                             <div className="modal-overlay">
@@ -119,7 +119,7 @@ function Clients() {
                             </div>
                         )}
 
-                    </div>
+                    </article>
 
                     <section className="clients-table">
                         <table>
@@ -149,7 +149,7 @@ function Clients() {
                 </section>
 
             </main>
-        </div>
+        </section>
     );
 }
 

@@ -10,25 +10,6 @@
     gap: 1rem;
 }
 
-.login-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.login-container h1 {
-    color: white;
-    font-size: clamp(3rem, 2.5vw, 4rem);
-    margin-bottom: 2rem;
-}
-
-.login-content h2 {
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
-    color: white;
-    margin-bottom: 1rem;
-}
-
-
 .login-container {
     display: flex;
     position: relative;
@@ -41,7 +22,7 @@
     min-height: 500px;
     border-radius: 15px;
     background: rgba(255, 255, 255, 0.01);
-    box-shadow: 14px 12px 34.5px 3px #F6AD55;
+    box-shadow: 14px 12px 34px 3px #F6AD55;
 }
 
 .icon-back {
@@ -54,6 +35,26 @@
     color: white;
     cursor: pointer;
 }
+
+.login-container h1 {
+    color: white;
+    font-size: clamp(3rem, 2.5vw, 4rem);
+    margin-bottom: 2rem;
+}
+
+
+.login-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-content h2 {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    color: white;
+    margin-bottom: 1rem;
+}
+
 
 .login-form {
     display: flex;
@@ -69,19 +70,13 @@
     border-radius: 15px;
 }
 
-.login-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    margin-bottom: 0.5rem;
-}
-
 .password-wrapper {
     position: relative;
     display: inline-block;
 }
 
 .password-wrapper input {
-    padding-right: 35px; /* ruimte voor het oogje */
+    padding-right: 35px;
 }
 
 .toggle-eye {
@@ -92,6 +87,12 @@
     cursor: pointer;
     user-select: none;
     font-size: 18px;
+}
+
+.login-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    margin-bottom: 0.5rem;
 }
 
 .forget-password {
@@ -111,8 +112,8 @@
 
 
 /* =========================
-         MOBILE (≤ 480px)
-         ========================= */
+   MOBILE (≤ 480px)
+   ========================= */
 
 @media (max-width: 480px) {
     .login-container {

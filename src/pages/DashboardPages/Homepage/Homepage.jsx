@@ -1,5 +1,5 @@
 import "./Homepage.css";
-import {useEffect, useMemo, useState} from "react";
+import {useEffect, useState} from "react";
 import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
 import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
 import {useNavigate, useParams} from "react-router-dom";
@@ -8,8 +8,7 @@ import {convertToISO, getEndOfWeek, getStartOfWeek} from "../../../helpers/date.
 import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 import DashboardAppointmentModal
     from "../../../components/dashboard/DashboardAppointmentModal/DashboardAppointmentModal.jsx";
-import { calculateTotalRevenue } from "../../../helpers/calculateTotalRevenue.js";
-
+import {calculateTotalRevenue} from "../../../helpers/calculateTotalRevenue.js";
 
 
 function Homepage() {
@@ -19,11 +18,34 @@ function Homepage() {
     const [company, setCompany] = useState(null);
     const [availabilities, setAvailabilities] = useState([]);
     const [appointments, setAppointments] = useState([]);
+
     const [appointmentsToday, setAppointmentsToday] = useState([]);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+
     const [services, setService] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const nextAppointment = appointmentsToday[0];
+
+    // Aantal afspraken per week tonen
+    const now = new Date();
+    const startOfWeek = getStartOfWeek(now);
+    const endOfWeek = getEndOfWeek(now);
+
+    const appointmentsThisWeek = appointments.filter((a) => {
+        if (!a.date) return false;
+
+        const iso = convertToISO(a.date);        // "11-12-2025" → "2025-12-11"
+        const date = new Date(`${iso}T00:00:00`);
+
+        return date >= startOfWeek && date <= endOfWeek;
+    });
+
+    const revenueThisWeek = calculateTotalRevenue(
+        appointmentsThisWeek,
+        services
+    );
 
     function handleGoToAgenda() {
         navigate(`/dashboard/${companyId}/agenda`);
@@ -66,44 +88,20 @@ function Homepage() {
                 setLoading(false);
             }
         }
+
         loadDashboard();
     }, [companyId]);
 
 
-    // eerst laden - geen bedrijf gevonden? dan return
-    if (loading) return <DashboardLoader text="Homepage laden.." />;
+    if (loading) return <DashboardLoader text="Homepage laden.."/>;
     if (!company) return <p>Bedrijf niet gevonden.</p>;
 
-    const nextAppointment = appointmentsToday[0];
-
-    // Aantal afspraken per week tonen
-    const now = new Date();
-    const startOfWeek = getStartOfWeek(now);
-    const endOfWeek = getEndOfWeek(now);
-
-    const appointmentsThisWeek = appointments.filter((a) => {
-        if (!a.date) return false;
-
-        const iso = convertToISO(a.date);        // "11-12-2025" → "2025-12-11"
-        const date = new Date(`${iso}T00:00:00`);
-
-        return date >= startOfWeek && date <= endOfWeek;
-    });
-
-    const revenueThisWeek = calculateTotalRevenue(
-        appointmentsThisWeek,
-        services
-    );
 
     return (
-        <div className="dashboard">
+        <section className="dashboard">
             <SideBar/>
             <main className="dashboard-main">
-
-                {/*Deze heb ik express hier gezet omdat die dan gelijk zichtbaar is*/}
                 {error && <p className="error-message">{error}</p>}
-
-                {/* HEADER */}
                 <HeaderDashboard
                     title="Welkom terug,"
                     company={company.name ?? ""}
@@ -194,7 +192,7 @@ function Homepage() {
                     </article>
                 </section>
             </main>
-        </div>
+        </section>
     );
 }
 
