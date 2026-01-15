@@ -119,6 +119,10 @@ function AppointmentForm({services, companyId, availabilities}) {
             return;
         }
 
+        if (!clientEmail.includes("@") || !clientEmail.includes(".")) {
+            setError("Vul een geldig e-mailadres in.");
+        }
+
         const selectedDateTime = new Date(`${selectedDate}T${selectedTime}`);
         if (selectedDateTime < new Date()) {
             setError("Je kunt geen afspraak in het verleden maken.");
@@ -141,6 +145,7 @@ function AppointmentForm({services, companyId, availabilities}) {
                 date: backendDate,
                 time: selectedTime,
             });
+
 
             await api.post("/clients", {
                 companyId: Number(companyId),

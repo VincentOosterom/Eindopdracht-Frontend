@@ -4,12 +4,13 @@ import NavBar from "../../../components/website/NavBar/NavBar.jsx";
 import AppointmentForm from "../../../components/website/Appointment_Form/AppointmentForm.jsx";
 import {useEffect, useState} from "react";
 import api from "../../../api/api";
-import SearchResultCard from "../../../components/website/SearchResult/SearchResultCard.jsx";
 import Footer from "../../../components/website/Footer/Footer.jsx";
 import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 
 function CompanyPage() {
     const {companyId} = useParams();
+
+    const [error, setError] = useState("");
 
     const [company, setCompany] = useState(null);
     const [services, setServices] = useState([]);
@@ -22,8 +23,8 @@ function CompanyPage() {
             try {
                 const res = await api.get(`/companies/${companyId}`);
                 setCompany(res.data);
-            } catch (err) {
-                console.error("Kon bedrijf niet ophalen:", err);
+            } catch {
+                setError("Fout bij het ophalen van het juiste bedrijf");
             }
         }
         fetchCompany();
@@ -38,9 +39,8 @@ function CompanyPage() {
 
                 const AvailResponse = await api.get(`/availabilities?companyId=${companyId}`);
                 setAvailabilities(AvailResponse.data);
-
-            } catch (err) {
-                console.error("Kon services niet ophalen:", err);
+            } catch  {
+                setError("Fout bij het ophalen van juiste informatie");
             } finally {
                 setLoading(false);
             }
@@ -50,13 +50,15 @@ function CompanyPage() {
     }, [companyId]);
 
     if (loading) return <DashboardLoader text="Bedrijf wordt opgehaald"/>
-    if (!company) return <p>Bedrijf niet gevonden</p>;
+    if (!company) return <p className="error-message">{error}</p>;
+
 
     return (
         <>
             <main className="company-page-header">
                 <NavBar/>
                 <header className="company-header">
+                    {error && <p className="error-message">{error}</p>}
                     <h1>{company.name}</h1>
                     <p>
                         {company.bio || "Bedrijf heeft nog geen bio toegevoegd!"}
@@ -109,7 +111,6 @@ function CompanyPage() {
                     </aside>
                 </section>
             </main>
-
             <Footer/>
         </>
     );

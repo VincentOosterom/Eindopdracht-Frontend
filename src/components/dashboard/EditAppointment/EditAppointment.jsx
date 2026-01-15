@@ -11,15 +11,23 @@ function EditAppointmentModal({
                                   onDelete
                               }) {
 
+
+
+
     const initialService = services.find(
         (s) => s.name === event.title.split(" - ")[0]
     );
+
+
+
 
     const [clientName, setClientName] = useState(event.extendedProps.clientName);
     const [clientEmail, setClientEmail] = useState(event.extendedProps.clientEmail);
     const [serviceId, setServiceId] = useState(initialService?.id || "");
     const [date, setDate] = useState(event.start.toISOString().slice(0, 10));
     const [time, setTime] = useState(event.start.toLocaleTimeString("en-Gb", {hour: "2-digit", minute: "2-digit"}));
+
+
 
     return (
         <section className="modal-overlay" onClick={onClose}>
