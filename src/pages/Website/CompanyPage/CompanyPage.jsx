@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import api from "../../../api/api";
 import SearchResultCard from "../../../components/website/SearchResult/SearchResultCard.jsx";
 import Footer from "../../../components/website/Footer/Footer.jsx";
+import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 
 function CompanyPage() {
     const {companyId} = useParams();
@@ -25,7 +26,6 @@ function CompanyPage() {
                 console.error("Kon bedrijf niet ophalen:", err);
             }
         }
-
         fetchCompany();
     }, [companyId]);
 
@@ -49,58 +49,67 @@ function CompanyPage() {
         fetchServices();
     }, [companyId]);
 
-    if (loading) return <p className="loading-message-company">Loading...</p>;
+    if (loading) return <DashboardLoader text="Bedrijf wordt opgehaald"/>
     if (!company) return <p>Bedrijf niet gevonden</p>;
 
     return (
         <>
-            <header className="company-page-header">
+            <main className="company-page-header">
                 <NavBar/>
+                <header className="company-header">
+                    <h1>{company.name}</h1>
+                    <p>
+                        {company.bio || "Bedrijf heeft nog geen bio toegevoegd!"}
+                    </p>
+                </header>
+
                 <section className="full-info-section">
-                    <section className="full-company-content">
-                        <article className="company-info">
-                            <h2>{company.name}</h2>
-                            <p>
-                                {company.bio || "Bedrijf heeft nog geen bio toegevoegd!"}
-                            </p>
-                        </article>
-                        <article className="company-info-description">
-                            <div className="company-info-availabilities">
-                                <h3>Onze openingstijden</h3>
+                    <article className="company-details">
+                        <section className="company-info-description">
+                            <section className="company-info-availabilities">
+                                <h2>Onze openingstijden</h2>
+
                                 {availabilities.length > 0 ? (
-                                    availabilities.map((availability) => (
-                                        <p key={availability.id}>{availability.dayOfWeek} - {availability.startTime} tot {availability.endTime}</p>
-                                    ))
+                                    <ul>
+                                        {availabilities.map((availability) => (
+                                            <li key={availability.id}>
+                                                {availability.dayOfWeek} – {availability.startTime} tot {availability.endTime}
+                                            </li>
+                                        ))}
+                                    </ul>
                                 ) : (
                                     <p>Geen openingstijden gevonden</p>
-                                )
-                                }
-                            </div>
-                            <article className="company-info-services">
-                                <h3>Onze diensten</h3>
-                                {services.length > 0 ? (
-                                    services.map((service) => (
-                                        <p key={service.id}>{service.name} (€{service.price} & {service.duration} min)
-                                            </p>
+                                )}
+                            </section>
 
-                                    ))
+                            <section className="company-info-services">
+                                <h2>Onze diensten</h2>
+
+                                {services.length > 0 ? (
+                                    <ul>
+                                        {services.map((service) => (
+                                            <li key={service.id}>
+                                                {service.name} (€{service.price} – {service.duration} min)
+                                            </li>
+                                        ))}
+                                    </ul>
                                 ) : (
                                     <p>Geen diensten gevonden</p>
                                 )}
-                            </article>
-                        </article>
-                    </section>
+                            </section>
+                        </section>
+                    </article>
 
-                    <section className="appointment-content">
+                    <aside className="appointment-content">
                         <AppointmentForm
                             companyId={companyId}
                             services={services}
                             availabilities={availabilities}
-
                         />
-                    </section>
+                    </aside>
                 </section>
-            </header>
+            </main>
+
             <Footer/>
         </>
     );

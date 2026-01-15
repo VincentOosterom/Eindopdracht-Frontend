@@ -1,81 +1,120 @@
-/* ========== Company Page ========== */
+/* ========== Company Page Layout ========== */
+
 .company-page-header {
-    height: auto;
-    background: linear-gradient(0deg, #000 12.02%, #F6AD55 100%);
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #F6AD55 0%, #000 88%);
+    padding-bottom: 3rem;
 }
+
+/* ===== Header (bedrijf intro) ===== */
+
+.company-header {
+    max-width: 800px;
+    padding: 5rem 2rem;
+    text-align: center;
+    color: var(--color-black);
+    background-color: var(--color-white);
+    margin: 2rem auto;
+    border-radius: 15px
+}
+
+.company-header h1 {
+    margin-bottom: 1rem;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.company-header p {
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+}
+
+/* ===== Main content ===== */
 
 .full-info-section {
     display: flex;
-    flex-direction: row;
     gap: 3rem;
     justify-content: center;
-    align-items: center;
     margin-top: 3rem;
 }
 
-.full-company-content {
+/* ===== Company details ===== */
+
+.company-details {
     display: flex;
     flex-direction: column;
-    color: var(--color-black);
-    gap: 1rem;
 }
 
-.company-info {
+.company-info-description {
     display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-
-.company-info,
-.company-info-description{
+    gap: 2rem;
     background-color: var(--color-white);
     padding: 2rem;
     border-radius: 1rem;
     max-width: 600px;
 }
 
-.company-info-description {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 1rem;
-}
-
 .company-info-availabilities,
 .company-info-services {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
 }
 
-.company-info-availabilities h3,
-.company-info-services h3,
-.company-info h2 {
+.company-info-availabilities h2,
+.company-info-services h2 {
     margin-bottom: 1rem;
 }
 
+/* Lists netjes maken */
+.company-info-availabilities ul,
+.company-info-services ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.company-info-availabilities li,
+.company-info-services li {
+    line-height: 1.6;
+}
+
+/* ===== Appointment aside ===== */
+
+.appointment-content {
+    background-color: var(--color-white);
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+.appointment-content h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
 
 /* ========== MEDIA QUERIES ========== */
-@media (max-width: 480px) {
-    .loading-message-company {
-        display: flex;
-        align-content: center;
-        justify-content: center;
-        font-family: var(--font-heading), serif;
 
-    }
-
+@media (min-width: 1024px) and (max-width: 1400px) {
     .full-info-section {
         flex-direction: column;
-        gap: 1rem;
+        padding: 0;
+        max-width: 800px;
+        margin: 4rem auto;
     }
 
-    .full-company-content {
-        margin-left: 1rem;
-        margin-right: 1rem;
+    .appointment-content {
+        margin: 0 auto;
     }
 
-    .company-info {
-        max-width: 100%;
+    .company-details {
+        margin: 0 auto  ;
+    }
+}
+
+@media (max-width: 768px) {
+    .full-info-section {
+        flex-direction: column;
+        align-items: center;
     }
 
     .company-info-description {
@@ -83,11 +122,24 @@
         width: 100%;
     }
 
-    .appointment-content {
-        max-width: 400px;
-        width: 100%;
-        margin-bottom: 1rem;
+
+    .company-header {
+        padding-top: 3rem;
+        margin: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .company-header {
+        padding-top: 3rem;
+        margin: 1rem;
     }
 
+    .company-details {
+        width: 92%;
+    }
 
+    .appointment-content {
+        margin-bottom: 1rem;
+    }
 }
