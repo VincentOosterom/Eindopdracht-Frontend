@@ -13,7 +13,7 @@ function RegisterForm() {
     const [city, setCity] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [newCompany, setNewCompany] = useState([]);
+    const [, setNewCompany] = useState([]);
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
@@ -66,7 +66,7 @@ function RegisterForm() {
                 }
             );
 
-            console.log("Nieuw user:", userRes.data);
+
 
             const userId = userRes.data.id;
 
@@ -94,15 +94,9 @@ function RegisterForm() {
                 },
             );
             setNewCompany(companyRes.data)
-
-
-
             setSuccess("Account succesvol aangemaakt!");
-
             setTimeout(() => navigate("/inloggen"), 1500);
-
         } catch (err) {
-
             if (axios.isAxiosError(err)) {
                 if (err.response?.status === 409) {
                     setError("Dit e-mailadres is al in gebruik.");
@@ -122,12 +116,13 @@ function RegisterForm() {
     return (
         <section className="register-container">
             <form onSubmit={Register} className="register-form">
-                <div className="register-form-title">
+                {error && <p className="error-message" role="alert">{error}</p>}
+                <section className="register-form-title">
                     <h2>Maak jouw account aan</h2>
                     <p>Gratis voor 14 dagen, geheel vrijblijvend.</p>
-                </div>
+                </section>
 
-                <div className="register-form-inputs">
+                <section className="register-form-inputs">
                     <label htmlFor="firstname">Voornaam</label>
                     <input
                         id="firstname"
@@ -202,16 +197,11 @@ function RegisterForm() {
                         <li>Minstens één cijfer</li>
                         <li>Minstens één speciaal teken</li>
                     </ul>
-                </div>
-
-
+                </section>
                 <button type="submit" disabled={loading}>
                     {success ? "Uw account wordt aangemaakt..." : "Registreren"}
                 </button>
-                {error && <p className="error-message" role="alert">{error}</p>}
             </form>
-
-
         </section>
     );
 }

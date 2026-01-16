@@ -9,7 +9,7 @@ function AccountSchedule({days, services, companyId}) {
     const [savingServices, setSavingServices] = useState(false);
 
     const [error, setError] = useState("");
-    const [succes, setSucces] = useState("");
+    const [success, setSuccess] = useState(null);
 
     const DAY_ORDER = [
         "Maandag",
@@ -25,15 +25,15 @@ function AccountSchedule({days, services, companyId}) {
     useEffect(() => {
         let timer;
 
-        if (succes) {
-            timer = setTimeout(() => setSucces(""), 3000);
+        if (success) {
+            timer = setTimeout(() => setSuccess(""), 3000);
         }
 
         if (error) {
             timer = setTimeout(() => setError(""), 3000);
         }
         return () => clearTimeout(timer);
-    }, [succes, error]);
+    }, [success, error]);
 
     useEffect(() => {
         // ----- AVAILABILITIES LADEN -----
@@ -104,7 +104,7 @@ function AccountSchedule({days, services, companyId}) {
     async function handleAvailabilitySubmit(e) {
         e.preventDefault();
         setSavingAvail(true);
-        setSucces(false);
+        setSuccess(false);
 
         try {
             for (const a of availabilities) {
@@ -133,7 +133,7 @@ function AccountSchedule({days, services, companyId}) {
                 }
             }
 
-            setSucces("Openingstijden opgeslagen!");
+            setSuccess("Openingstijden opgeslagen!");
         } catch (err) {
             console.error("Fout bij opslaan openingstijden:", err);
             setError("Er ging iets mis tijdens het opslaan.");
@@ -162,9 +162,9 @@ function AccountSchedule({days, services, companyId}) {
         ]);
     }
 
-    async function handleDeleteService(serivceId, index) {
+    async function handleDeleteService(serviceId, index) {
 
-        if (serivceId == null) {
+        if (serviceId == null) {
             setServiceList((prev) => prev.filter((_, i) => i !== index));
             return
         }
@@ -173,9 +173,9 @@ function AccountSchedule({days, services, companyId}) {
         if (!confirmDelete) return;
 
         try {
-            await api.delete(`/services/${serivceId}`);
+            await api.delete(`/services/${serviceId}`);
             setServiceList((prev) => prev.filter((_, i) => i !== index));
-            setSucces("Uw dienst in succesvol verwijderd")
+            setSuccess("Uw dienst in succesvol verwijderd")
         } catch (error) {
             console.log(error);
             setError("Het is niet gelukt om deze dienst te verwijderen")
@@ -206,7 +206,7 @@ function AccountSchedule({days, services, companyId}) {
                     });
                 }
             }
-            setSucces("Diensten opgeslagen!");
+            setSuccess("Diensten opgeslagen!");
 
         } catch (err) {
             console.error("Fout bij opslaan diensten:", err);
@@ -221,7 +221,7 @@ function AccountSchedule({days, services, companyId}) {
             {/* OPENINGSTIJDEN */}
             <article className="account-availabilities">
                 <h2>Openingstijden</h2>
-                {succes && <p className="success-message">{succes}</p>}
+                {success && <p className="success-message">{success}</p>}
                 {error && <p className="error-message" role="alert">{error} </p>}
                 <form className="availability-form" onSubmit={handleAvailabilitySubmit}>
                     <ul className="availability-list">
@@ -352,7 +352,7 @@ function AccountSchedule({days, services, companyId}) {
                         <button type="button" className="btn" onClick={handleAddService}>
                             Dienst toevoegen
                         </button>
-                        <button type="submit" className="btn" disabled={savingServices}>
+                        <button type="submit" className="btn" disabled={!handleServiceSubmit}>
                             {savingServices ? "Opslaan..." : "Diensten opslaan"}
                         </button>
                     </section>
