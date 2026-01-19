@@ -11,15 +11,9 @@ function EditAppointmentModal({
                                   onDelete
                               }) {
 
-
-
-
     const initialService = services.find(
         (s) => s.name === event.title.split(" - ")[0]
     );
-
-
-
 
     const [clientName, setClientName] = useState(event.extendedProps.clientName);
     const [clientEmail, setClientEmail] = useState(event.extendedProps.clientEmail);
@@ -27,11 +21,9 @@ function EditAppointmentModal({
     const [date, setDate] = useState(event.start.toISOString().slice(0, 10));
     const [time, setTime] = useState(event.start.toLocaleTimeString("en-Gb", {hour: "2-digit", minute: "2-digit"}));
 
-
-
     return (
         <section className="modal-overlay" onClick={onClose}>
-            <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <article className="modal" onClick={(e) => e.stopPropagation()}>
                 <h2>Afspraak bewerken</h2>
                 <label>
                     Klantnaam
@@ -41,7 +33,6 @@ function EditAppointmentModal({
                         onChange={(e) => setClientName(e.target.value)}
                     />
                 </label>
-
                 <label>
                     E-mail
                     <input
@@ -50,7 +41,6 @@ function EditAppointmentModal({
                         onChange={(e) => setClientEmail(e.target.value)}
                     />
                 </label>
-
                 <label>
                     Dienst
                     <select
@@ -84,7 +74,7 @@ function EditAppointmentModal({
                     />
                 </label>
 
-                <div className="modal-buttons">
+                <section className="modal-buttons">
                     <button
                         className="btn-save"
                         onClick={() =>
@@ -111,8 +101,8 @@ function EditAppointmentModal({
                     <button className="btn-cancel" onClick={onClose}>
                         Annuleren
                     </button>
-                </div>
-            </div>
+                </section>
+            </article>
         </section>
     );
 }

@@ -95,17 +95,6 @@
     margin-bottom: 0.5rem;
 }
 
-.forget-password {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.forget-password a {
-    color: white;
-    margin: 1rem;
-}
-
 .error-message {
     color: red;
 }

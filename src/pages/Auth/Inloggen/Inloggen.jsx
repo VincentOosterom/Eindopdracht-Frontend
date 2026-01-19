@@ -106,9 +106,6 @@ function Inloggen() {
                             disabled={loading}
                         > {loading ? "Bezig met inloggen" : "Inloggen"}
                         </button>
-                        <div className="forget-password">
-                            <NavLink to="/wachtwoord-vergeten">Wachtwoord vergeten</NavLink>
-                        </div>
                     </form>
 
                     {error && <p className="error-message">{error}</p>}

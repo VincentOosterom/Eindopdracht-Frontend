@@ -71,12 +71,12 @@ button:hover {
 
 /* ========== ERROR & SUCCES MESSAGE ========== */
 .success-message {
-    color: var(--color-green);
+    color: var(--color-green) !important;
     margin-top: 0.8rem;
 }
 
 .error-message {
-    color: var(--color-red);
+    color: var(--color-red) !important;
     margin-top: 0.8rem;
 }
 

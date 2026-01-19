@@ -57,12 +57,12 @@ function AccountInfo({company}) {
 
         try {
             await api.patch(`/users/${company.ownerUserId}`, {
+                oldPassword,
                 password: newPassword,
             });
 
             setSuccess("Wachtwoord succesvol gewijzigd!");
 
-            // Leeg velden
             setOldPassword("");
             setNewPassword("");
             setConfirmNewPassword("");

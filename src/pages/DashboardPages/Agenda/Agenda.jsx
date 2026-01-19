@@ -22,9 +22,10 @@ function Agenda() {
     const [calendarView, setCalendarView] = useState("timeGridWeek");
     const calendarRef = useRef(null);
 
+    const [error, setError] = useState(null);
+
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showModal, setShowModal] = useState(false);
-
 
 
     // ============== 1. Bedrijf ophalen ==============
@@ -46,13 +47,18 @@ function Agenda() {
             try {
                 const res = await api.get(`/services?companyId=${companyId}`);
                 setServices(res.data);
-            } catch (err) {
-                console.error("Services ophalen mislukt:", err);
+            } catch {
+                setError("Fout bij het ophalen van alle services");
             }
         }
         fetchServices();
     }, [companyId]);
 
+    useEffect(() => {
+        if (services.length > 0) {
+            refreshAppointments();
+        }
+    }, [services, companyId]);
 
     // ============== 3. Afspraken ophalen ==============
     async function refreshAppointments() {
@@ -86,14 +92,6 @@ function Agenda() {
         }
     }
 
-    useEffect(() => {
-        if (services.length > 0) {
-            refreshAppointments();
-        }
-    }, [services, companyId]);
-
-
-
     // ====================== 4. Layout responsive ======================
     useEffect(() => {
         function handleResize() {
@@ -110,7 +108,6 @@ function Agenda() {
         const api = calendarRef.current?.getApi();
         if (api) api.changeView(calendarView);
     }, [calendarView]);
-
 
     // ====================== 6. VERWIJDER afspraak ======================
     async function handleDeleteEvent(eventId) {
@@ -137,12 +134,14 @@ function Agenda() {
         refreshAppointments();
         setShowModal(false);
     }
+
     return (
         <section className="dashboard">
             <SideBar />
 
             <main className="agenda-container">
                 <HeaderDashboard title="Agenda -" company={company?.name} />
+                {error && <p className="error-message">{error}</p>}
 
                 <FullCalendar
                     plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -173,7 +172,6 @@ function Agenda() {
                     eventClick={(info) => {
                         setSelectedEvent(info.event);
                         setShowModal(true);
-
                     }}
                 />
 

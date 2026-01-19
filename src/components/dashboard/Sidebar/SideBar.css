@@ -185,6 +185,11 @@
         display: none;
     }
 
+    .logout-btn {
+        background-color: var(--color-primary);
+        color: var(--color-black);
+    }
+
     .active-sidebar {
         border-radius: 5px;
         padding: 5px;

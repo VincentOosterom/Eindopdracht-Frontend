@@ -121,6 +121,12 @@ function AppointmentForm({services, companyId, availabilities}) {
 
         if (!clientEmail.includes("@") || !clientEmail.includes(".")) {
             setError("Vul een geldig e-mailadres in.");
+            return;
+        }
+
+        if (clientPhone.length !== 10) {
+            setError("Vul een geldig telefoonnummer in.");
+            return;
         }
 
         const selectedDateTime = new Date(`${selectedDate}T${selectedTime}`);
@@ -231,8 +237,8 @@ function AppointmentForm({services, companyId, availabilities}) {
             </label>
 
             <button type="submit">{loading ? "Afspraak wordt gemaakt" : "Afspraak maken"}</button>
-            {success && <p className="success-message form-success">{success}</p>}
-            {error && <p className="error-message form-error">{error}</p>}
+            {success && <p className="success-message">{success}</p>}
+            {error && <p className="error-message">{error}</p>}
         </form>
     );
 }
