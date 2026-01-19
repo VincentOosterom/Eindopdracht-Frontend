@@ -47,10 +47,7 @@
     font-family: var(--font-heading), sans-serif;
 }
 
-.nav-sidebar ul li a:hover {
-    cursor: pointer;
 
-}
 
 .nav-sidebar ul li .icon {
     color: var(--color-black);
@@ -167,9 +164,6 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        text-decoration: none;
-        color: var(--color-black);
-        font-family: var(--font-heading), sans-serif;
         font-size: 0.8rem;
     }
 
@@ -193,7 +187,6 @@
     .active-sidebar {
         border-radius: 5px;
         padding: 5px;
-        background-color: var(--color-bg);
     }
 
 

@@ -22,8 +22,10 @@ function AccountInfo({company}) {
 
 
     // ====== HANDLE COMPANY INFO SAVE ======
-    async function handleSaveCompany() {
-        setLoading(false);
+    async function handleSaveCompany(e) {
+        e.preventDefault();
+        setLoading(true);
+
         try {
             await api.patch(`/companies/${company.id}`, {
                 name,
@@ -35,9 +37,11 @@ function AccountInfo({company}) {
 
         } catch {
             setError("Bijwerken mislukt.");
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     }
+
 
     // ====== HANDLE PASSWORD CHANGE ======
     async function handlePasswordChange(e) {
@@ -69,6 +73,8 @@ function AccountInfo({company}) {
 
         } catch {
             setError("Wachtwoord wijzigen mislukt.");
+        } finally {
+            setLoading(false);
         }
     }
 

@@ -25,9 +25,27 @@
     --border-radius-input: 15px;
     --border-radius-button: 10px;
     --border-line: 1px solid #000;
+
+    /* ========== FULL CALENDER API ========== */
+    --fc-page-bg-color: var(--color-bg);
+    --fc-neutral-bg-color: var(--color-bg);
+    --fc-border-color: rgba(0, 0, 0, .12);
+
+    --fc-button-bg-color: var(--color-bg);
+    --fc-button-text-color: var(--color-text);
+    --fc-button-border-color: var(--color-button);
+    --fc-button-hover-bg-color: var(--color-primary);
+    --fc-button-hover-border-color: var(--color-primary);
+    --fc-button-active-bg-color: var(--color-primary);
+    --fc-button-active-border-color: var(--color-primary);
+
+    --fc-event-bg-color: var(--color-primary);
+    --fc-event-border-color: var(--color-primary);
+    --fc-event-text-color: #000;
+    --fc-today-bg-color: rgba(246, 173, 85, 0.15);
 }
 
-/* ========== BASE ========== */
+/* ========== BASIS ========== */
 html {
     scroll-behavior: smooth;
     font-size: 16px;
@@ -41,6 +59,22 @@ body {
     padding: 0;
 }
 
+/* ========== DASHBOARD BASIS ========== */
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    overflow: visible;
+}
+
+.dashboard-main {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin: 20px;
+    overflow-y: auto;
+}
+
 /* ========== HEADINGS ========== */
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading), serif;
@@ -48,6 +82,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p, label{
+
     color: var(--color-black);
 }
 
@@ -71,11 +106,13 @@ button:hover {
 
 /* ========== ERROR & SUCCES MESSAGE ========== */
 .success-message {
+    /* Met !important kan ik de basis overschrijven*/
     color: var(--color-green) !important;
     margin-top: 0.8rem;
 }
 
 .error-message {
+    /* Met !important kan ik de basis overschrijven*/
     color: var(--color-red) !important;
     margin-top: 0.8rem;
 }
@@ -102,43 +139,6 @@ input, textarea, select {
 
 .text-center {
     text-align: center;
-}
-
-
-/* ========== DASHBOARD BASIS ========== */
-.dashboard {
-    display: flex;
-    flex-direction: row;
-    min-height: 100vh;
-    overflow: visible;
-}
-
-.dashboard-main {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    margin: 20px;
-    overflow-y: auto;
-}
-
-/* ==== FullCalendar API CSS ==== */
-:root {
-    --fc-page-bg-color: var(--color-bg);
-    --fc-neutral-bg-color: var(--color-bg);
-    --fc-border-color: rgba(0, 0, 0, .12);
-
-    --fc-button-bg-color: var(--color-bg);
-    --fc-button-text-color: var(--color-text);
-    --fc-button-border-color: var(--color-button);
-    --fc-button-hover-bg-color: var(--color-primary);
-    --fc-button-hover-border-color: var(--color-primary);
-    --fc-button-active-bg-color: var(--color-primary);
-    --fc-button-active-border-color: var(--color-primary);
-
-    --fc-event-bg-color: var(--color-primary);
-    --fc-event-border-color: var(--color-primary);
-    --fc-event-text-color: #000;
-    --fc-today-bg-color: rgba(246, 173, 85, 0.15);
 }
 
 

@@ -104,12 +104,6 @@
     border-bottom: none;
 }
 
-.today-table tbody tr:hover {
-    background: #fafafa;
-    cursor: pointer;
-    transition: background 0.2s ease-in-out;
-}
-
 .quick-look-section {
     display: flex;
     flex-direction: row;

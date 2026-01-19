@@ -1,15 +1,15 @@
 import './index.css'
 import {Route, Routes} from "react-router-dom";
-import Inloggen from "./pages/Auth/Inloggen/Inloggen.jsx";
-import Register from "./pages/Auth/Registeren/Registeren.jsx";
-import Homepage from "./pages/Website/Homepage/Homepage.jsx";
-import CompanyPage from "./pages/Website/CompanyPage/CompanyPage.jsx";
-import DashBoard from "./pages/DashboardPages/Homepage/Homepage.jsx";
-import Agenda from "./pages/DashboardPages/Agenda/Agenda.jsx";
-import Settings from "./pages/DashboardPages/Instellingen/Settings.jsx";
-import Clients from "./pages/DashboardPages/Klanten/Clients.jsx";
-import NotFound from "./pages/Website/NotFound/NotFound.jsx";
-import ProtectedRoute from "./components/routes/protected_route/ProtectedRoute.jsx";
+import Inloggen from "./pages/auth/Inloggen/Inloggen.jsx";
+import Register from "./pages/auth/Registeren/Registeren.jsx";
+import Homepage from "./pages/website/Homepage/Homepage.jsx";
+import CompanyPage from "./pages/website/CompanyPage/CompanyPage.jsx";
+import DashBoard from "./pages/dashboard/Homepage/Homepage.jsx";
+import Agenda from "./pages/dashboard/Agenda/Agenda.jsx";
+import Settings from "./pages/dashboard/Instellingen/Settings.jsx";
+import Clients from "./pages/dashboard/Klanten/Clients.jsx";
+import NotFound from "./pages/website/NotFound/NotFound.jsx";
+import ProtectedRoute from "./routes/protected_route/ProtectedRoute.jsx";
 
 
 function App() {

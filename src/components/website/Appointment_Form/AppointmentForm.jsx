@@ -182,6 +182,8 @@ function AppointmentForm({services, companyId, availabilities}) {
 
     return (
         <form className="appointment-form" onSubmit={handleSubmit}>
+            {success && <p className="success-message">{success}</p>}
+            {error && <p className="error-message">{error}</p>}
             <h2>Maak hier uw afspraak</h2>
             <label>
                 Voornaam
@@ -237,8 +239,6 @@ function AppointmentForm({services, companyId, availabilities}) {
             </label>
 
             <button type="submit">{loading ? "Afspraak wordt gemaakt" : "Afspraak maken"}</button>
-            {success && <p className="success-message">{success}</p>}
-            {error && <p className="error-message">{error}</p>}
         </form>
     );
 }
