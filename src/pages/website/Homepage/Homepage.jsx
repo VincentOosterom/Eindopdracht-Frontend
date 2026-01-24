@@ -75,7 +75,7 @@ function Home() {
                         ))}
 
                         {filteredCompanies.length > visibleCount && (
-                            <button onClick={() => setVisibleCount(visible => visible + 6)}>
+                            <button className="btn load_more" onClick={() => setVisibleCount(visible => visible + 6)}>
                                 Toon meer
                             </button>
                         )}

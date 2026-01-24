@@ -18,10 +18,9 @@ function SearchResultCard({ company }) {
     }
 
     return (
-        <article className="search-result-card">
-            <div className="search-result-card-content">
+        <section className="search-result-card">
+            <article className="search-result-card-content">
                     <h3>{name}</h3>
-
                     <p className="bio">
                         {bio || "Dit bedrijf heeft nog geen beschrijving toegevoegd."}
                     </p>
@@ -29,10 +28,9 @@ function SearchResultCard({ company }) {
                     {street
                         &&
                         <p className="address">Onze adres: <br/> {street} - {zip} - {city}</p>}
-
                     <button className="book-btn" onClick={handleGoCompanyPage}>Boek nu</button>
-                </div>
-        </article>
+                </article>
+        </section>
     );
 }
 

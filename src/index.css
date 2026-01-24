@@ -112,13 +112,12 @@ button:disabled {
 .success-message {
     /* Met !important kan ik de basis overschrijven*/
     color: var(--color-green) !important;
-    margin-top: 0.8rem;
 }
 
 .error-message {
     /* Met !important kan ik de basis overschrijven*/
     color: var(--color-red) !important;
-    margin-top: 0.8rem;
+
 }
 
 /* ========== FORMS ========== */

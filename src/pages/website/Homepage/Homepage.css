@@ -36,6 +36,14 @@
     justify-items: center;
 }
 
+
+.load_more {
+    grid-column: 1 / -1; /* ⬅️ hele breedte */
+    justify-self: center; /* ⬅️ knop zelf centreren */
+    font-size: clamp(1rem, 2vw, 1.2rem);
+}
+
+
 /* ========== SECTION 2 ========== */
 
 .how-it-works {

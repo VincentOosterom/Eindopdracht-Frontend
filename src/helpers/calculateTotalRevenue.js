@@ -6,3 +6,8 @@ export const calculateTotalRevenue = (appointments = [], services = []) => {
         return total + (service?.price || 0);
     }, 0);
 };
+
+
+export function calculateTax(totalRevenue) {
+    return Number(((totalRevenue * 9) / 109).toFixed(2));
+}

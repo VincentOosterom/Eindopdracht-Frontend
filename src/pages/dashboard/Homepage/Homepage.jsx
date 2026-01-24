@@ -8,30 +8,50 @@ import {convertToISO, getEndOfWeek, getStartOfWeek} from "../../../helpers/date.
 import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 import DashboardAppointmentModal
     from "../../../components/dashboard/DashboardAppointmentModal/DashboardAppointmentModal.jsx";
-import {calculateTotalRevenue} from "../../../helpers/calculateTotalRevenue.js";
+import {calculateTax, calculateTotalRevenue} from "../../../helpers/calculateTotalRevenue.js";
 
 
 function Homepage() {
     const {companyId} = useParams();
     const navigate = useNavigate();
+    const [now, setNow] = useState(new Date());
+
+    function handleGoToAgenda() {
+        navigate(`/dashboard/${companyId}/agenda`);
+    }
+
 
     const [company, setCompany] = useState(null);
     const [availabilities, setAvailabilities] = useState([]);
     const [appointments, setAppointments] = useState([]);
 
+    // Alle afspraken van bedrijf
     const [appointmentsToday, setAppointmentsToday] = useState([]);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     const [services, setService] = useState([]);
+    console.log(services);
+
+    // Voor nieuwe afspraak
     const [showModal, setShowModal] = useState(false);
-    const nextAppointment = appointmentsToday[0];
+
+    const nextAppointment = (() => {
+        const currentMinutes = now.getHours() * 60 + now.getMinutes();
+        return appointmentsToday
+            .map(appt => {
+                const [h, m] = appt.time.split(":").map(Number);
+                return {...appt, minutes: h * 60 + m};
+            })
+            .filter(appt => appt.minutes > currentMinutes)
+            .sort((a, b) => a.minutes - b.minutes)[0] ?? null;
+    })();
 
     // Aantal afspraken per week tonen
-    const now = new Date();
     const startOfWeek = getStartOfWeek(now);
     const endOfWeek = getEndOfWeek(now);
+
 
     const appointmentsThisWeek = appointments.filter((a) => {
         if (!a.date) return false;
@@ -47,9 +67,13 @@ function Homepage() {
         services
     );
 
-    function handleGoToAgenda() {
-        navigate(`/dashboard/${companyId}/agenda`);
-    }
+    const taxThisWeek = calculateTax(revenueThisWeek);
+
+
+    useEffect(() => {
+        const id = setInterval(() => setNow(new Date()), 60_000);
+        return () => clearInterval(id);
+    }, []);
 
     useEffect(() => {
         async function loadDashboard() {
@@ -103,7 +127,7 @@ function Homepage() {
             <main className="dashboard-main">
                 <HeaderDashboard title="Welkom terug," company={company.name ?? ""}/>
                 {error && <p className="error-message" role="alert">{error}</p>}
-                
+
                 <section className="dashboard-today">
                     <article>
                         <h3>Afspraken vandaag</h3>
@@ -171,7 +195,6 @@ function Homepage() {
                     {/* Weekoverzicht (placeholder tot je weekberekening maakt) */}
                     <article className="dashboard-quick-this-week">
                         <h3>Weekoverzicht</h3>
-
                         <ul className="stats-list">
                             <li>
                                 <p>Afspraken deze week</p>
@@ -180,6 +203,10 @@ function Homepage() {
                             <li>
                                 <p>Totale omzet deze week</p>
                                 <strong>€{revenueThisWeek}</strong>
+                            </li>
+                            <li>
+                                <p>BTW</p>
+                                <strong>€{taxThisWeek}</strong>
                             </li>
                         </ul>
                     </article>
