@@ -2,6 +2,7 @@ import './AppointmentForm.css';
 import {useState, useEffect} from "react";
 import api from "../../../api/api";
 import {doTimesOverlap} from "../../../helpers/appointments";
+import { useAutoClearMessage } from "../../../helpers/useAutoClearMessage";
 
 
 function AppointmentForm({services, companyId, availabilities}) {
@@ -16,10 +17,14 @@ function AppointmentForm({services, companyId, availabilities}) {
 
     const [availableTimes, setAvailableTimes] = useState([]);
     const [appointments, setAppointments] = useState([]);
+
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
+    useAutoClearMessage(error, setError);
+    useAutoClearMessage(success, setSuccess);
     const [loading, setLoading] = useState(false);
 
+    // Haalt alle afspraken op van het bedrijf
     useEffect(() => {
         async function fetchAppointments() {
             const res = await api.get(`/appointments?companyId=${companyId}`);
@@ -27,7 +32,6 @@ function AppointmentForm({services, companyId, availabilities}) {
         }
         fetchAppointments();
     }, [companyId]);
-
 
     // 3. generate alle time op basis van openingstijden + service duration + bestaande afspraken
     useEffect(() => {
@@ -128,13 +132,12 @@ function AppointmentForm({services, companyId, availabilities}) {
             setError("Vul een geldig telefoonnummer in.");
             return;
         }
-
+        // Controleert of tijd in het verleden ligt.
         const selectedDateTime = new Date(`${selectedDate}T${selectedTime}`);
         if (selectedDateTime < new Date()) {
-            setError("Je kunt geen afspraak in het verleden maken.");
+            setError("Je kunt geen afspraak in het verleden maken. Probeer een andere tijd");
             return;
         }
-
         const backendDate = selectedDate.split("-").reverse().join("-");
 
         setLoading(false);

@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLeftLong} from "@fortawesome/free-solid-svg-icons";
 import {useAuth} from "../../../context/AuthContext";
 import api from "../../../api/api.js";
+import {useAutoClearMessage} from "../../../helpers/useAutoClearMessage.js";
 
 
 function decodeJwt(token) {
@@ -16,10 +17,12 @@ function Inloggen() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    useAutoClearMessage(error, setError);
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const {login} = useAuth();
+
 
     function handleBack() {
         navigate("/");
@@ -70,47 +73,78 @@ function Inloggen() {
 
     return (
         <>
-            <header className="login-page">
+            <main className="login-page">
                 <section className="login-container">
-                    <div className="icon-back" onClick={handleBack}>
-                        <FontAwesomeIcon icon={faLeftLong}/>
-                    </div>
+
+                    <button
+                        type="button"
+                        className="icon-back"
+                        onClick={handleBack}
+                        aria-label="Ga terug"
+                    >
+                        <FontAwesomeIcon icon={faLeftLong} />
+                    </button>
+
                     <h1>Tijdslot</h1>
-                    <div className="login-content">
-                        <h2>Welkom Terug</h2>
-                    </div>
-                    <form className="login-form" onSubmit={handleSubmit}>
-                        <label htmlFor="email"></label>
+
+                    <header className="login-content">
+                        <h2>Welkom terug</h2>
+                    </header>
+
+                    <form className="login-form" onSubmit={handleSubmit} noValidate>
+
+                        <label htmlFor="email">E-mailadres</label>
                         <input
+                            id="email"
                             type="email"
                             value={email}
-                            placeholder="Uw E-mail"
-                            onChange={(e) => setEmail(e.target.value)}/>
-                        <label htmlFor="Password"></label>
+                            placeholder="Uw e-mailadres"
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+
+                        <label htmlFor="password">Wachtwoord</label>
                         <div className="password-wrapper">
                             <input
+                                id="password"
                                 type={showPassword ? "text" : "password"}
-                                name="password"
                                 value={password}
-                                placeholder="Uw Wachtwoord"
+                                placeholder="Uw wachtwoord"
                                 onChange={(e) => setPassword(e.target.value)}
+                                required
                             />
-                            <span
+
+                            <button
+                                type="button"
                                 className="toggle-eye"
                                 onClick={() => setShowPassword(!showPassword)}
-                            > {showPassword ? "🙈" : "👁️"}</span>
+                                aria-label={
+                                    showPassword ? "Verberg wachtwoord" : "Toon wachtwoord"
+                                }
+                            >
+                                {showPassword ? "🙈" : "👁️"}
+                            </button>
                         </div>
+
                         <button
                             type="submit"
                             className="login-btn"
                             disabled={loading}
-                        > {loading ? "Bezig met inloggen" : "Inloggen"}
+                        >
+                            {loading ? "Bezig met inloggen" : "Inloggen"}
                         </button>
+
                     </form>
 
-                    {error && <p className="error-message">{error}</p>}
+                    {error && (
+                        <p className="error-message" role="alert">
+                            {error}
+                        </p>
+                    )}
+
                 </section>
-            </header>
+            </main>
+
         </>
     )
 }

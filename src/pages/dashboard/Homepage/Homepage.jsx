@@ -32,7 +32,6 @@ function Homepage() {
     const [error, setError] = useState("");
 
     const [services, setService] = useState([]);
-    console.log(services);
 
     // Voor nieuwe afspraak
     const [showModal, setShowModal] = useState(false);

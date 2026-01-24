@@ -34,6 +34,11 @@
     top: 2rem;
     color: white;
     cursor: pointer;
+    background: none;
+}
+
+.icon-back:hover {
+    background: none;
 }
 
 .login-container h1 {
@@ -70,6 +75,10 @@
     border-radius: 15px;
 }
 
+.login-form label{
+    display: none;
+}
+
 .password-wrapper {
     position: relative;
     display: inline-block;
@@ -84,9 +93,13 @@
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    cursor: pointer;
     user-select: none;
     font-size: 18px;
+    background: none;
+}
+
+.toggle-eye:hover {
+    background: none;
 }
 
 .login-btn:disabled {
@@ -94,11 +107,6 @@
     cursor: not-allowed;
     margin-bottom: 0.5rem;
 }
-
-.error-message {
-    color: red;
-}
-
 
 /* =========================
    MOBILE (≤ 480px)

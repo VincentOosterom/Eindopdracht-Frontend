@@ -17,6 +17,8 @@ function Settings() {
     const [days, setDays] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const [error, setError] = useState("");
+
     useEffect(() => {
         async function loadData() {
             try {
@@ -37,7 +39,7 @@ function Settings() {
 
 
             } catch (err) {
-                console.error("Fout bij ophalen instellingen:", err);
+                setError("Fout bij ophalen instellingen")
             } finally {
                 setLoading(false);
             }
@@ -51,9 +53,10 @@ function Settings() {
     if (!company) return <p>Bedrijf niet gevonden.</p>;
 
     return (
-        <div className="dashboard">
+        <main className="dashboard">
             <SideBar/>
-            <main className="dashboard-main">
+            <section className="dashboard-main">
+                {error && <p className="error-message">{error}</p>}
                 <HeaderDashboard title="Instellingen" company={company.name}/>
 
                 {/* Bedrijfsgegevens */}
@@ -61,8 +64,8 @@ function Settings() {
 
                 {/* Dienstaanbod + openingstijden */}
                 <AccountSchedule days={days} services={services} companyId={companyId}/>
-            </main>
-        </div>
+            </section>
+        </main>
     );
 }
 
