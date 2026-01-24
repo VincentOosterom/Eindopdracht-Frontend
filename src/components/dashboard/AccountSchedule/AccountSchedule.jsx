@@ -10,8 +10,7 @@ function AccountSchedule({days, services, companyId}) {
 
 
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState(null);
-
+    const [success, setSuccess] = useState("");
     const [availabilitySuccess, setAvailabilitySuccess] = useState("");
     const [serviceSuccess, setServiceSuccess] = useState("");
 
@@ -30,22 +29,24 @@ function AccountSchedule({days, services, companyId}) {
         let timer;
 
         if (success) {
-            timer = setTimeout(() => setSuccess(""), 5000);
+            timer = setTimeout(() => setSuccess(""), 2000);
         }
 
-        if (setServiceSuccess) {
-            timer = setTimeout(() => setServiceSuccess(""), 5000);
+        if (serviceSuccess) {
+            timer = setTimeout(() => setServiceSuccess(""), 2000);
         }
 
         if (setAvailabilitySuccess) {
-            timer = setTimeout(() => setAvailabilitySuccess(""), 5000);
+            timer = setTimeout(() => setAvailabilitySuccess(""), 2000);
         }
 
         if (error) {
-            timer = setTimeout(() => setError(""), 5000);
+            timer = setTimeout(() => setError(""), 2000);
         }
         return () => clearTimeout(timer);
-    }, [success, error]);
+    }, [success, error, serviceSuccess]);
+
+
 
     useEffect(() => {
         // ----- AVAILABILITIES LADEN -----
@@ -290,7 +291,7 @@ function AccountSchedule({days, services, companyId}) {
             <article className="account-availabilities">
                 <h2>Diensten</h2>
                 {serviceSuccess && (
-                    <p className="success-message">{serviceSuccess}</p>
+                    <p className="success-message" role="status" aria-live="polite">{serviceSuccess}</p>
                 )}
                 <form className="service-form" onSubmit={handleServiceSubmit}>
                     {serviceList.length === 0 ? (
@@ -306,7 +307,6 @@ function AccountSchedule({days, services, companyId}) {
                                         <legend className="visually-hidden">
                                             Dienst {service.name}
                                         </legend>
-
                                         <label>
                                             <input
                                                 type="text"

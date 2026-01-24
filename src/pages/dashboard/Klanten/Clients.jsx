@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import api from "../../../api/api.js";
 import AddClientForm from "../../../components/dashboard/AddClientForm/AddClientForm.jsx";
 import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
+import {useAutoClearMessage} from "../../../helpers/useAutoClearMessage.js";
 
 
 function Clients() {
@@ -13,9 +14,12 @@ function Clients() {
     const [clients, setClients] = useState([]);
     const [company, setCompany] = useState([]);
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    useAutoClearMessage(error, setError);
+    useAutoClearMessage(success, setSuccess);
     const [loading, setLoading] = useState(true);
     const [showForm, setShowForm] = useState(false);
-    const [successMessage, setSuccessMessage] = useState("");
+
 
     // STATE: zoekterm input
     const [searchClient, setSearchClient] = useState("");
@@ -53,10 +57,7 @@ function Clients() {
     function handleClientAdded(newClient) {
         setClients((prev) => [...prev, newClient]);
         setShowForm(false);
-        setSuccessMessage("Nieuw klant toegevoegd");
-        setInterval(() => {
-            setSuccessMessage("");
-        }, 1500)
+        setSuccess("Nieuw klant toegevoegd");
     }
 
     async function handleDeleteClient(clientId) {
@@ -73,7 +74,7 @@ function Clients() {
             // Verwijder lokaal
             setClients((prev) => prev.filter((c) => c.id !== clientId));
 
-            setSuccessMessage(true);
+            setSuccess(true);
 
         } catch (err) {
             console.error("Fout bij verwijderen klant:", err);
@@ -118,7 +119,6 @@ function Clients() {
                                 </div>
                             </div>
                         )}
-
                     </article>
 
                     <section className="clients-table">
@@ -144,7 +144,7 @@ function Clients() {
                             </tbody>
                         </table>
                         {error && <p>Er is een fout opgetreden</p>}
-                        {successMessage && <p>{successMessage}</p>}
+                        {success && <p className="success-message">{success}</p>}
                     </section>
                 </section>
 
