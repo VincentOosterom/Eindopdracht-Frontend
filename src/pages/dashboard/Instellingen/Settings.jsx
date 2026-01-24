@@ -35,6 +35,7 @@ function Settings() {
                 const availRes = await api.get(`/availabilities?companyId=${companyId}`);
                 setDays(availRes.data);
 
+
             } catch (err) {
                 console.error("Fout bij ophalen instellingen:", err);
             } finally {

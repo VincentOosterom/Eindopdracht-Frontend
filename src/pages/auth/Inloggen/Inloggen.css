@@ -1,13 +1,13 @@
 /* ========== LOGIN PAGE ========== */
 
 .login-page {
-    background: linear-gradient(0deg, #000 12.02%, #F6AD55 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     gap: 1rem;
+    background: linear-gradient(0deg, #000 12.02%, #F6AD55 100%);
 }
 
 .login-container {

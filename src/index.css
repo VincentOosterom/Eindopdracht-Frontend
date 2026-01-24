@@ -18,7 +18,7 @@
     --color-bg: #ffffff;
     --color-white: #ffffff;
     --color-black: #000000;
-    --color-green: #09f409;
+    --color-green: #2ee12e;
     --color-red: #ff0000;
 
 
@@ -54,7 +54,6 @@ html {
 body {
     font-family: var(--font-body), serif;
     color: var(--color-text);
-    background-color: var(--color-bg);
     margin: 0;
     padding: 0;
 }
@@ -101,6 +100,11 @@ button {
 button:hover {
     background-color: var(--color-primary);
     color: #000;
+}
+
+button:disabled {
+    filter: blur(1px);
+    cursor: not-allowed;
 }
 
 

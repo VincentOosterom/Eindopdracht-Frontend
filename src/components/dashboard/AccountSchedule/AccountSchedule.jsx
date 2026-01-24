@@ -8,8 +8,12 @@ function AccountSchedule({days, services, companyId}) {
     const [savingAvail, setSavingAvail] = useState(false);
     const [savingServices, setSavingServices] = useState(false);
 
+
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(null);
+
+    const [availabilitySuccess, setAvailabilitySuccess] = useState("");
+    const [serviceSuccess, setServiceSuccess] = useState("");
 
     const DAY_ORDER = [
         "Maandag",
@@ -26,11 +30,19 @@ function AccountSchedule({days, services, companyId}) {
         let timer;
 
         if (success) {
-            timer = setTimeout(() => setSuccess(""), 3000);
+            timer = setTimeout(() => setSuccess(""), 5000);
+        }
+
+        if (setServiceSuccess) {
+            timer = setTimeout(() => setServiceSuccess(""), 5000);
+        }
+
+        if (setAvailabilitySuccess) {
+            timer = setTimeout(() => setAvailabilitySuccess(""), 5000);
         }
 
         if (error) {
-            timer = setTimeout(() => setError(""), 3000);
+            timer = setTimeout(() => setError(""), 5000);
         }
         return () => clearTimeout(timer);
     }, [success, error]);
@@ -88,7 +100,7 @@ function AccountSchedule({days, services, companyId}) {
         );
     }
 
-    // Voor gesloten dagen
+    // ====== GESLOTEN DAGEN ======
     function handleClosedToggle(index, checked) {
         setAvailabilities((prev) =>
             prev.map((item, i) =>
@@ -99,6 +111,26 @@ function AccountSchedule({days, services, companyId}) {
                     : item
             )
         );
+    }
+
+    // ====== SERVICES HANDLERS  ======
+    function handleServiceChange(index, field, value) {
+        setServiceList((prev) =>
+            prev.map((item, i) =>
+                i === index ? {...item, [field]: value} : item
+            )
+        );
+    }
+
+    function handleAddService() {
+        setServiceList((prev) => [...prev,
+            {
+                id: null,
+                name: "",
+                duration: "",
+                price: "",
+            },
+        ]);
     }
 
     async function handleAvailabilitySubmit(e) {
@@ -133,33 +165,13 @@ function AccountSchedule({days, services, companyId}) {
                 }
             }
 
-            setSuccess("Openingstijden opgeslagen!");
-        } catch (err) {
-            console.error("Fout bij opslaan openingstijden:", err);
+            setAvailabilitySuccess("Openingstijden opgeslagen!");
+            setServiceSuccess("");
+        } catch {
             setError("Er ging iets mis tijdens het opslaan.");
         } finally {
             setSavingAvail(false);
         }
-    }
-
-    // ====== SERVICES HANDLERS  ======
-    function handleServiceChange(index, field, value) {
-        setServiceList((prev) =>
-            prev.map((item, i) =>
-                i === index ? {...item, [field]: value} : item
-            )
-        );
-    }
-
-    function handleAddService() {
-        setServiceList((prev) => [...prev,
-            {
-                id: null,
-                name: "",
-                duration: "",
-                price: "",
-            },
-        ]);
     }
 
     async function handleDeleteService(serviceId, index) {
@@ -206,8 +218,8 @@ function AccountSchedule({days, services, companyId}) {
                     });
                 }
             }
-            setSuccess("Diensten opgeslagen!");
-
+            setServiceSuccess("Diensten opgeslagen!");
+            setAvailabilitySuccess("");
         } catch (err) {
             console.error("Fout bij opslaan diensten:", err);
             setError("Er ging iets mis tijdens het opslaan.");
@@ -221,7 +233,8 @@ function AccountSchedule({days, services, companyId}) {
             {/* OPENINGSTIJDEN */}
             <article className="account-availabilities">
                 <h2>Openingstijden</h2>
-                {success && <p className="success-message">{success}</p>}
+                {availabilitySuccess && (
+                    <p className="success-message">{availabilitySuccess}</p>)}
                 {error && <p className="error-message" role="alert">{error} </p>}
                 <form className="availability-form" onSubmit={handleAvailabilitySubmit}>
                     <ul className="availability-list">
@@ -239,7 +252,7 @@ function AccountSchedule({days, services, companyId}) {
                                             handleAvailabilityChange(
                                                 index,
                                                 "startTime",
-                                                e.target.value )} />
+                                                e.target.value)}/>
                                     <input
                                         type="time"
                                         value={day.endTime}
@@ -248,7 +261,7 @@ function AccountSchedule({days, services, companyId}) {
                                             handleAvailabilityChange(
                                                 index,
                                                 "endTime",
-                                                e.target.value )}/>
+                                                e.target.value)}/>
 
                                     <label className="closed-toggle">
                                     <span className="toggle-text">
@@ -276,7 +289,9 @@ function AccountSchedule({days, services, companyId}) {
             {/* DIENSTEN */}
             <article className="account-availabilities">
                 <h2>Diensten</h2>
-
+                {serviceSuccess && (
+                    <p className="success-message">{serviceSuccess}</p>
+                )}
                 <form className="service-form" onSubmit={handleServiceSubmit}>
                     {serviceList.length === 0 ? (
                         <section>
@@ -347,12 +362,12 @@ function AccountSchedule({days, services, companyId}) {
                                 </li>
                             ))}
                         </ul>
-                        )}
+                    )}
                     <section className="services-btn">
                         <button type="button" className="btn" onClick={handleAddService}>
                             Dienst toevoegen
                         </button>
-                        <button type="submit" className="btn" disabled={!handleServiceSubmit}>
+                        <button type="submit" className="btn" disabled={savingServices}>
                             {savingServices ? "Opslaan..." : "Diensten opslaan"}
                         </button>
                     </section>

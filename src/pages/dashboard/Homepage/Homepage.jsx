@@ -144,7 +144,6 @@ function Homepage() {
                             <tr>
                                 <th>Tijd</th>
                                 <th>Klant</th>
-                                <th>Dienst</th>
                             </tr>
                             </thead>
 
@@ -154,15 +153,6 @@ function Homepage() {
                                     <tr key={appt.id}>
                                         <td>{appt.time}</td>
                                         <td>{appt.clientName}</td>
-                                        <td>{services.length === 0 ? (
-                                            <p>Er zijn nog geen diensten ingesteld.</p>
-                                        ) : (
-                                            services.map((service) => (
-                                                <div key={service.id} className="service-row">
-                                                    <span>{service.name}</span>
-                                                </div>
-                                            ))
-                                        )}</td>
                                     </tr>
                                 ))
                             ) : (
