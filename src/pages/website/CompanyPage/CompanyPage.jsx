@@ -17,37 +17,28 @@ function CompanyPage() {
     const [loading, setLoading] = useState(true);
     const [availabilities, setAvailabilities] = useState([]);
 
-    // ---- BEDRIJF OPHALEN ----
     useEffect(() => {
-        async function fetchCompany() {
+        async function fetchCompanyPageData() {
             try {
-                const res = await api.get(`/companies/${companyId}`);
-                setCompany(res.data);
+                const [companyRes, servicesRes, availRes] = await Promise.all([
+                    api.get(`/companies/${companyId}`),
+                    api.get(`/services?companyId=${companyId}`),
+                    api.get(`/availabilities?companyId=${companyId}`)
+                ]);
+
+                setCompany(companyRes.data);
+                setServices(servicesRes.data);
+                setAvailabilities(availRes.data);
             } catch {
-                setError("Fout bij het ophalen van het juiste bedrijf");
-            }
-        }
-        fetchCompany();
-    }, [companyId]);
-
-    // ---- SERVICES OPHALEN & AVAILABILITIES OPHALEN ----
-    useEffect(() => {
-        async function fetchServices() {
-            try {
-                const res = await api.get(`/services?companyId=${companyId}`);
-                setServices(res.data);
-
-                const AvailResponse = await api.get(`/availabilities?companyId=${companyId}`);
-                setAvailabilities(AvailResponse.data);
-            } catch  {
-                setError("Fout bij het ophalen van juiste informatie");
+                setError("Fout bij het ophalen van bedrijfsgegevens");
             } finally {
                 setLoading(false);
             }
         }
 
-        fetchServices();
+        fetchCompanyPageData();
     }, [companyId]);
+
 
     if (loading) return <DashboardLoader text="Bedrijf wordt opgehaald"/>
     if (!company) return <p className="error-message">{error}</p>;

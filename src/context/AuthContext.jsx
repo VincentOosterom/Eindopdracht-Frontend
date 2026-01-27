@@ -5,6 +5,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
     // undefined = aan het laden, null = niet ingelogd, object = ingelogd
     const [user, setUser] = useState(undefined);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         const stored = localStorage.getItem("user");
@@ -12,8 +13,8 @@ export function AuthProvider({ children }) {
             try {
                 const parsed = JSON.parse(stored);
                 setUser(parsed);
-            } catch (e) {
-                console.error("Kon user niet parsen uit localStorage", e);
+            } catch {
+                setError("Kon user niet parsen uit localStorage")
                 setUser(null);
             }
         } else {

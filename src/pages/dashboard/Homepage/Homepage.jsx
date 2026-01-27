@@ -76,44 +76,42 @@ function Homepage() {
     useEffect(() => {
         async function loadDashboard() {
             try {
-                // 1. Company ophalen
-                const companyRes = await api.get(`/companies/${companyId}`);
+                const [
+                    companyRes,
+                    apptRes,
+                    servicesRes,
+                    availRes
+                ] = await Promise.all([
+                    api.get(`/companies/${companyId}`),
+                    api.get(`/appointments?companyId=${companyId}`),
+                    api.get(`/services?companyId=${companyId}`),
+                    api.get(`/availabilities?companyId=${companyId}`)
+                ]);
+
                 setCompany(companyRes.data);
 
-                // 2. Afspraken ophalen voor dit bedrijf
-                const apptRes = await api.get(
-                    `/appointments?companyId=${companyId}`
-                );
-                // Alle afspraken opslaan in variable
                 const allAppointments = apptRes.data;
                 setAppointments(allAppointments);
 
-                // Service ophalen
-                const getServices = await api.get(`/services?companyId=${companyId}`);
-
-                // Alle services opslaan in variable
-                const allServices = getServices.data;
+                const allServices = servicesRes.data;
                 setService(allServices);
 
-                const availRes = await api.get(`/availabilities?companyId=${companyId}`);
                 setAvailabilities(availRes.data);
 
                 const todayIso = new Date().toISOString().split("T")[0];
-
-                const todayList = allAppointments.filter(
-                    (appt) => convertToISO(appt.date) === todayIso);
-                setAppointmentsToday(todayList);
-
+                setAppointmentsToday(
+                    allAppointments.filter(
+                        (appt) => convertToISO(appt.date) === todayIso
+                    )
+                );
             } catch {
                 setError("Fout bij ophalen dashboard gegevens");
             } finally {
                 setLoading(false);
             }
         }
-
         loadDashboard();
     }, [companyId]);
-
 
     if (loading) return <DashboardLoader text="Homepage laden.."/>;
     if (!company) return <p>Bedrijf niet gevonden.</p>;
