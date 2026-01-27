@@ -17,8 +17,7 @@ function Homepage() {
     const [now, setNow] = useState(new Date());
 
     function handleGoToAgenda() {
-        navigate(`/dashboard/${companyId}/agenda`);
-    }
+        navigate(`/dashboard/${companyId}/agenda`);}
 
 
     const [company, setCompany] = useState(null);

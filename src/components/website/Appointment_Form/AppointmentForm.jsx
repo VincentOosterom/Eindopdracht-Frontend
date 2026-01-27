@@ -20,9 +20,11 @@ function AppointmentForm({services, companyId, availabilities}) {
 
     const [success, setSuccess] = useState("");
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+
     useAutoClearMessage(error, setError);
     useAutoClearMessage(success, setSuccess);
-    const [loading, setLoading] = useState(false);
+
 
     // Haalt alle afspraken op van het bedrijf
     useEffect(() => {
@@ -33,9 +35,10 @@ function AppointmentForm({services, companyId, availabilities}) {
         fetchAppointments();
     }, [companyId]);
 
-    // 3. generate alle time op basis van openingstijden + service duration + bestaande afspraken
+    // 3. generate alle tijden op basis van openingstijden + service duration + bestaande afspraken
     useEffect(() => {
-        if (!selectedDate || !selectedService) return;
+        if (!selectedDate || !selectedService)
+            return;
 
         const service = services.find(s => s.id === Number(selectedService));
         const duration = service?.duration || 30;

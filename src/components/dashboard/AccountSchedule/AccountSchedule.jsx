@@ -36,7 +36,7 @@ function AccountSchedule({days, services, companyId}) {
             timer = setTimeout(() => setServiceSuccess(""), 2000);
         }
 
-        if (setAvailabilitySuccess) {
+        if (availabilitySuccess) {
             timer = setTimeout(() => setAvailabilitySuccess(""), 2000);
         }
 
@@ -44,9 +44,7 @@ function AccountSchedule({days, services, companyId}) {
             timer = setTimeout(() => setError(""), 2000);
         }
         return () => clearTimeout(timer);
-    }, [success, error, serviceSuccess]);
-
-
+    }, [success, error, serviceSuccess, availabilitySuccess]);
 
     useEffect(() => {
         // ----- AVAILABILITIES LADEN -----
@@ -137,8 +135,7 @@ function AccountSchedule({days, services, companyId}) {
     async function handleAvailabilitySubmit(e) {
         e.preventDefault();
         setSavingAvail(true);
-        setSuccess(false);
-
+        setSuccess("");
         try {
             for (const a of availabilities) {
 

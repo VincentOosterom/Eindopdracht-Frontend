@@ -15,16 +15,18 @@ function Home() {
     const [companies, setCompanies] = useState([]);
     const [loading, setLoading] = useState(true);
     const [visibleCount, setVisibleCount] = useState(6);
+    const MAX_RESULTS = 6;
+
+    const [error, setError] = useState("");
 
 
-    // ✔ ECHTE BEDRIJVEN OPHALEN UIT DE NOVI-API
     useEffect(() => {
         async function fetchCompanies() {
             try {
                 const res = await api.get("/companies");
                 setCompanies(res.data);
-            } catch (err) {
-                console.error("Kon bedrijven niet ophalen:", err);
+            } catch {
+               setError("Fout bij het laden van deze informatie");
             } finally {
                 setLoading(false);
             }
@@ -32,9 +34,9 @@ function Home() {
         fetchCompanies();
     }, []);
 
-    const MAX_RESULTS = 6;
 
-    // ✔ FILTEREN OP NAAM
+
+    // Zoekbalk filter
     const filteredCompanies = query
         ? companies.filter((c) =>
             c.name.toLowerCase().includes(query.toLowerCase())
@@ -53,6 +55,7 @@ function Home() {
             <main className="main">
                 <section className="search-result">
                     <h2>Zoek resultaten</h2>
+                    {error && <p className="error-message">{error}</p>}
                     {loading && <p className="loading-message">Bedrijven laden</p>}
                     {!loading && filteredCompanies.length === 0 && (
                         <p className="error-message">Geen bedrijven gevonden…</p>)

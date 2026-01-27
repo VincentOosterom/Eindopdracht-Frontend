@@ -70,7 +70,6 @@ function CompanyPage() {
                         <section className="company-info-description">
                             <section className="company-info-availabilities">
                                 <h2>Onze openingstijden</h2>
-
                                 {availabilities.length > 0 ? (
                                     <ul>
                                         {availabilities.map((availability) => (

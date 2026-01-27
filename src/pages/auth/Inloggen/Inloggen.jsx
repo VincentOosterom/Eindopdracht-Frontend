@@ -82,7 +82,7 @@ function Inloggen() {
                         onClick={handleBack}
                         aria-label="Ga terug"
                     >
-                        <FontAwesomeIcon icon={faLeftLong} />
+                        <FontAwesomeIcon icon={faLeftLong}/>
                     </button>
 
                     <h1>Tijdslot</h1>
@@ -141,10 +141,8 @@ function Inloggen() {
                             {error}
                         </p>
                     )}
-
                 </section>
             </main>
-
         </>
     )
 }
