@@ -95,6 +95,7 @@ function CompanyPage() {
                     <aside className="appointment-content">
                         <AppointmentForm
                             companyId={companyId}
+                            company={company}
                             services={services}
                             availabilities={availabilities}
                         />

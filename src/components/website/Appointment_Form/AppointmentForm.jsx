@@ -5,7 +5,7 @@ import {doTimesOverlap} from "../../../helpers/appointments";
 import { useAutoClearMessage } from "../../../helpers/useAutoClearMessage";
 
 
-function AppointmentForm({services, companyId, availabilities}) {
+function AppointmentForm({services, companyId, availabilities, company}) {
 
     const [clientName, setClientName] = useState('');
     const [clientEmail, setClientEmail] = useState('');
@@ -190,7 +190,7 @@ function AppointmentForm({services, companyId, availabilities}) {
         <form className="appointment-form" onSubmit={handleSubmit}>
             {success && <p className="success-message">{success}</p>}
             {error && <p className="error-message">{error}</p>}
-            <h2>Maak hier uw afspraak</h2>
+            <h2>Maak hier uw afspraak bij {company.name}</h2>
             <label>
                 Voornaam
                 <input value={clientName} onChange={(e) => setClientName(e.target.value)}/>
