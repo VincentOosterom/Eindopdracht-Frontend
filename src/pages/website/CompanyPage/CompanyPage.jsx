@@ -95,6 +95,8 @@ function CompanyPage() {
                     <aside className="appointment-content">
                         <AppointmentForm
                             companyId={companyId}
+                            title="Maak hier uw afspraak bij:"
+                            title_company={company.name}
                             company={company}
                             services={services}
                             availabilities={availabilities}

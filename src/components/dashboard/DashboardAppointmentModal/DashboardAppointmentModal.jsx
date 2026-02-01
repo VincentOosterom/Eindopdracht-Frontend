@@ -19,6 +19,7 @@ export default function DashboardAppointmentModal({
                 </button>
 
                 <AppointmentForm
+                    title="Nieuwe afspraak toevoegen"
                     services={services}
                     companyId={companyId}
                     availabilities={availabilities}

@@ -146,6 +146,7 @@ function Homepage() {
                         <DashboardAppointmentModal
                             services={services}
                             companyId={companyId}
+                            company={company}
                             availabilities={availabilities}
                             onClose={() => setShowModal(false)}
                         />
