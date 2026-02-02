@@ -66,7 +66,6 @@ function SideBar() {
                             spin={loading}
                             className="icon"
                         />
-
                         <span>
                             {loading ? "Uitloggen..." : "Uitloggen"}
                         </span>

@@ -19,6 +19,7 @@ function Settings() {
 
     const [error, setError] = useState("");
 
+
     useEffect(() => {
         async function loadData() {
             try {
@@ -38,7 +39,7 @@ function Settings() {
                 setDays(availRes.data);
 
 
-            } catch (err) {
+            } catch {
                 setError("Fout bij ophalen instellingen")
             } finally {
                 setLoading(false);

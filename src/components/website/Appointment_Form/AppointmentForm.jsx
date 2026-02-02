@@ -2,10 +2,10 @@ import './AppointmentForm.css';
 import {useState, useEffect} from "react";
 import api from "../../../api/api";
 import {doTimesOverlap} from "../../../helpers/appointments";
-import { useAutoClearMessage } from "../../../helpers/useAutoClearMessage";
+import {useAutoClearMessage} from "../../../helpers/useAutoClearMessage";
 
 
-function AppointmentForm({services, companyId, availabilities,  title, title_company}) {
+function AppointmentForm({services, companyId, availabilities, title, title_company}) {
 
     const [clientName, setClientName] = useState('');
     const [clientEmail, setClientEmail] = useState('');
@@ -32,6 +32,7 @@ function AppointmentForm({services, companyId, availabilities,  title, title_com
             const res = await api.get(`/appointments?companyId=${companyId}`);
             setAppointments(res.data);
         }
+
         fetchAppointments();
     }, [companyId]);
 
@@ -158,7 +159,6 @@ function AppointmentForm({services, companyId, availabilities,  title, title_com
                 time: selectedTime,
             });
 
-
             await api.post("/clients", {
                 companyId: Number(companyId),
                 name: clientName,
@@ -172,7 +172,7 @@ function AppointmentForm({services, companyId, availabilities,  title, title_com
             setTimeout(() => {
                 setSuccess("");
                 setLoading(false);
-            }, 1500);
+            }, 5000);
 
             setClientName("");
             setClientEmail("");
@@ -182,15 +182,20 @@ function AppointmentForm({services, companyId, availabilities,  title, title_com
             setClientPhone("");
 
         } catch {
-            setError("Kon de afspraak niet opslaan.");
+            setError("Fout bij het maken van uw afspraak. Probeer het opnieuw");
+        } finally {
+            setLoading(false);
         }
     }
 
+
     return (
         <form className="appointment-form" onSubmit={handleSubmit}>
+            <h2>{title} {title_company}</h2>
+
             {success && <p className="success-message">{success}</p>}
             {error && <p className="error-message">{error}</p>}
-            <h2>{title} {title_company}</h2>
+
             <label>
                 Voornaam
                 <input value={clientName} onChange={(e) => setClientName(e.target.value)}/>
