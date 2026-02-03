@@ -40,12 +40,12 @@ function CompanyPage() {
     }, [companyId]);
 
     useEffect(() => {
-        if (!loading && services.length === 0) {
+        if (!loading && services.length === 0 || availabilities.length === 0) {
             setError(
-                "Je kunt hier nog geen afspraak maken. Dit bedrijf heeft nog geen diensten toegevoegd"
+                "Dit bedrijf heeft nog geen diensten en/of openingstijden toegevoegd."
             );
         }
-    }, [services, loading])
+    }, [services, loading, availabilities]);
 
     if (loading) return <DashboardLoader text="Bedrijf wordt opgehaald"/>
     if (!company) return <p className="error-message">{error}</p>;
