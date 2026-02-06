@@ -10,11 +10,15 @@ import DashboardAppointmentModal
     from "../../../components/dashboard/DashboardAppointmentModal/DashboardAppointmentModal.jsx";
 import {calculateTax, calculateTotalRevenue} from "../../../helpers/calculateTotalRevenue.js";
 
+import usePageTitleDashboard from "../../../helpers/usePageTitle.js";
+
 
 function Homepage() {
     const {companyId} = useParams();
     const navigate = useNavigate();
     const [now, setNow] = useState(new Date());
+
+    usePageTitleDashboard("Homepage", "Dashboard");
 
     function handleGoToAgenda() {
         navigate(`/dashboard/${companyId}/agenda`);}

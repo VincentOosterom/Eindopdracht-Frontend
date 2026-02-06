@@ -2,9 +2,13 @@ import NavBar from "../../../components/website/NavBar/NavBar.jsx";
 import './Registeren.css'
 import RegisterForm from "../../../components/website/RegisterForm/RegisterForm.jsx";
 import Footer from "../../../components/website/Footer/Footer.jsx";
+import usePageTitle from "../../../helpers/usePageTitle.js";
 
 
 function Register() {
+
+    usePageTitle("Registeren");
+
     return (
         <>
             <header className="register-header">

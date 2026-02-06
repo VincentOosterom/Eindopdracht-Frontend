@@ -7,10 +7,12 @@ import api from "../../../api/api.js";
 import AddClientForm from "../../../components/dashboard/AddClientForm/AddClientForm.jsx";
 import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 import {useAutoClearMessage} from "../../../helpers/useAutoClearMessage.js";
+import usePageTitle from "../../../helpers/usePageTitle.js";
 
 
 function Clients() {
     const {companyId} = useParams();
+    usePageTitle("Klanten", "Dashboard");
     const [clients, setClients] = useState([]);
     const [company, setCompany] = useState([]);
     const [error, setError] = useState("");

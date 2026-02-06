@@ -7,9 +7,12 @@ import AccountSchedule from "../../../components/dashboard/AccountSchedule/Accou
 import api from "../../../api/api.js";
 import "./Settings.css";
 import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
+import usePageTitle from "../../../helpers/usePageTitle.js";
 
 function Settings() {
     const {companyId} = useParams();
+
+    usePageTitle("Instellingen", "Dashboard");
 
     const [company, setCompany] = useState(null);
     const [user, setUser] = useState(null);

@@ -1,7 +1,6 @@
 import './RegisterForm.css'
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 import api from "../../../api/api.js";
 
 function RegisterForm() {
@@ -52,7 +51,6 @@ function RegisterForm() {
         }
 
         setLoading(true);
-
         try {
             // 1. USER AANMAKEN
             const userRes = await api.post(
@@ -65,9 +63,6 @@ function RegisterForm() {
                     roles: ["admin"],
                 }
             );
-
-
-
             const userId = userRes.data.id;
 
             // 2. DIRECT INLOGGEN (token krijgen)
@@ -95,18 +90,8 @@ function RegisterForm() {
             );
             setNewCompany(companyRes.data)
             setSuccess("Account succesvol aangemaakt!");
-            setTimeout(() => navigate("/inloggen"), 1500);
-        } catch (err) {
-            if (axios.isAxiosError(err)) {
-                if (err.response?.status === 409) {
-                    setError("Dit e-mailadres is al in gebruik.");
-                    return;
-                }
-                if (err.response?.status === 400) {
-                    setError("Ongeldige invoer. Controleer je gegevens.");
-                    return;
-                }
-            }
+            setTimeout(() => navigate("/inloggen"), 3000);
+        } catch {
             setError("Er ging iets mis bij het registreren. Probeer opnieuw.");
         } finally {
             setLoading(false);

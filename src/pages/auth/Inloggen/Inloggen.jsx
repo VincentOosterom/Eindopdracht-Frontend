@@ -1,11 +1,12 @@
 import './Inloggen.css'
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {NavLink, useNavigate,} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLeftLong} from "@fortawesome/free-solid-svg-icons";
 import {useAuth} from "../../../context/AuthContext";
 import api from "../../../api/api.js";
 import {useAutoClearMessage} from "../../../helpers/useAutoClearMessage.js";
+import usePageTitle from "../../../helpers/usePageTitle.js";
 
 
 function decodeJwt(token) {
@@ -23,6 +24,7 @@ function Inloggen() {
     const navigate = useNavigate();
     const {login} = useAuth();
 
+    usePageTitle("Inloggen", "Tijdslot");
 
     function handleBack() {
         navigate("/");

@@ -1,15 +1,16 @@
 import './CompanyPage.css';
 import {useParams} from "react-router-dom";
 import NavBar from "../../../components/website/NavBar/NavBar.jsx";
-import AppointmentForm from "../../../components/website/Appointment_Form/AppointmentForm.jsx";
+import AppointmentForm from "../../../components/website/AppointmentForm/AppointmentForm.jsx";
 import {useEffect, useState} from "react";
 import api from "../../../api/api";
 import Footer from "../../../components/website/Footer/Footer.jsx";
 import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
+import usePageTitle from "../../../helpers/usePageTitle.js";
+
 
 function CompanyPage() {
     const {companyId} = useParams();
-
     const [error, setError] = useState("");
 
     const [company, setCompany] = useState(null);
@@ -24,11 +25,12 @@ function CompanyPage() {
                     api.get(`/companies/${companyId}`),
                     api.get(`/services?companyId=${companyId}`),
                     api.get(`/availabilities?companyId=${companyId}`)
-                ]);
 
+                ]);
                 setCompany(companyRes.data);
                 setServices(servicesRes.data);
                 setAvailabilities(availRes.data);
+
             } catch {
                 setError("Fout bij het ophalen van bedrijfsgegevens");
             } finally {
@@ -39,13 +41,19 @@ function CompanyPage() {
         fetchCompanyPageData();
     }, [companyId]);
 
+    usePageTitle(
+        company
+            ? `Maak je afspraak bij ${company.name}`
+            : "Maak je afspraak"
+    );
+
     useEffect(() => {
-        if (!loading && services.length === 0 || availabilities.length === 0) {
+        if (services.length <= 0 || availabilities.length <= 0) {
             setError(
                 "Dit bedrijf heeft nog geen diensten en/of openingstijden toegevoegd."
             );
         }
-    }, [services, loading, availabilities]);
+    }, [services, availabilities]);
 
     if (loading) return <DashboardLoader text="Bedrijf wordt opgehaald"/>
     if (!company) return <p className="error-message">{error}</p>;

@@ -11,10 +11,12 @@ import { calculateEndTime } from "../../../helpers/time.js";
 import { useParams } from "react-router-dom";
 import EditAppointmentModal from "../../../components/dashboard/EditAppointment/EditAppointment.jsx";
 import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
+import usePageTitle from "../../../helpers/usePageTitle.js";
 
 
 function Agenda() {
     const { companyId } = useParams();
+    usePageTitle("Agenda", "Dashboard");
 
     const [company, setCompany] = useState(null);
     const [services, setServices] = useState([]);
