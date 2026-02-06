@@ -21,7 +21,8 @@ function Homepage() {
     usePageTitleDashboard("Homepage", "Dashboard");
 
     function handleGoToAgenda() {
-        navigate(`/dashboard/${companyId}/agenda`);}
+        navigate(`/dashboard/${companyId}/agenda`);
+    }
 
 
     const [company, setCompany] = useState(null);
@@ -114,6 +115,7 @@ function Homepage() {
                 setLoading(false);
             }
         }
+
         loadDashboard();
     }, [companyId]);
 
@@ -212,9 +214,51 @@ function Homepage() {
                         </ul>
                     </article>
                 </section>
+
+                <section className="dashboard-quick-links">
+                    <h3>Snel aan de slag</h3>
+                    <ul className="quick-links-list">
+                        <li>
+                            <button
+                                type="button"
+                                onClick={() => setShowModal(true)}
+                            >
+                                ➕ Afspraak toevoegen
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                onClick={() => navigate(`/dashboard/${companyId}/instellingen/`)}
+                            >
+                                🕒 Beschikbaarheid beheren
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                onClick={() => navigate(`/dashboard/${companyId}/klanten`)}
+                            >
+                                ✂️ Klanten beheren
+                            </button>
+                        </li>
+
+                        <li>
+                            <button
+                                type="button"
+                                onClick={() => navigate(`/dashboard/${companyId}/instellingen/`)}
+                            >
+                                👤 Profiel bewerken
+                            </button>
+                        </li>
+                    </ul>
+                </section>
             </main>
         </section>
-    );
+    )
+        ;
 }
 
 export default Homepage;

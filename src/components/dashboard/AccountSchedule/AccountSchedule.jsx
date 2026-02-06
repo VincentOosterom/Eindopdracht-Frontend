@@ -218,8 +218,7 @@ function AccountSchedule({days, services, companyId}) {
             }
             setServiceSuccess("Diensten opgeslagen!");
             setAvailabilitySuccess("");
-        } catch (err) {
-            console.error("Fout bij opslaan diensten:", err);
+        } catch {
             setError("Er ging iets mis tijdens het opslaan.");
         } finally {
             setSavingServices(false);
@@ -333,15 +332,22 @@ function AccountSchedule({days, services, companyId}) {
                                         <label>
                                             <input
                                                 type="text"
-                                                value={`€ ${service.price}`}
+                                                inputMode="decimal"
+                                                placeholder="€"
+                                                value={service.price}
                                                 onChange={(e) => {
-                                                    const numeric = e.target.value.replace(/[^0-9.,]/g, '');
+                                                    let value = e.target.value.replace(/[^0-9.,]/g, "");
+                                                    value = value.replace(",", ".");
+                                                    if ((value.match(/\./g) || []).length > 1) return;
+                                                    handleServiceChange(index, "price", value);
+                                                }}
+                                                onBlur={() =>
                                                     handleServiceChange(
                                                         index,
                                                         "price",
-                                                        parseFloat(numeric.replace(',', '.')) || 0
-                                                    );
-                                                }}
+                                                        service.price === "" ? "" : Number(service.price)
+                                                    )
+                                                }
                                             />
                                         </label>
 

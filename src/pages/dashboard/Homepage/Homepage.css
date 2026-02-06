@@ -140,6 +140,33 @@
     text-align: center;
 }
 
+/* ========== QUICK LINKS ========== */
+.dashboard-quick-links {
+    margin-bottom: 2rem;
+}
+
+.dashboard-quick-links h3 {
+   margin: 0.5rem 0 0.5rem 0;
+}
+
+.quick-links-list {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.quick-links-list button {
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+
 
 /* ========== MEDIA QUERIES ========== */
 
@@ -173,5 +200,14 @@
     .quick-look-section {
         flex-direction: column;
     }
+
+    .dashboard-quick-links{
+       text-align: left;
+    }
+    .quick-links-list {
+        flex-direction: column;
+        align-items: left;
+    }
+
 }
 

@@ -11,12 +11,14 @@ import usePageTitle from "../../../helpers/usePageTitle.js";
 
 function CompanyPage() {
     const {companyId} = useParams();
-    const [error, setError] = useState("");
 
     const [company, setCompany] = useState(null);
     const [services, setServices] = useState([]);
-    const [loading, setLoading] = useState(true);
     const [availabilities, setAvailabilities] = useState([]);
+
+    const [error, setError] = useState("");
+    const [emptyMessage, setEmptyMessage] = useState("");
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchCompanyPageData() {
@@ -48,22 +50,29 @@ function CompanyPage() {
     );
 
     useEffect(() => {
-        if (services.length <= 0 || availabilities.length <= 0) {
-            setError(
-                "Dit bedrijf heeft nog geen diensten en/of openingstijden toegevoegd."
-            );
+        if (!loading) {
+            if (services.length === 0 || availabilities.length === 0) {
+                setEmptyMessage(
+                    "Dit bedrijf heeft nog geen diensten en/of openingstijden toegevoegd."
+                );
+            } else {
+                setEmptyMessage("");
+            }
         }
-    }, [services, availabilities]);
+    }, [loading, services, availabilities]);
 
-    if (loading) return <DashboardLoader text="Bedrijf wordt opgehaald"/>
-    if (!company) return <p className="error-message">{error}</p>;
+    if (loading) return <DashboardLoader text="Bedrijf wordt opgehaald"/>;
+    if (error) return <p className="error-message">{error}</p>;
+    if (!company) return null;
 
     return (
         <>
             <main className="company-page-header">
                 <NavBar/>
                 <header className="company-header">
-                    {error && <p className="error-message">{error}</p>}
+                    {emptyMessage && (
+                        <p className="error-message">{emptyMessage}</p>
+                    )}
                     <h1>{company.name}</h1>
                     <p>
                         {company.bio || "Bedrijf heeft nog geen bio toegevoegd!"}

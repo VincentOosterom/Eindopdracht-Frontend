@@ -31,13 +31,16 @@
 
 @media (max-width: 480px) {
     .modal-content {
-        height: 100svh;              /* iOS safe viewport */
+        max-height: 100svh;
+        height: auto;
         width: 100%;
-        max-width: none;
         border-radius: 0;
-
         padding: 1.25rem 1rem;
         overflow-y: auto;
+    }
+
+    .modal-overlay {
+        align-items: flex-start;
     }
 
 
