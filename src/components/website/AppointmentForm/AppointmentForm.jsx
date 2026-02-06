@@ -119,7 +119,7 @@ function AppointmentForm({services, companyId, availabilities, title, title_comp
     }, [selectedDate, selectedService, appointments, services, availabilities]);
 
 
-    async function handleSubmit(e)  {
+    async function handleSubmit(e)   {
         e.preventDefault();
 
         if (!clientName || !clientEmail || !selectedDate || !selectedTime) {
