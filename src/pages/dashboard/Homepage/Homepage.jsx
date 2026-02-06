@@ -8,6 +8,7 @@ import {convertToISO, getEndOfWeek, getStartOfWeek} from "../../../helpers/date.
 import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
 import DashboardAppointmentModal
     from "../../../components/dashboard/DashboardAppointmentModal/DashboardAppointmentModal.jsx";
+import ClientForm from "../../../components/dashboard/AddClientForm/AddClientForm.jsx";
 import {calculateTax, calculateTotalRevenue} from "../../../helpers/calculateTotalRevenue.js";
 
 import usePageTitleDashboard from "../../../helpers/usePageTitle.js";
@@ -39,6 +40,8 @@ function Homepage() {
 
     // Voor nieuwe afspraak
     const [showModal, setShowModal] = useState(false);
+
+
 
     const nextAppointment = (() => {
         const currentMinutes = now.getHours() * 60 + now.getMinutes();
@@ -232,7 +235,7 @@ function Homepage() {
                                 type="button"
                                 onClick={() => navigate(`/dashboard/${companyId}/instellingen/`)}
                             >
-                                🕒 Beschikbaarheid beheren
+                                Klant toevoegen
                             </button>
                         </li>
 
