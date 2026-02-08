@@ -14,7 +14,6 @@ function AppointmentForm({services, companyId, availabilities, title, title_comp
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedTime, setSelectedTime] = useState('');
 
-
     const [availableTimes, setAvailableTimes] = useState([]);
     const [appointments, setAppointments] = useState([]);
 
@@ -122,9 +121,23 @@ function AppointmentForm({services, companyId, availabilities, title, title_comp
     async function handleSubmit(e)   {
         e.preventDefault();
 
-        if (!clientName || !clientEmail || !selectedDate || !selectedTime) {
-            setError("Vul alle velden in.");
+        if (!clientName) {
+            setError("Vergeet uw naam niet in te vullen")
             return;
+        }
+
+        if (!clientEmail) {
+            setError("Vergeet uw e-mailadres niet in te vullen")
+            return;
+        }
+
+        if (!selectedDate) {
+            setError("Vergeet uw datum niet in te vullen")
+            return;
+        }
+
+        if (!selectedTime) {
+            setError("Vergeet uw tijd niet in te vullen")
         }
 
         if (!clientEmail.includes("@") || !clientEmail.includes(".")) {
@@ -147,7 +160,7 @@ function AppointmentForm({services, companyId, availabilities, title, title_comp
         setLoading(false);
         setTimeout(() => {
             setLoading(true)
-        }, 1500);
+        }, 2000);
 
         try {
             await api.post("/appointments", {
@@ -200,6 +213,7 @@ function AppointmentForm({services, companyId, availabilities, title, title_comp
                 Voornaam
                 <input value={clientName} onChange={(e) => setClientName(e.target.value)}/>
             </label>
+
 
             <label>
                 E-mail
