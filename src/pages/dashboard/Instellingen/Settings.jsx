@@ -1,12 +1,12 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
-import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
-import AccountInfo from "../../../components/dashboard/AccountInfo/AccountInfo.jsx";
-import AccountSchedule from "../../../components/dashboard/AccountSchedule/AccountSchedule.jsx";
+import SideBar from "../../../components/dashboard/header_sidebar/Sidebar/SideBar.jsx";
+import HeaderDashboard from "../../../components/dashboard/header_sidebar/HeaderDashboard/HeaderDashboard.jsx";
+import AccountInfo from "../../../components/dashboard/settings_page/AccountInfo/AccountInfo.jsx";
+import AccountSchedule from "../../../components/dashboard/settings_page/AccountSchedule/AccountSchedule.jsx";
 import api from "../../../api/api.js";
 import "./Settings.css";
-import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
+import DashboardLoader from "../../../components/dashboard/modal_loader/DashboardLoader/DashboardLoader.jsx";
 import usePageTitle from "../../../helpers/usePageTitle.js";
 
 function Settings() {

@@ -1,20 +1,20 @@
-import NavBar from "../../../components/website/NavBar/NavBar.jsx";
+import NavBar from "../../../components/website/header_footer_navbar/NavBar/NavBar.jsx";
 import './Registeren.css'
-import RegisterForm from "../../../components/website/RegisterForm/RegisterForm.jsx";
-import Footer from "../../../components/website/Footer/Footer.jsx";
+import RegisterForm from "../../../components/website/register_page/RegisterForm/RegisterForm.jsx";
+import Footer from "../../../components/website/header_footer_navbar/Footer/Footer.jsx";
 import usePageTitle from "../../../helpers/usePageTitle.js";
 
 
 function Register() {
 
-    usePageTitle("Registeren");
+    usePageTitle("Registeren", "Tijslot");
 
     return (
         <>
             <header className="register-header">
                 <NavBar/>
                 <section className="register">
-                    <article className="register-title">
+                    <article className="register-content">
                         <h1>De eerste 14 dagen gratis!</h1>
                         <p>Maak een account aan en begin met het plannen van je afspraken.</p>
                     </article>

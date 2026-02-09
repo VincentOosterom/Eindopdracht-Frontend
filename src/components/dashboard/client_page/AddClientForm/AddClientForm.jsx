@@ -1,7 +1,7 @@
 import './AddClientForm.css'
 
 import {useState} from "react";
-import api from "../../../api/api";
+import api from "../../../../api/api.js";
 import "./AddClientForm.css";
 
 function AddClientForm({companyId, onClientAdded, onCancel}) {

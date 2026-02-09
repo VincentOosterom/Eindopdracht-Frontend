@@ -1,8 +1,8 @@
 import './AppointmentForm.css';
 import {useState, useEffect} from "react";
-import api from "../../../api/api";
-import {doTimesOverlap} from "../../../helpers/appointments";
-import {useAutoClearMessage} from "../../../helpers/useAutoClearMessage";
+import api from "../../../../api/api.js";
+import {doTimesOverlap} from "../../../../helpers/appointments.js";
+import {useAutoClearMessage} from "../../../../helpers/useAutoClearMessage.js";
 
 
 function AppointmentForm({services, companyId, availabilities, title, title_company}) {

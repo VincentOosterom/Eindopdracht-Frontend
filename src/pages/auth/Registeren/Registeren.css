@@ -13,12 +13,12 @@
     margin-top: 3rem;
 }
 
-.register-title {
+.register-content {
     text-align: center;
     color: white;
     font-size: clamp(1rem, 3vw, 1.5rem);
 }
 
-.register-title h1 {
+.register-content h1 {
     margin-bottom: 1rem;
 }

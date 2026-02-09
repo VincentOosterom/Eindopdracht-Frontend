@@ -1,11 +1,11 @@
 import './CompanyPage.css';
 import {useParams} from "react-router-dom";
-import NavBar from "../../../components/website/NavBar/NavBar.jsx";
-import AppointmentForm from "../../../components/website/AppointmentForm/AppointmentForm.jsx";
+import NavBar from "../../../components/website/header_footer_navbar/NavBar/NavBar.jsx";
+import AppointmentForm from "../../../components/website/company_page/AppointmentForm/AppointmentForm.jsx";
 import {useEffect, useState} from "react";
 import api from "../../../api/api";
-import Footer from "../../../components/website/Footer/Footer.jsx";
-import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
+import Footer from "../../../components/website/header_footer_navbar/Footer/Footer.jsx";
+import DashboardLoader from "../../../components/dashboard/modal_loader/DashboardLoader/DashboardLoader.jsx";
 import usePageTitle from "../../../helpers/usePageTitle.js";
 
 

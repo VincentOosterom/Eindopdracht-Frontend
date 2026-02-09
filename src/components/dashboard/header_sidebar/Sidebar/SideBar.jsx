@@ -10,7 +10,7 @@ import {
     faRightFromBracket
 } from '@fortawesome/free-solid-svg-icons';
 import {useState} from "react";
-import {useAuth} from "../../../context/AuthContext.jsx";
+import {useAuth} from "../../../../context/AuthContext.jsx";
 
 
 

@@ -1,6 +1,6 @@
 import './NotFound.css'
 import {useNavigate} from "react-router-dom";
-import NavBar from "../../../components/website/NavBar/NavBar.jsx";
+import NavBar from "../../../components/website/header_footer_navbar/NavBar/NavBar.jsx";
 
 function NotFound() {
     const navigate = useNavigate();

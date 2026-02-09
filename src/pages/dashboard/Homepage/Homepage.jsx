@@ -1,14 +1,14 @@
 import "./Homepage.css";
 import {useEffect, useState} from "react";
-import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
-import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
+import SideBar from "../../../components/dashboard/header_sidebar/Sidebar/SideBar.jsx";
+import HeaderDashboard from "../../../components/dashboard/header_sidebar/HeaderDashboard/HeaderDashboard.jsx";
 import {useNavigate, useParams} from "react-router-dom";
 import api from "../../../api/api.js";
 import {convertToISO, getEndOfWeek, getStartOfWeek} from "../../../helpers/date.js";
-import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
+import DashboardLoader from "../../../components/dashboard/modal_loader/DashboardLoader/DashboardLoader.jsx";
 import DashboardAppointmentModal
-    from "../../../components/dashboard/DashboardAppointmentModal/DashboardAppointmentModal.jsx";
-import ClientForm from "../../../components/dashboard/AddClientForm/AddClientForm.jsx";
+    from "../../../components/dashboard/modal_loader/DashboardAppointmentModal/DashboardAppointmentModal.jsx";
+import ClientForm from "../../../components/dashboard/client_page/AddClientForm/AddClientForm.jsx";
 import {calculateTax, calculateTotalRevenue} from "../../../helpers/calculateTotalRevenue.js";
 
 import usePageTitleDashboard from "../../../helpers/usePageTitle.js";
@@ -229,16 +229,6 @@ function Homepage() {
                                 ➕ Afspraak toevoegen
                             </button>
                         </li>
-
-                        <li>
-                            <button
-                                type="button"
-                                onClick={() => navigate(`/dashboard/${companyId}/instellingen/`)}
-                            >
-                                Klant toevoegen
-                            </button>
-                        </li>
-
                         <li>
                             <button
                                 type="button"

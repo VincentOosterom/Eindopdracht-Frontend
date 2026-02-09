@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import api from "../../../api/api";
+import api from "../../../../api/api.js";
 import "./AccountSchedule.css";
 
 function AccountSchedule({days, services, companyId}) {
@@ -301,7 +301,7 @@ function AccountSchedule({days, services, companyId}) {
                                 <li key={service.id ?? index}>
                                     <fieldset className="service-row">
                                         <legend className="visually-hidden">
-                                            Dienst {service.name}
+                                            {service.name || "Dienst"}
                                         </legend>
                                         <label>
                                             <input

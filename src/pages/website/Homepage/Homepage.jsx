@@ -1,14 +1,14 @@
 import './Homepage.css'
-import SearchResultCard from "../../../components/website/SearchResult/SearchResultCard.jsx";
-import InfoCard from "../../../components/website/InfoCard/InfoCard.jsx";
+import SearchResultCard from "../../../components/website/homepage/SearchResult/SearchResultCard.jsx";
+import InfoCard from "../../../components/website/homepage/InfoCard/InfoCard.jsx";
 import plus from "../../../assets/plus.svg";
 import global from "../../../assets/global.svg";
 import calender from "../../../assets/calender.svg";
-import Header from "../../../components/website/Header/Header.jsx";
-import Footer from "../../../components/website/Footer/Footer.jsx";
+import Header from "../../../components/website/header_footer_navbar/Header/Header.jsx";
+import Footer from "../../../components/website/header_footer_navbar/Footer/Footer.jsx";
 import api from "../../../api/api";
 import {useState, useEffect} from "react";
-import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
+import DashboardLoader from "../../../components/dashboard/modal_loader/DashboardLoader/DashboardLoader.jsx";
 
 function Home() {
     const [query, setQuery] = useState("");

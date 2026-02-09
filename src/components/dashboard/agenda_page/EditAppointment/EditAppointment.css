@@ -72,7 +72,8 @@
 }
 
 .btn-delete:hover {
-    background: var(--color-white);
+    background: var(--color-black);
+    color: var(--color-white);
 }
 
 .btn-cancel {

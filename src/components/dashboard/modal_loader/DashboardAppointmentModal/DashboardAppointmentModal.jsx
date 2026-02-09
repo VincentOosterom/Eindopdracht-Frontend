@@ -1,4 +1,4 @@
-import AppointmentForm from "../../website/AppointmentForm/AppointmentForm.jsx";
+import AppointmentForm from "../../../website/company_page/AppointmentForm/AppointmentForm.jsx";
 import "./DashboardAppointmentModal.css";
 
 export default function DashboardAppointmentModal({

@@ -1,5 +1,5 @@
 import './Agenda.css';
-import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
+import SideBar from "../../../components/dashboard/header_sidebar/Sidebar/SideBar.jsx";
 import React, { useEffect, useRef, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -9,8 +9,8 @@ import api from "../../../api/api.js";
 import { convertToISO } from "../../../helpers/date.js";
 import { calculateEndTime } from "../../../helpers/time.js";
 import { useParams } from "react-router-dom";
-import EditAppointmentModal from "../../../components/dashboard/EditAppointment/EditAppointment.jsx";
-import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
+import EditAppointmentModal from "../../../components/dashboard/agenda_page/EditAppointment/EditAppointment.jsx";
+import HeaderDashboard from "../../../components/dashboard/header_sidebar/HeaderDashboard/HeaderDashboard.jsx";
 import usePageTitle from "../../../helpers/usePageTitle.js";
 
 
@@ -142,7 +142,7 @@ function Agenda() {
             <SideBar />
 
             <main className="agenda-container">
-                <HeaderDashboard title="Agenda -" company={company?.name} />
+                <HeaderDashboard title="Agenda van" company={company?.name} />
                 {error && <p className="error-message">{error}</p>}
 
                 <FullCalendar

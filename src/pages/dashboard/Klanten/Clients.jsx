@@ -1,11 +1,11 @@
 import "./Clients.css";
-import SideBar from "../../../components/dashboard/Sidebar/SideBar.jsx";
-import HeaderDashboard from "../../../components/dashboard/HeaderDashboard/HeaderDashboard.jsx";
+import SideBar from "../../../components/dashboard/header_sidebar/Sidebar/SideBar.jsx";
+import HeaderDashboard from "../../../components/dashboard/header_sidebar/HeaderDashboard/HeaderDashboard.jsx";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import api from "../../../api/api.js";
-import AddClientForm from "../../../components/dashboard/AddClientForm/AddClientForm.jsx";
-import DashboardLoader from "../../../components/dashboard/DashboardLoader/DashboardLoader.jsx";
+import AddClientForm from "../../../components/dashboard/client_page/AddClientForm/AddClientForm.jsx";
+import DashboardLoader from "../../../components/dashboard/modal_loader/DashboardLoader/DashboardLoader.jsx";
 import {useAutoClearMessage} from "../../../helpers/useAutoClearMessage.js";
 import usePageTitle from "../../../helpers/usePageTitle.js";
 
