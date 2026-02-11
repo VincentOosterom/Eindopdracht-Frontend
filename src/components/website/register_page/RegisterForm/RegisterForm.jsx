@@ -102,7 +102,7 @@ function RegisterForm() {
         <section className="register-container">
             <form onSubmit={Register} className="register-form">
                 {error && <p className="error-message" role="alert">{error}</p>}
-                <section className="register-form-title">
+                <section className="register-form-content">
                     <h2>Maak jouw account aan</h2>
                     <p>Gratis voor 14 dagen, geheel vrijblijvend.</p>
                 </section>

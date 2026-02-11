@@ -10,6 +10,7 @@ import Settings from "./pages/dashboard/Instellingen/Settings.jsx";
 import Clients from "./pages/dashboard/Klanten/Clients.jsx";
 import NotFound from "./pages/website/NotFound/NotFound.jsx";
 import ProtectedRoute from "./routes/protected_route/ProtectedRoute.jsx";
+import AboutUs from "./pages/website/AboutUs/AboutUs.jsx";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <>
             <Routes>
                 <Route path="/" element={<Homepage/>}/>
+                <Route path="/over-ons" element={<AboutUs />}/>
                 <Route path="/inloggen" element={<Inloggen/>}/>
                 <Route path="/registeren" element={<Register/>}/>
                 <Route path="/boek-nu/:companyId/" element={<CompanyPage/>}/>

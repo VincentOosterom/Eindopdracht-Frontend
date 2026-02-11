@@ -15,7 +15,7 @@
 
 .register-content {
     text-align: center;
-    color: white;
+    color: var(--color-white);
     font-size: clamp(1rem, 3vw, 1.5rem);
 }
 
