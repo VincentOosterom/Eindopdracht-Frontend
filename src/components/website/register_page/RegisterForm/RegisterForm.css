@@ -7,7 +7,6 @@
     max-width: 750px;
     width: 100%;
     border-radius: 15px;
-    border: 1px solid #ccc;
     flex-shrink: 0;
 }
 
@@ -20,19 +19,19 @@
     width: 100%;
 }
 
-.register-form-title {
+.register-form-content {
     text-align: center;
     margin-top: 2rem;
     color: white;
 }
 
 /*TYPOGRAFIE*/
-.register-form-title h2 {
+.register-form-content h2 {
     font-size: clamp(1.5rem, 2.5vw, 2rem);
     margin-bottom: 0.4rem;
 }
 
-.register-form-title p {
+.register-form-content p {
     font-size: clamp(0.8rem, 2.5vw, 1rem);
     margin-bottom: 0.4rem;
 }

@@ -39,6 +39,7 @@ function NavBar() {
 
             <ul className={`nav-links ${isOpen ? "open" : ""}`}>
                 <li><NavLink to="/" onClick={closeMenu}>Home</NavLink></li>
+                <li><NavLink to="/over-ons" onClick={closeMenu}>Over ons</NavLink> </li>
                 <li><NavLink to="/inloggen" onClick={closeMenu}>Inloggen</NavLink></li>
                 <li className="cta">
                     <NavLink to="/registeren" onClick={closeMenu}>Registreren</NavLink>
