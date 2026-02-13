@@ -31,6 +31,7 @@ function RegisterForm() {
         e.preventDefault();
         setError("");
 
+
         if (!name || !company || !email || !password || !confirmPassword) {
             setError("Let op, alle velden moeten ingevuld zijn.");
             return;
@@ -38,6 +39,7 @@ function RegisterForm() {
 
         if (!email.includes("@") || !email.includes(".")) {
             setError("Vul een geldig e-mailadres in.");
+            return;
         }
 
         if (password !== confirmPassword) {
@@ -72,10 +74,9 @@ function RegisterForm() {
             );
 
             const token = loginRes.data.token;
-            const decoded = decodeJwt(token);
-            console.log("Decoded JWT:", decoded);
+            decodeJwt(token);
 
-            // 3. COMPANY AANMAKEN MET ZELFDE ID ALS USER
+// 3. COMPANY AANMAKEN MET ZELFDE ID ALS USER
             const companyRes = await api.post(
                 "/companies",
                 {
@@ -102,6 +103,7 @@ function RegisterForm() {
         <section className="register-container">
             <form onSubmit={Register} className="register-form">
                 {error && <p className="error-message" role="alert">{error}</p>}
+                {success && <p className="success-message" role="alert">{success}</p>}
                 <section className="register-form-content">
                     <h2>Maak jouw account aan</h2>
                     <p>Gratis voor 14 dagen, geheel vrijblijvend.</p>

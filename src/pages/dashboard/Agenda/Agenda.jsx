@@ -1,17 +1,18 @@
 import './Agenda.css';
 import SideBar from "../../../components/dashboard/header_sidebar/Sidebar/SideBar.jsx";
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import api from "../../../api/api.js";
-import { convertToISO } from "../../../helpers/date.js";
-import { calculateEndTime } from "../../../helpers/time.js";
-import { useParams } from "react-router-dom";
+import {convertToISO} from "../../../helpers/date.js";
+import {calculateEndTime} from "../../../helpers/time.js";
+import {useParams} from "react-router-dom";
 import EditAppointmentModal from "../../../components/dashboard/agenda_page/EditAppointment/EditAppointment.jsx";
 import HeaderDashboard from "../../../components/dashboard/header_sidebar/HeaderDashboard/HeaderDashboard.jsx";
 import usePageTitle from "../../../helpers/usePageTitle.js";
+import {useMemo} from "react";
 
 
 function Agenda() {
@@ -25,50 +26,101 @@ function Agenda() {
     const calendarRef = useRef(null);
 
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
+    // Lookup map voor services
+    const serviceMap = useMemo(() => {
+        return Object.fromEntries(
+            services.map(service => [service.id, service])
+        );
+    }, [services]);
 
-    // ============== 1. Bedrijf ophalen ==============
+    // ====================== DATA LADEN ======================
     useEffect(() => {
-        async function fetchCompany() {
-            try {
-                const res = await api.get(`/companies/${companyId}`);
-                setCompany(res.data);
-            } catch (err) {
-                console.log("Bedrijf ophalen mislukt:", err);
-            }
-        }
-        fetchCompany();
-    }, [companyId]);
+        async function loadAgenda() {
+            setLoading(true);
+            setError(null);
 
-    // ============== 2. Services ophalen ==============
-    useEffect(() => {
-        async function fetchServices() {
             try {
-                const res = await api.get(`/services?companyId=${companyId}`);
-                setServices(res.data);
+                const [companyRes, servicesRes, appointmentsRes] =
+                    await Promise.all([
+                        api.get(`/companies/${companyId}`),
+                        api.get(`/services?companyId=${companyId}`),
+                        api.get(`/appointments?companyId=${companyId}`)
+                    ]);
+
+                const companyData = companyRes.data;
+                const servicesData = servicesRes.data;
+                const appointmentsData = appointmentsRes.data;
+
+                setCompany(companyData);
+                setServices(servicesData);
+
+                const serviceLookup = Object.fromEntries(
+                    servicesData.map(s => [s.id, s])
+                );
+
+                const formattedEvents = appointmentsData.map((appointment) => {
+                    const service = serviceLookup[appointment.serviceId];
+
+                    return {
+                        id: appointment.id,
+                        title: `${service?.name || "Dienst"} - ${appointment.clientName}`,
+                        start: `${convertToISO(appointment.date)}T${appointment.time}`,
+                        end: `${convertToISO(appointment.date)}T${calculateEndTime(
+                            appointment.time,
+                            service?.duration || 30
+                        )}`,
+                        extendedProps: {
+                            clientName: appointment.clientName,
+                            clientEmail: appointment.clientEmail,
+                            serviceId: appointment.serviceId,
+                            rawDate: appointment.date,
+                            time: appointment.time
+                        }
+                    };
+                });
+
+                setEvents(formattedEvents);
+
             } catch {
-                setError("Fout bij het ophalen van alle services");
+                setError("Agenda kon niet geladen worden. Probeer het opnieuw.");
+            } finally {
+                setLoading(false);
             }
         }
-        fetchServices();
+
+        loadAgenda();
     }, [companyId]);
 
+    // ====================== Responsive view ======================
     useEffect(() => {
-        if (services.length > 0) {
-            refreshAppointments();
+        function handleResize() {
+            setCalendarView(
+                window.innerWidth <= 768 ? "timeGridDay" : "timeGridWeek"
+            );
         }
-    }, [services, companyId]);
 
-    // ============== 3. Afspraken ophalen ==============
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    useEffect(() => {
+        const apiCalendar = calendarRef.current?.getApi();
+        if (apiCalendar) apiCalendar.changeView(calendarView);
+    }, [calendarView]);
+
+    // ====================== REFRESH NA DELETE/UPDATE ======================
     async function refreshAppointments() {
         try {
             const res = await api.get(`/appointments?companyId=${companyId}`);
 
             const formatted = res.data.map((appointment) => {
-                const service = services.find(s => s.id === appointment.serviceId);
+                const service = serviceMap[appointment.serviceId];
 
                 return {
                     id: appointment.id,
@@ -89,93 +141,92 @@ function Agenda() {
             });
 
             setEvents(formatted);
-        } catch (error) {
-            console.log("Afspraken ophalen mislukt:", error);
+        } catch {
+            setError("Afspraken vernieuwen mislukt.");
         }
     }
 
-    // ====================== 4. Layout responsive ======================
-    useEffect(() => {
-        function handleResize() {
-            setCalendarView(window.innerWidth <= 768 ? "timeGridDay" : "timeGridWeek");
+    async function handleDeleteEvent(eventId) {
+        if (!window.confirm("Weet je zeker dat je deze afspraak wilt verwijderen?"))
+            return;
+
+        try {
+            await api.delete(`/appointments/${eventId}`);
+            await refreshAppointments();
+        } catch {
+            setError("Verwijderen mislukt.");
         }
 
-
-        handleResize();
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
-
-    useEffect(() => {
-        const api = calendarRef.current?.getApi();
-        if (api) api.changeView(calendarView);
-    }, [calendarView]);
-
-    // ====================== 6. VERWIJDER afspraak ======================
-    async function handleDeleteEvent(eventId) {
-        if (!window.confirm("Weet je zeker dat je deze afspraak wilt verwijderen?")) return;
-
-        await api.delete(`/appointments/${eventId}`);
-        refreshAppointments();
         setShowModal(false);
     }
 
-
-    // ====================== 7. BEWERK afspraak ======================
     async function handleSaveEvent(data) {
         const backendDate = data.date.split("-").reverse().join("-");
 
-        await api.patch(`/appointments/${data.id}`, {
-            clientName: data.clientName,
-            clientEmail: data.clientEmail,
-            serviceId: Number(data.serviceId),
-            date: backendDate,
-            time: data.time,
-        });
+        try {
+            await api.patch(`/appointments/${data.id}`, {
+                clientName: data.clientName,
+                clientEmail: data.clientEmail,
+                serviceId: Number(data.serviceId),
+                date: backendDate,
+                time: data.time,
+            });
 
-        refreshAppointments();
+            await refreshAppointments();
+
+        } catch {
+            setError("Afspraken bewerken mislukt.");
+        }
+
         setShowModal(false);
     }
 
     return (
         <section className="dashboard">
             <SideBar />
-
             <main className="agenda-container">
-                <HeaderDashboard title="Agenda van" company={company?.name} />
-                {error && <p className="error-message">{error}</p>}
-
-                <FullCalendar
-                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                    initialView="timeGridWeek"
-                    headerToolbar={{
-                        left: "prev,next today",
-                        center: "title",
-                        right: "dayGridMonth,timeGridWeek,timeGridDay"
-                    }}
-
-                    buttonText={{
-                        today: "Vandaag",
-                        month: "Maand",
-                        week: "Week",
-                        day: "Dag",
-                        list: "Lijst"
-                    }}
-                    ref={calendarRef}
-                    locale="nl"
-                    allDaySlot={false}
-                    slotMinTime="08:00:00"
-                    slotMaxTime="23:00:00"
-                    height="80vh"
-                    nowIndicator={true}
-                    selectOverlap={false}
-                    events={events}
-                    editable={true}
-                    eventClick={(info) => {
-                        setSelectedEvent(info.event);
-                        setShowModal(true);
-                    }}
+                <HeaderDashboard
+                    title="Agenda van"
+                    company={company?.name}
                 />
+                {error && (
+                    <p className="error-message" role="alert">
+                        {error}
+                    </p>
+                )}
+                {loading ? (
+                    <p>Agenda laden...</p>
+                ) : (
+                    <FullCalendar
+                        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                        initialView="timeGridWeek"
+                        headerToolbar={{
+                            left: "prev,next today",
+                            center: "title",
+                            right: "dayGridMonth,timeGridWeek,timeGridDay"
+                        }}
+                        buttonText={{
+                            today: "Vandaag",
+                            month: "Maand",
+                            week: "Week",
+                            day: "Dag",
+                        }}
+                        ref={calendarRef}
+                        locale="nl"
+                        allDaySlot={false}
+                        slotMinTime="08:00:00"
+                        slotMaxTime="23:00:00"
+                        height="80vh"
+                        nowIndicator={true}
+                        selectOverlap={false}
+                        events={events}
+                        editable={true}
+                        eventClick={(info) => {
+                            setSelectedEvent(info.event);
+                            setShowModal(true);
+                        }}
+                    />
+                )}
 
                 {showModal && selectedEvent && (
                     <EditAppointmentModal

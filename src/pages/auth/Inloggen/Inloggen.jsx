@@ -1,5 +1,5 @@
 import './Inloggen.css'
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {NavLink, useNavigate,} from "react-router-dom";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLeftLong} from "@fortawesome/free-solid-svg-icons";
@@ -15,16 +15,20 @@ function decodeJwt(token) {
 }
 
 function Inloggen() {
+    const { login } = useAuth();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
     const [error, setError] = useState("");
-    useAutoClearMessage(error, setError);
     const [loading, setLoading] = useState(false);
+
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-    const {login} = useAuth();
+
 
     usePageTitle("Inloggen", "Tijdslot");
+    useAutoClearMessage(error, setError);
 
     function handleBack() {
         navigate("/");
@@ -33,7 +37,7 @@ function Inloggen() {
     async function handleSubmit(e) {
         e.preventDefault();
         setLoading(true);
-        setError("");
+        setError(null);
 
         try {
             // 1. Inloggen bij NOVI API
@@ -44,7 +48,7 @@ function Inloggen() {
             const userId = decoded.userId;
 
 
-// 1. Bedrijf zoeken via ownerUserId
+            // 2. Bedrijf zoeken via ownerUserId
             const companyRes = await api.get(`/companies?ownerUserId=${userId}`);
             const company = companyRes.data[0];
 
@@ -55,7 +59,7 @@ function Inloggen() {
 
             const companyId = company.id;
 
-// 2. Opslaan in AuthContext
+// 3. Opslaan in AuthContext
             login({
                 token,
                 userId,
@@ -63,10 +67,10 @@ function Inloggen() {
                 roles: decoded.roles || [],
             });
 
-// 3. Navigeren
+// 4. Navigeren
             navigate(`/dashboard/${companyId}`);
         } catch {
-            setError("Verkeerd e-mailadres of wachtwoord.");
+            setError("Verkeerde inloggegevens");
         } finally {
             setLoading(false);
         }
@@ -84,17 +88,18 @@ function Inloggen() {
                         onClick={handleBack}
                         aria-label="Ga terug"
                     >
-                        <FontAwesomeIcon icon={faLeftLong}/>
+                        <FontAwesomeIcon icon={faLeftLong} />
                     </button>
 
                     <h1>Tijdslot</h1>
+                    <h2 id="login-heading">Welkom terug</h2>
 
-                    <header className="login-content">
-                        <h2>Welkom terug</h2>
-                    </header>
-
-                    <form className="login-form" onSubmit={handleSubmit} noValidate>
-
+                    <form className="login-form" onSubmit={handleSubmit} noValidate aria-labelledby="login-heading">
+                        {error && (
+                            <p className="error-message" role="alert">
+                                {error}
+                            </p>
+                        )}
                         <label htmlFor="email">E-mailadres</label>
                         <input
                             id="email"
@@ -137,12 +142,6 @@ function Inloggen() {
                         </button>
 
                     </form>
-
-                    {error && (
-                        <p className="error-message" role="alert">
-                            {error}
-                        </p>
-                    )}
                 </section>
             </main>
         </>

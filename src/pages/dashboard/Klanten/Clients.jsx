@@ -78,8 +78,7 @@ function Clients() {
 
             setSuccess(true);
 
-        } catch (err) {
-            console.error("Fout bij verwijderen klant:", err);
+        } catch {
             setError("Kon de klant niet verwijderen.")
         }
     }
@@ -149,7 +148,6 @@ function Clients() {
                         {success && <p className="success-message">{success}</p>}
                     </section>
                 </section>
-
             </main>
         </section>
     );

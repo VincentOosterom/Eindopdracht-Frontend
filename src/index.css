@@ -117,6 +117,7 @@ button:disabled {
 .error-message {
     /* Met !important kan ik de basis overschrijven*/
     color: var(--color-red) !important;
+    text-align: center;
 
 }
 

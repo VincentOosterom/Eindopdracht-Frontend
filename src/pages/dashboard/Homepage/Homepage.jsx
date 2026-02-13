@@ -1,5 +1,5 @@
 import "./Homepage.css";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import SideBar from "../../../components/dashboard/header_sidebar/Sidebar/SideBar.jsx";
 import HeaderDashboard from "../../../components/dashboard/header_sidebar/HeaderDashboard/HeaderDashboard.jsx";
 import {useNavigate, useParams} from "react-router-dom";
@@ -8,23 +8,20 @@ import {convertToISO, getEndOfWeek, getStartOfWeek} from "../../../helpers/date.
 import DashboardLoader from "../../../components/dashboard/modal_loader/DashboardLoader/DashboardLoader.jsx";
 import DashboardAppointmentModal
     from "../../../components/dashboard/modal_loader/DashboardAppointmentModal/DashboardAppointmentModal.jsx";
-import ClientForm from "../../../components/dashboard/client_page/AddClientForm/AddClientForm.jsx";
 import {calculateTax, calculateTotalRevenue} from "../../../helpers/calculateTotalRevenue.js";
 
 import usePageTitleDashboard from "../../../helpers/usePageTitle.js";
 
 
 function Homepage() {
+    usePageTitleDashboard("Homepage", "Dashboard");
     const {companyId} = useParams();
     const navigate = useNavigate();
     const [now, setNow] = useState(new Date());
 
-    usePageTitleDashboard("Homepage", "Dashboard");
-
     function handleGoToAgenda() {
         navigate(`/dashboard/${companyId}/agenda`);
     }
-
 
     const [company, setCompany] = useState(null);
     const [availabilities, setAvailabilities] = useState([]);
@@ -36,28 +33,28 @@ function Homepage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-    const [services, setService] = useState([]);
+    const [services, setServices] = useState([]);
 
     // Voor nieuwe afspraak
     const [showModal, setShowModal] = useState(false);
 
-
-
-    const nextAppointment = (() => {
+    // USE MEMO: Omdat nextAppointment derived state is die alleen hoeft te herberekenen wanneer appointmentsToday of de tijd verandert. useMemo voorkomt onnodige berekeningen bij andere renders.
+    const nextAppointment = useMemo(() => {
         const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
         return appointmentsToday
             .map(appt => {
                 const [h, m] = appt.time.split(":").map(Number);
-                return {...appt, minutes: h * 60 + m};
+                return { ...appt, minutes: h * 60 + m };
             })
             .filter(appt => appt.minutes > currentMinutes)
             .sort((a, b) => a.minutes - b.minutes)[0] ?? null;
-    })();
+
+    }, [appointmentsToday, now]);
 
     // Aantal afspraken per week tonen
     const startOfWeek = getStartOfWeek(now);
     const endOfWeek = getEndOfWeek(now);
-
 
     const appointmentsThisWeek = appointments.filter((a) => {
         if (!a.date) return false;
@@ -74,7 +71,6 @@ function Homepage() {
     );
 
     const taxThisWeek = calculateTax(revenueThisWeek);
-
 
     useEffect(() => {
         const id = setInterval(() => setNow(new Date()), 60_000);
@@ -102,7 +98,7 @@ function Homepage() {
                 setAppointments(allAppointments);
 
                 const allServices = servicesRes.data;
-                setService(allServices);
+                setServices(allServices);
 
                 setAvailabilities(availRes.data);
 
