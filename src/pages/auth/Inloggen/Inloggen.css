@@ -44,8 +44,15 @@
 .login-container h1 {
     color: white;
     font-size: clamp(3rem, 2.5vw, 4rem);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
+
+.login-container h2 {
+    color: white;
+    font-size: clamp(1.5rem, 2vw, 3rem);
+    margin-bottom: 1rem;
+}
+
 
 
 .login-content {
@@ -115,6 +122,10 @@
 @media (max-width: 480px) {
     .login-container {
         max-width: 350px;
+    }
+
+    .icon-back {
+        left: 0.8rem;
     }
 
 

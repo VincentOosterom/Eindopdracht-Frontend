@@ -22,18 +22,20 @@ function Home() {
 
     useEffect(() => {
         async function fetchCompanies() {
+            setLoading(true);
+            setError(null)
             try {
                 const res = await api.get("/companies");
                 setCompanies(res.data);
             } catch {
-               setError("Fout bij het laden van deze informatie");
+                setError("Fout bij het laden van deze informatie");
             } finally {
                 setLoading(false);
             }
         }
+
         fetchCompanies();
     }, []);
-
 
 
     // Zoekbalk filter
@@ -54,9 +56,9 @@ function Home() {
 
             <main className="main">
                 <section className="search-result">
-                    <h2>Zoek resultaten</h2>
                     {error && <p className="error-message">{error}</p>}
                     {loading && <p className="loading-message">Bedrijven laden</p>}
+                    <h2>Zoek resultaten</h2>
                     {!loading && filteredCompanies.length === 0 && (
                         <p className="error-message">Geen bedrijven gevonden…</p>)
                     }
@@ -65,28 +67,28 @@ function Home() {
                         {filteredCompanies
                             .slice(0, visibleCount)
                             .map((company) => (
-                            <SearchResultCard
-                                key={company.id}
-                                title={company.name}
-                                description={company.bio}
-                                company={company}
-                                street={company.street}
-                                city={company.city}
-                                zipcode={company.zipcode}
-                                name="Boek nu"
-                            />
-                        ))}
+                                <SearchResultCard
+                                    key={company.id}
+                                    title={company.name}
+                                    description={company.bio}
+                                    company={company}
+                                    street={company.street}
+                                    city={company.city}
+                                    zipcode={company.zipcode}
+                                    name="Boek nu"
+                                />
+                            ))}
 
                         {filteredCompanies.length > visibleCount && (
                             <button className="btn load_more" onClick={() => setVisibleCount(visible => visible + 6)}>
-                                Toon meer
+                                Toon meer bedrijven
                             </button>
                         )}
                     </article>
                 </section>
                 <section className="how-it-works">
                     <h2>Hoe werkt het?</h2>
-                    <div className="how-it-works-grid">
+                    <article className="how-it-works-grid">
                         <InfoCard
                             image={plus}
                             title="Meld je aan als bedrijf"
@@ -102,7 +104,7 @@ function Home() {
                             title="Ontvang en beheer afspraken"
                             subtitle="Klanten boeken direct een tijdslot bij jouw diensten. Beheer je agenda eenvoudig via het dashboard en blijf overzicht houden."
                         />
-                    </div>
+                    </article>
                 </section>
             </main>
             <Footer/>

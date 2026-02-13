@@ -43,8 +43,7 @@ function AddClientForm({companyId, onClientAdded, onCancel}) {
 
             onClientAdded(res.data);
 
-        } catch (err) {
-            console.error("Fout bij toevoegen klant:", err);
+        } catch {
             setError("Klant kon niet worden toegevoegd.");
         } finally {
             setLoading(false);
