@@ -75,7 +75,7 @@ function CompanyPage() {
                     )}
                     <h1>{company.name}</h1>
                     <p>
-                        {company.bio || "Bedrijf heeft nog geen bio toegevoegd!"}
+                        {company.bio || company.name + " " + "heeft nog geen bio toegevoegd."}
                     </p>
                 </header>
 
@@ -99,7 +99,6 @@ function CompanyPage() {
 
                             <section className="company-info-services">
                                 <h2>Onze diensten</h2>
-
                                 {services.length > 0 ? (
                                     <ul>
                                         {services.map((service) => (

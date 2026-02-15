@@ -26,14 +26,13 @@ function Homepage() {
     const [company, setCompany] = useState(null);
     const [availabilities, setAvailabilities] = useState([]);
     const [appointments, setAppointments] = useState([]);
+    const [services, setServices] = useState([]);
 
-    // Alle afspraken van bedrijf
+
     const [appointmentsToday, setAppointmentsToday] = useState([]);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-
-    const [services, setServices] = useState([]);
 
     // Voor nieuwe afspraak
     const [showModal, setShowModal] = useState(false);
@@ -76,6 +75,7 @@ function Homepage() {
         const id = setInterval(() => setNow(new Date()), 60_000);
         return () => clearInterval(id);
     }, []);
+
 
     useEffect(() => {
         async function loadDashboard() {
@@ -128,7 +128,6 @@ function Homepage() {
             <main className="dashboard-main">
                 <HeaderDashboard title="Welkom terug," company={company.name ?? ""}/>
                 {error && <p className="error-message" role="alert">{error}</p>}
-
                 <section className="dashboard-today">
                     <article>
                         <h3>Afspraken vandaag</h3>
