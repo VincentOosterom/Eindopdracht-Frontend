@@ -109,10 +109,14 @@
 
     .appointment-content {
         width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
     }
 
     .company-details {
         width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
     }
 
 }
