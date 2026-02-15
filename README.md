@@ -87,6 +87,15 @@ Start de development server met:
 
 npm run dev
 
+TESTGEBRUIKER:
+
+: Gebruikersnaam: testlaura@test.nl
+: Wachtwoord: Testuser123!
+
+Of 
+: Gebruikersnaam: Testuser2@test.nl 
+: Wachtwoord: Testuser123!
+
 ````import axios from "axios";
 
 const api = axios.create({
