@@ -1,0 +1,122 @@
+{
+  "collections": [
+    {
+      "name": "users",
+      "fields": [
+        { "name": "id", "type": "number" },
+        { "name": "email", "type": "string" },
+        { "name": "password", "type": "string" },
+        { "name": "firstname", "type": "string" },
+        { "name": "lastname", "type": "string" },
+        { "name": "roles", "type": "array" },
+        { "name": "slug", "type": "string" },
+        { "name": "companyId", "type": "number" }
+      ],
+      "permissions": {
+        "GET": ["anonymous", "user", "admin"],
+        "POST": ["anonymous"],
+        "PUT": ["admin"],
+        "DELETE": ["admin"]
+      }
+    },
+
+    {
+      "name": "companies",
+      "fields": [
+        { "name": "id", "type": "number" },
+        { "name": "ownerUserId", "type": "number" },
+        { "name": "name", "type": "string" },
+        { "name": "bio", "type": "string" },
+        { "name": "zipcode", "type": "string" },
+        { "name": "city", "type": "string" },
+        { "name": "street", "type": "string" }
+      ],
+      "permissions": {
+        "GET": ["anonymous", "user", "admin"],
+        "POST": ["admin"],
+        "PUT": ["admin"],
+        "DELETE": ["admin"]
+      }
+    },
+
+    {
+      "name": "services",
+      "fields": [
+        { "name": "id", "type": "number" },
+        { "name": "companyId", "type": "number" },
+        { "name": "name", "type": "string" },
+        { "name": "duration", "type": "number" },
+        { "name": "price", "type": "number" }
+      ],
+      "permissions": {
+        "GET": ["anonymous", "user", "admin"],
+        "POST": ["admin"],
+        "PUT": ["admin"],
+        "DELETE": ["admin"]
+      }
+    },
+
+    {
+      "name": "availabilities",
+      "fields": [
+        { "name": "id", "type": "number" },
+        { "name": "companyId", "type": "number" },
+        { "name": "dayOfWeek", "type": "string" },
+        { "name": "startTime", "type": "string" },
+        { "name": "endTime", "type": "string" }
+      ],
+      "permissions": {
+        "GET": ["anonymous", "user", "admin"],
+        "POST": ["admin"],
+        "PUT": ["admin"],
+        "DELETE": ["admin"]
+      }
+    },
+
+    {
+      "name": "appointments",
+      "fields": [
+        { "name": "id", "type": "number" },
+        { "name": "companyId", "type": "number" },
+        { "name": "clientName", "type": "string" },
+        { "name": "clientEmail", "type": "string" },
+        { "name": "serviceId", "type": "number" },
+        { "name": "date", "type": "string" },
+        { "name": "time", "type": "string" }
+      ],
+      "permissions": {
+        "GET": ["anonymous", "user", "admin"],
+        "POST": ["anonymous", "admin"],
+        "PUT": ["admin"],
+        "DELETE": ["admin"]
+      }
+    },
+
+    {
+      "name": "clients",
+      "fields": [
+        { "name": "id", "type": "number" },
+        { "name": "companyId", "type": "number" },
+        { "name": "name", "type": "string" },
+        { "name": "email", "type": "string" },
+        { "name": "phone", "type": "string" }
+      ],
+      "permissions": {
+        "GET": ["anonymous", "user", "admin"],
+        "POST": ["anonymous", "admin"],
+        "PUT": ["admin"],
+        "DELETE": ["admin"]
+      }
+    }
+  ],
+
+  "users": [],
+  "data": {
+    "users": [],
+    "companies": [],
+    "services": [],
+    "availabilities": [],
+    "appointments": [],
+    "clients": []
+  }
+}
