@@ -51,7 +51,7 @@ function AddClientForm({companyId, onClientAdded, onCancel}) {
     }
 
     return (
-        <div className="add-client-form">
+        <section className="add-client-form">
             <h2>Nieuwe klant</h2>
 
             <form onSubmit={handleSubmit}>
@@ -75,7 +75,6 @@ function AddClientForm({companyId, onClientAdded, onCancel}) {
                         placeholder="E-mail"
                     />
                 </label>
-
                 <label>
                     <input
                         type="text"
@@ -86,7 +85,7 @@ function AddClientForm({companyId, onClientAdded, onCancel}) {
 
                 {error && <p className="error-msg">{error}</p>}
 
-                <div className="btn-wrapper">
+                <article className="btn-wrapper">
                     <button type="submit" className="btn" disabled={loading}>
                         {loading ? "Bezig..." : "Opslaan"}
                     </button>
@@ -94,9 +93,9 @@ function AddClientForm({companyId, onClientAdded, onCancel}) {
                     <button type="button" className="btn cancel" onClick={onCancel}>
                         Annuleren
                     </button>
-                </div>
+                </article>
             </form>
-        </div>
+        </section>
     );
 }
 

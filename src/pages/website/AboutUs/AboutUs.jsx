@@ -1,8 +1,9 @@
 import './AboutUs.css'
 import NavBar from "../../../components/website/header_footer_navbar/NavBar/NavBar.jsx";
 import Footer from "../../../components/website/header_footer_navbar/Footer/Footer.jsx";
-import DashboardSettings  from "../../../assets/DashboardSettings.png"
+import DashboardSettings from "../../../assets/DashboardSettings.png"
 import DashboardPreview from "../../../assets/dashboardPreview.png"
+
 
 function AboutUs() {
     return (
@@ -18,10 +19,10 @@ function AboutUs() {
                     </article>
                 </section>
             </header>
+
             <main className="about-us-main">
                 <section className="about-us-section">
-
-                    <div className="row">
+                    <section className="row">
                         <article className="content">
                             <h2>Tijdslot. Wat is het?</h2>
                             <p>
@@ -31,12 +32,12 @@ function AboutUs() {
                             </p>
                         </article>
 
-                        <article className="image">
-                            <img src={DashboardPreview} alt="Tijdslot dashboard preview" />
-                        </article>
-                    </div>
+                        <figure className="image">
+                            <img src={DashboardPreview} alt="Tijdslot dashboard preview"/>
+                        </figure>
+                    </section>
 
-                    <div className="row reverse">
+                    <section className="row reverse">
                         <article className="content">
                             <h2>Maak je eigen diensten</h2>
                             <p>
@@ -46,11 +47,10 @@ function AboutUs() {
                             </p>
                         </article>
 
-                        <article className="image">
-                            <img src={DashboardSettings} alt="Tijdslot instellingen preview" />
-                        </article>
-                    </div>
-
+                        <figure className="image">
+                            <img src={DashboardSettings} alt="Tijdslot instellingen preview"/>
+                        </figure>
+                    </section>
                 </section>
 
             </main>

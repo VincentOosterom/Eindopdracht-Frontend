@@ -81,7 +81,6 @@ function Inloggen() {
         <>
             <main className="login-page">
                 <section className="login-container">
-
                     <button
                         type="button"
                         className="icon-back"
@@ -111,7 +110,7 @@ function Inloggen() {
                         />
 
                         <label htmlFor="password">Wachtwoord</label>
-                        <div className="password-wrapper">
+                        <section className="password-wrapper">
                             <input
                                 id="password"
                                 type={showPassword ? "text" : "password"}
@@ -131,7 +130,7 @@ function Inloggen() {
                             >
                                 {showPassword ? "🙈" : "👁️"}
                             </button>
-                        </div>
+                        </section>
 
                         <button
                             type="submit"

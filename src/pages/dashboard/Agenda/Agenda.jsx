@@ -16,7 +16,7 @@ import {useMemo} from "react";
 
 
 function Agenda() {
-    const { companyId } = useParams();
+    const {companyId} = useParams();
     usePageTitle("Agenda", "Dashboard");
 
     const [company, setCompany] = useState(null);
@@ -62,10 +62,8 @@ function Agenda() {
                 const serviceLookup = Object.fromEntries(
                     servicesData.map(s => [s.id, s])
                 );
-
                 const formattedEvents = appointmentsData.map((appointment) => {
                     const service = serviceLookup[appointment.serviceId];
-
                     return {
                         id: appointment.id,
                         title: `${service?.name || "Dienst"} - ${appointment.clientName}`,
@@ -83,27 +81,24 @@ function Agenda() {
                         }
                     };
                 });
-
                 setEvents(formattedEvents);
-
             } catch {
                 setError("Agenda kon niet geladen worden. Probeer het opnieuw.");
             } finally {
                 setLoading(false);
             }
         }
-
         loadAgenda();
     }, [companyId]);
 
     // ====================== Responsive view ======================
+
     useEffect(() => {
         function handleResize() {
             setCalendarView(
                 window.innerWidth <= 768 ? "timeGridDay" : "timeGridWeek"
             );
         }
-
         handleResize();
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
@@ -118,10 +113,8 @@ function Agenda() {
     async function refreshAppointments() {
         try {
             const res = await api.get(`/appointments?companyId=${companyId}`);
-
             const formatted = res.data.map((appointment) => {
                 const service = serviceMap[appointment.serviceId];
-
                 return {
                     id: appointment.id,
                     title: `${service?.name || "Dienst"} - ${appointment.clientName}`,
@@ -139,7 +132,6 @@ function Agenda() {
                     }
                 };
             });
-
             setEvents(formatted);
         } catch {
             setError("Afspraken vernieuwen mislukt.");
@@ -149,20 +141,17 @@ function Agenda() {
     async function handleDeleteEvent(eventId) {
         if (!window.confirm("Weet je zeker dat je deze afspraak wilt verwijderen?"))
             return;
-
         try {
             await api.delete(`/appointments/${eventId}`);
             await refreshAppointments();
         } catch {
             setError("Verwijderen mislukt.");
         }
-
         setShowModal(false);
     }
 
     async function handleSaveEvent(data) {
         const backendDate = data.date.split("-").reverse().join("-");
-
         try {
             await api.patch(`/appointments/${data.id}`, {
                 clientName: data.clientName,
@@ -171,19 +160,16 @@ function Agenda() {
                 date: backendDate,
                 time: data.time,
             });
-
             await refreshAppointments();
-
         } catch {
             setError("Afspraken bewerken mislukt.");
         }
-
         setShowModal(false);
     }
 
     return (
         <section className="dashboard">
-            <SideBar />
+            <SideBar/>
             <main className="agenda-container">
                 <HeaderDashboard
                     title="Agenda van"

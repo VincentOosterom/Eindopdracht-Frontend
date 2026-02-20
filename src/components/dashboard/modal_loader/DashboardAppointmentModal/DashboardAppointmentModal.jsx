@@ -8,8 +8,8 @@ export default function DashboardAppointmentModal({
                                                       onClose,
                                                   }) {
     return (
-        <div className="modal-overlay">
-            <div className="modal-content">
+        <section className="modal-overlay">
+            <article className="modal-content">
                 <button
                     className="modal-close"
                     onClick={onClose}
@@ -24,7 +24,7 @@ export default function DashboardAppointmentModal({
                     companyId={companyId}
                     availabilities={availabilities}
                 />
-            </div>
-        </div>
+            </article>
+        </section>
     );
 }

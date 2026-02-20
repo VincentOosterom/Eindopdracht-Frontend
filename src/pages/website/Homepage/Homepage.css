@@ -1,5 +1,4 @@
 /* ========== MAIN ========== */
-
 .main {
     background-color: #000;
     display: flex;
@@ -38,8 +37,8 @@
 
 
 .load_more {
-    grid-column: 1 / -1; /* ⬅️ hele breedte */
-    justify-self: center; /* ⬅️ knop zelf centreren */
+    grid-column: 1 / -1;
+    justify-self: center;
     font-size: clamp(1rem, 2vw, 1.2rem);
 }
 
@@ -59,7 +58,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     flex-direction: row;
-    justify-content: center; /* centreer horizontaal */
+    justify-content: center;
     gap: 1rem;
     width: 100%;
     max-width: 1100px;
@@ -73,7 +72,6 @@
    ========================= */
 
 @media (max-width: 1024px) {
-
     .main {
         padding-top: 4rem;
     }
@@ -98,7 +96,6 @@
    ========================= */
 
 @media (max-width: 768px) {
-
     .search-result-grid {
         grid-template-columns: 1fr;
         padding: 0 1rem;
@@ -116,7 +113,6 @@
    ========================= */
 
 @media (max-width: 480px) {
-
     /* SECTION 1 */
     .search-result {
         margin-bottom: 0;

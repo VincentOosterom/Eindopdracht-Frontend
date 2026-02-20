@@ -44,7 +44,7 @@ function Homepage() {
         return appointmentsToday
             .map(appt => {
                 const [h, m] = appt.time.split(":").map(Number);
-                return { ...appt, minutes: h * 60 + m };
+                return {...appt, minutes: h * 60 + m};
             })
             .filter(appt => appt.minutes > currentMinutes)
             .sort((a, b) => a.minutes - b.minutes)[0] ?? null;
@@ -123,9 +123,9 @@ function Homepage() {
 
 
     return (
-        <section className="dashboard">
+        <main className="dashboard">
             <SideBar/>
-            <main className="dashboard-main">
+            <section className="dashboard-main">
                 <HeaderDashboard title="Welkom terug," company={company.name ?? ""}/>
                 {error && <p className="error-message" role="alert">{error}</p>}
                 <section className="dashboard-today">
@@ -161,9 +161,8 @@ function Homepage() {
                 <section className="quick-look-section">
 
                     {/* Vandaag agenda */}
-                    <section className="dashboard-quick-agenda">
+                    <article className="dashboard-quick-agenda">
                         <h3>Vandaag in één oogopslag</h3>
-
                         <table className="today-table">
                             <thead>
                             <tr>
@@ -191,7 +190,7 @@ function Homepage() {
                         <button onClick={handleGoToAgenda}>
                             Bekijk volledige agenda
                         </button>
-                    </section>
+                    </article>
 
                     {/* Weekoverzicht (placeholder tot je weekberekening maakt) */}
                     <article className="dashboard-quick-this-week">
@@ -243,8 +242,8 @@ function Homepage() {
                         </li>
                     </ul>
                 </section>
-            </main>
-        </section>
+            </section>
+        </main>
     )
         ;
 }

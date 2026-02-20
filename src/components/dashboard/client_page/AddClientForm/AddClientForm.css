@@ -20,7 +20,6 @@
     margin-bottom: 0.8rem;
 }
 
-
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -39,7 +38,6 @@
     max-width: 480px;
     width: 100%;
 }
-
 
 .error-msg {
     color: red;

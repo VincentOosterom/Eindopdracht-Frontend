@@ -17,7 +17,6 @@ function NavBar() {
             setHideBurger(lastScroll > 0);
 
         }
-
         window.addEventListener("scroll", handleScroll, {passive: true});
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);

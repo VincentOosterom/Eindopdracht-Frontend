@@ -20,6 +20,12 @@ function CompanyPage() {
     const [emptyMessage, setEmptyMessage] = useState("");
     const [loading, setLoading] = useState(true);
 
+    usePageTitle(
+        company
+            ? `Maak je afspraak bij ${company.name}`
+            : "Maak je afspraak"
+    );
+
     useEffect(() => {
         async function fetchCompanyPageData() {
             try {
@@ -42,12 +48,6 @@ function CompanyPage() {
 
         fetchCompanyPageData();
     }, [companyId]);
-
-    usePageTitle(
-        company
-            ? `Maak je afspraak bij ${company.name}`
-            : "Maak je afspraak"
-    );
 
     useEffect(() => {
         if (!loading) {
@@ -82,7 +82,7 @@ function CompanyPage() {
                 <section className="full-info-section">
                     <article className="company-details">
                         <section className="company-info-description">
-                            <section className="company-info-availabilities">
+                            <article className="company-info-availabilities">
                                 <h2>Onze openingstijden</h2>
                                 {availabilities.length > 0 ? (
                                     <ul>
@@ -95,9 +95,9 @@ function CompanyPage() {
                                 ) : (
                                     <p>Geen openingstijden gevonden</p>
                                 )}
-                            </section>
+                            </article>
 
-                            <section className="company-info-services">
+                            <article className="company-info-services">
                                 <h2>Onze diensten</h2>
                                 {services.length > 0 ? (
                                     <ul>
@@ -110,7 +110,7 @@ function CompanyPage() {
                                 ) : (
                                     <p>Geen diensten gevonden</p>
                                 )}
-                            </section>
+                            </article>
                         </section>
                     </article>
 

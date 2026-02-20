@@ -8,18 +8,18 @@ import Header from "../../../components/website/header_footer_navbar/Header/Head
 import Footer from "../../../components/website/header_footer_navbar/Footer/Footer.jsx";
 import api from "../../../api/api";
 import {useState, useEffect} from "react";
-import DashboardLoader from "../../../components/dashboard/modal_loader/DashboardLoader/DashboardLoader.jsx";
+
 
 function Home() {
     const [query, setQuery] = useState("");
     const [companies, setCompanies] = useState([]);
     const [loading, setLoading] = useState(true);
     const [visibleCount, setVisibleCount] = useState(6);
-    const MAX_RESULTS = 6;
+
 
     const [error, setError] = useState("");
 
-
+    // ALLE BEDRIJVEN OPHALEN
     useEffect(() => {
         async function fetchCompanies() {
             setLoading(true);
@@ -28,7 +28,7 @@ function Home() {
                 const res = await api.get("/companies");
                 setCompanies(res.data);
             } catch {
-                setError("Fout bij het laden van deze informatie");
+                setError("Fout bij het ophalen van geregisteerde bedrijven");
             } finally {
                 setLoading(false);
             }
@@ -38,12 +38,13 @@ function Home() {
     }, []);
 
 
-    // Zoekbalk filter
+    // ZOEKBALK FITLER
     const filteredCompanies = query
         ? companies.filter((c) =>
             c.name.toLowerCase().includes(query.toLowerCase())
         )
         : companies;
+
 
     return (
         <>

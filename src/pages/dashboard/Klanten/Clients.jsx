@@ -72,12 +72,10 @@ function Clients() {
 
         try {
             await api.delete(`/clients/${clientId}`);
-
             // Verwijder lokaal
+
             setClients((prev) => prev.filter((c) => c.id !== clientId));
-
             setSuccess(true);
-
         } catch {
             setError("Kon de klant niet verwijderen.")
         }
@@ -85,10 +83,10 @@ function Clients() {
 
 
     return (
-        <section className="dashboard">
+        <main className="dashboard">
             <SideBar/>
 
-            <main className="dashboard-main">
+            <section className="dashboard-main">
                 <HeaderDashboard
                     title="Klanten van" company={company.name ?? ""}
                 />
@@ -148,8 +146,8 @@ function Clients() {
                         {success && <p className="success-message">{success}</p>}
                     </section>
                 </section>
-            </main>
-        </section>
+            </section>
+        </main>
     );
 }
 
