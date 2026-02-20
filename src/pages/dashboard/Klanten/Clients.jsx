@@ -11,8 +11,8 @@ import usePageTitle from "../../../helpers/usePageTitle.js";
 
 
 function Clients() {
-    const {companyId} = useParams();
     usePageTitle("Klanten", "Dashboard");
+    const {companyId} = useParams();
     const [clients, setClients] = useState([]);
     const [company, setCompany] = useState([]);
     const [error, setError] = useState("");
@@ -38,23 +38,17 @@ function Clients() {
                 const clientResponse = await api.get(
                     `/clients?companyId=${companyId}`);
                 setClients(clientResponse.data);
-
                 const companyRes = await api.get(`/companies/${companyId}`);
                 setCompany(companyRes.data);
-
-            } catch (error) {
-                console.error("Kon klanten niet ophalen:", error);
-                setError(true);
+            } catch {
+                setError("Kon klanten niet ophalen");
             } finally {
                 setLoading(false);
             }
         }
-
         fetchClients();
     }, [companyId]); // opnieuw laden wanneer companyId verandert
 
-    if (loading) return <DashboardLoader text="Klanten laden..."/>;
-    if (!company) return <p>Bedrijf niet gevonden.</p>;
 
     function handleClientAdded(newClient) {
         setClients((prev) => [...prev, newClient]);
@@ -62,9 +56,9 @@ function Clients() {
         setSuccess("Nieuw klant toegevoegd");
     }
 
+
     async function handleDeleteClient(clientId) {
         if (!clientId) return;
-
         const confirmDelete = window.confirm(
             "Weet je zeker dat je deze klant wilt verwijderen?"
         );
@@ -72,15 +66,18 @@ function Clients() {
 
         try {
             await api.delete(`/clients/${clientId}`);
-            // Verwijder lokaal
 
             setClients((prev) => prev.filter((c) => c.id !== clientId));
             setSuccess(true);
         } catch {
             setError("Kon de klant niet verwijderen.")
+        } finally {
+            setLoading(false);
         }
     }
 
+    if (loading) return <DashboardLoader text="Klanten laden..."/>;
+    if (!company) return <p>Bedrijf niet gevonden.</p>;
 
     return (
         <main className="dashboard">
@@ -90,6 +87,9 @@ function Clients() {
                 <HeaderDashboard
                     title="Klanten van" company={company.name ?? ""}
                 />
+                {error && <p className="error-message">{error}</p>}
+                {success && <p className="success-message">{success}</p>}
+
                 <section className="clients-container">
                     <article className="clients-content">
                         <h2>Alle klanten</h2>
@@ -142,8 +142,6 @@ function Clients() {
                             )}
                             </tbody>
                         </table>
-                        {error && <p>Er is een fout opgetreden</p>}
-                        {success && <p className="success-message">{success}</p>}
                     </section>
                 </section>
             </section>
