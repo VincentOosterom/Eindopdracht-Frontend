@@ -79,24 +79,8 @@ api.js
 
 Plaats in api.js de volgende configuratie:
 
-**Daarna** 
-
-7.Applicatie starten
-
-Start de development server met:
-
-npm run dev
-
-TESTGEBRUIKER:
-
-: Gebruikersnaam: testlaura@test.nl
-: Wachtwoord: Testuser123!
-
-Of 
-: Gebruikersnaam: Testuser2@test.nl 
-: Wachtwoord: Testuser123!
-
-````import axios from "axios";
+````
+import axios from "axios";
 
 const api = axios.create({
 baseURL: "https://novi-backend-api-wgsgz.ondigitalocean.app/api",
@@ -121,6 +105,26 @@ config.headers = {};
     }
 
     return config;
-});````
+});
 
 export default api;
+
+````
+
+**Daarna** 
+
+7.Applicatie starten
+
+Start de development server met:
+
+npm run dev
+
+TESTGEBRUIKER:
+
+: Gebruikersnaam: testlaura@test.nl
+: Wachtwoord: Testuser123!
+
+Of 
+: Gebruikersnaam: Testuser2@test.nl 
+: Wachtwoord: Testuser123!
+
